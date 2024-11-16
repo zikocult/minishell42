@@ -1,0 +1,9 @@
+- [Tareas a realizar TODO](00_TODO.md)
+- [Readline.h and history.h](readline.h_and_history.h.md)
+	- readline
+	- rl_clear_history
+	- add_history
+	- rl_clear_history
+	- rl_on_new_line
+	- rl_redisplay
+	- rl_replace_line

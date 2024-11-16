@@ -1,0 +1,11 @@
+{
+  "accentColor": "#0088ee",
+  "nativeMenus": true,
+  "cssTheme": "Obsidian gruvbox",
+  "interfaceFontFamily": "Poppins",
+  "textFontFamily": "Poppins",
+  "showViewHeader": true,
+  "theme": "obsidian",
+  "monospaceFontFamily": "Fira Code",
+  "baseFontSize": 16
+}
