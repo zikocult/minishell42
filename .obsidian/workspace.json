@@ -164,6 +164,8 @@
   },
   "active": "923a315c896d3ed0",
   "lastOpenFiles": [
+    "inventodelaparra.c",
+    "src/main.c~",
     "doc/00_TODO.md",
     "doc/examples/readline.c~",
     "src/patata.c",
@@ -176,7 +178,6 @@
     "mylibft/stU0KTf3",
     "mylibft/stBVTWHK",
     "mylibft/libft.a",
-    "mylibft/obj/extra/ft_num_len.o",
     "doc/Funciones pendientes de documentar.md",
     "doc/Indice de todas las funciones permitidas en minishell.md",
     "doc/assets/Pasted image 20241115170628.png",
