@@ -17,11 +17,7 @@
 
 - [x] Estructura de carpetas, Makefile y Libft (se ha subido el de Guillem)
 - [ ] Organigrama y primeras ideas
-- [ ] Siguiente reunión el *martes 19* por la tarde, después de comer
-
-## Programación
-
-- [ ] Crear el primer main, un esbozo simple y testimonial
+- [x] Siguiente reunión el *martes 26 por la tarde, después de comerRus
 ## Documentación por finalizar
 
 [Indice de la documentación generada](01_Indice.md)
