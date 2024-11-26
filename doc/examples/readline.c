@@ -12,11 +12,7 @@ int main(void)
 	{
 		command_buff = readline("minishell> ");
 		if (strlen(command_buff) > 0)
-		{
 			add_history(command_buff);
-            rl_on_new_line(); // Preparamos la línea para la redisplay
-            rl_redisplay();   // Redisplay de la línea de entrada
-		}
 		if (!strcmp(command_buff, "exit"))
 		{
 			rl_clear_history();
