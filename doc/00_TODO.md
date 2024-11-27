@@ -29,8 +29,8 @@
 	- [x] rl_on_new_line
 	- [x] rl_redisplay
 	- [x] rl_replace_line
-	- [ ] getcwd
-	- [ ] chdir 
+	- [x] getcwd
+	- [x] chdir 
 	- [ ] stat 
 	- [ ] lstat
 	- [ ] fstat
