@@ -1,0 +1,6 @@
+a.out
+*.o
+*.a
+.obsidian/
+*.swp
+*.gch

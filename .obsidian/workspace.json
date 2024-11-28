@@ -13,32 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/04_stats.md",
+                "file": "doc/00_TODO.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "04_stats"
-            }
-          }
-        ]
-      },
-      {
-        "id": "8095f023930257cd",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "df60bf4b6cb4670e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "doc/03_directories_work.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "03_directories_work"
+              "title": "00_TODO"
             }
           }
         ]
@@ -184,27 +164,32 @@
   },
   "active": "923a315c896d3ed0",
   "lastOpenFiles": [
-    "src/patata.c",
-    "doc/examples/stats.c",
+    "minishell",
+    "obj/patata.o",
+    "obj/main.o",
+    "obj",
+    "mylibft/stKZnyzc",
+    "mylibft/stanTScG",
+    "mylibft/libft.a",
+    "mylibft/obj/extra/ft_num_len.o",
+    "mylibft/obj/extra/ft_str_rm_str.o",
+    "mylibft/obj/extra/ft_uitoa.o",
+    "mylibft/obj/original/ft_strrchr.o",
+    "doc/05_tty.md",
     "doc/00_TODO.md",
-    "doc/04_stats.md",
-    "doc/03_directories_work.md",
+    "doc/assets/Pasted image 20241127194511.png",
+    "doc/assets/Pasted image 20241127193227.png",
     "doc/01_Indice.md",
-    "doc/assets/Pasted image 20241127125032.png",
-    "doc/examples/directories.c~",
-    "doc/examples/directories.c",
+    "doc/03_directories_work.md",
+    "doc/assets/Pasted image 20241127190842.png",
+    "doc/assets/Pasted image 20241127190341.png",
     "doc/02_readline.h_and_history.h.md",
+    "doc/04_stats.md",
+    "doc/assets/Pasted image 20241127125032.png",
     "doc/assets/Pasted image 20241127123251.png",
-    "doc/examples/getcwd.c",
     "doc/Funciones pendientes de documentar.md",
     "doc/Indice de todas las funciones permitidas en minishell.md",
-    "doc/examples/readline_final.c~",
-    "doc/examples/readline_final.c",
-    "doc/examples/readline.c~",
-    "doc/assets",
-    "doc/examples/a.out",
     "doc/assets/Pasted image 20241115170628.png",
-    "doc/examples/readline2.c",
     "minishell/Welcome.md"
   ]
 }

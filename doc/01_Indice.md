@@ -10,3 +10,11 @@
 -  [Directories work](03_directories_work.md)
 	- getcwd
 	- chdir
+	- opendir
+	- readdir
+	- closedir
+- [Stat function](04_stats.md)
+	- Introducción
+	- stat
+	- lstat
+	- fstat

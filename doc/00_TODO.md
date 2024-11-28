@@ -10,14 +10,17 @@
 - [x] Invitar a Patri al GitHub
 - [ ] Acabar de ver como se trabaja entre dos y con las ramas
 - [ ] Realizar alguna prueba
+- [ ] Crear rama desarrollo con toda la documentación ya acabada
 
->*Nota Guillem*: Debo leer todo lo referente a git branch y similares.
+>*Nota  para Guillem*: Debo leer todo lo referente a git branch y similares.
 
 ## Organización inicio
 
 - [x] Estructura de carpetas, Makefile y Libft (se ha subido el de Guillem)
-- [ ] Organigrama y primeras ideas
-- [x] Siguiente reunión el *martes 26 por la tarde, después de comerRus
+- [ ] Organigrama y primeras ideas (Patri)
+- [x] Siguiente reunión el *martes 26 por la tarde, después de comer
+- [ ] Siguiente reunión a concretar por falta de fechas.
+	- [ ] Queda saber los nuevos horarios de Patri, yo la semana que viene estaré por las tardes en el Hackaton de Mataró
 ## Documentación por finalizar
 
 [Indice de la documentación generada](01_Indice.md)
@@ -31,15 +34,15 @@
 	- [x] rl_replace_line
 	- [x] getcwd
 	- [x] chdir 
-	- [ ] stat 
-	- [ ] lstat
-	- [ ] fstat
-	- [ ] opendir
-	- [ ] readdir
-	- [ ] closedir
-	- [ ] isatty
-	- [ ] ttyname
-	- [ ] ttyslot
+	- [x] stat 
+	- [x] lstat
+	- [x] fstat
+	- [x] opendir
+	- [x] readdir
+	- [x] closedir
+	- [x] isatty
+	- [x] ttyname
+	- [x] ttyslot
 	- [ ] ioctl
 	- [ ] getenv
 	- [ ] tcsetattr
