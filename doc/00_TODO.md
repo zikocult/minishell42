@@ -21,6 +21,7 @@
 - [x] Siguiente reunión el *martes 26 por la tarde, después de comer
 - [ ] Siguiente reunión a concretar por falta de fechas.
 	- [ ] Queda saber los nuevos horarios de Patri, yo la semana que viene estaré por las tardes en el Hackaton de Mataró
+- [ ] Este es un video interesante, crea una shell de 0, aunque con otras funciones, nos dará ideas de como parsear... el [video](https://www.youtube.com/watch?v=yTR00r8vBH8)
 ## Documentación por finalizar
 
 [Indice de la documentación generada](01_Indice.md)

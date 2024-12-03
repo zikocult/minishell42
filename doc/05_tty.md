@@ -1,4 +1,6 @@
-
+- [[#isatty]]
+- [[#ttyname]]
+- [[#ttyslot]]
 ## isatty
 
 Es una función sencilla que simplemente testea si el fd que querramos está abierto o no.

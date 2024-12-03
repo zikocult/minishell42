@@ -18,3 +18,7 @@
 	- stat
 	- lstat
 	- fstat
+- [TTY functions](05_tty.md)
+	- isatty
+	- ttyname
+	- ttyslot
