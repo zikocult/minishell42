@@ -1,8 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
+/*   Updated: 2024/12/05 08:04:36 by pamanzan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "../include/minishell.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 int main(void)
 {
