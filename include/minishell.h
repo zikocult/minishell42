@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2024/12/06 09:19:31 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/06 09:52:24 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 # include "../mylibft/include/ft_printf.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
 
-typedef struct s_env_vars;
+typedef struct s_env_vars
 {
 	char	*path;
 	char	*home;
@@ -38,5 +39,8 @@ typedef struct s_env_vars;
 char	*enviroment(char **env);
 char	*find_path(char *command);
 void	free_memory(char **ptr);
+
+//INIT_FUNCTIONS
+void	init_env_vars(t_env_vars *env);
 
 #endif

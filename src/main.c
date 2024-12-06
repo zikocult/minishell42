@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/05 13:09:37 by pamanzan         ###   ########.fr       */
+/*   Updated: 2024/12/06 09:51:00 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 int main(int argc, char **argv)
 {
-	char *command_buff;
+	char 		*command_buff;
+	t_env_vars	env;
 
-	if(argc < 0)
-		return (0);
-	if (*argv > 0)
-		argv++;
-	
+	init_env_vars(&env); 
+	if (argc > 1)
+	{
+    printf("First argument: %s\n", argv[1]);
+	}
+
 	while (1)
 	{
 		command_buff = readline("minishell> ");
@@ -33,6 +35,13 @@ int main(int argc, char **argv)
 			printf("%s \n", find_path("ls"));
 		if (!strcmp(command_buff, "exit"))
 		{
+			printf("PATH: %s\n", env.path);	
+			printf("HOME: %s\n", env.home);
+			printf("USER: %s\n", env.user);				
+			printf("SHELL: %s\n", env.shell);
+			printf("PWD: %s\n", env.pwd);
+			printf("OLDPWD: %s\n", env.oldpwd);	
+			printf("ENV: %s\n", env.env);	
 			rl_clear_history();
 			free(command_buff);
 			break;
