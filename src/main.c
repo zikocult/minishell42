@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/05 08:04:36 by pamanzan         ###   ########.fr       */
+/*   Updated: 2024/12/06 12:48:18 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,27 @@
 
 int main(void)
 {
-	char *command_buff;
+	char 		*command_buff;
+	t_env_vars	env;
 
+	init_env_vars(&env); 
 	while (1)
 	{
 		command_buff = readline("minishell> ");
+		
+		if (*command_buff == '\0')
+		{
+			free(command_buff);
+			continue ;
+		}
 		if (ft_strlen(command_buff) > 0)
 			add_history(command_buff);
-		if (!strcmp(command_buff, "exit"))
+		if (select_type(command_buff, &env))
 		{
-			rl_clear_history();
 			free(command_buff);
-			break;
+			break ;
 		}
 		free(command_buff);
 	}
+	return (0);
 }
