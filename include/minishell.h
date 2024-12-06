@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2024/12/06 09:52:24 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/06 10:34:42 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,8 @@ void	free_memory(char **ptr);
 
 //INIT_FUNCTIONS
 void	init_env_vars(t_env_vars *env);
+
+//BODY_FUNCTIONS
+void	select_type(char *command_buff);
 
 #endif
