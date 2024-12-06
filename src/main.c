@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/06 10:39:45 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:48:18 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,21 @@ int main(void)
 	t_env_vars	env;
 
 	init_env_vars(&env); 
-/*	if (argc > 1)
-	{
-    printf("First argument: %s\n", argv[1]);
-	}*/
-
 	while (1)
 	{
 		command_buff = readline("minishell> ");
+		
+		if (*command_buff == '\0')
+		{
+			free(command_buff);
+			continue ;
+		}
 		if (ft_strlen(command_buff) > 0)
 			add_history(command_buff);
-		select_type(command_buff);
-		if (!strcmp(command_buff, "exit"))
+		if (select_type(command_buff, &env))
 		{
-			printf("USER: %s\n", env.user);	//se ha de quitar antes de entrega	
-			rl_clear_history();
 			free(command_buff);
-			break;
+			break ;
 		}
 		free(command_buff);
 	}

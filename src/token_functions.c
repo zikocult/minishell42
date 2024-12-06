@@ -6,26 +6,11 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:37:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/05 13:07:22 by pamanzan         ###   ########.fr       */
+/*   Updated: 2024/12/06 12:01:22 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/minishell.h"
-
-
-void	free_memory(char **ptr)
-{
-	int	i;
-
-	i = 0;
-	while (ptr[i])
-	{
-		free(ptr[i]);
-		i++;
-	}
-	free(ptr);
-	ptr = NULL;
-}
 
 char	*find_path(char *command)
 {
@@ -56,4 +41,39 @@ char	*find_path(char *command)
 	if (!found)
 		ft_printf("Comando no encontrado");
 	return (free_memory(result), full_path);
+}
+
+char **parse_token(char *command_buff)
+{
+	int 	i;
+	char	**args;
+	char 	*start;
+	size_t	len;
+
+	i = 0;
+	start = command_buff;
+	args = malloc(sizeof(char *) * 42);
+	len = 0;
+	if (!args)
+		malloc_error("error de malloc en el parseo");
+	while (*command_buff)
+	{
+        if (*command_buff == ' ')
+		{
+            if (len > 0) 
+			{
+                args[i] = strndup(start, len);
+                i++;
+                len = 0;
+            }
+            start = command_buff + 1; 
+        }
+		else 
+            len++;
+        command_buff++;
+    }
+    if (len > 0)   
+		args[i++] = strndup(start, len);
+    args[i] = NULL;    
+	return args;	
 }

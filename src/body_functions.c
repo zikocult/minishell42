@@ -6,16 +6,26 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2024/12/06 10:35:21 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:46:56 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	select_type(char *command_buff)
+int	select_type(char *command_buff, t_env_vars *env)
 {
-	if (!strcmp(command_buff, "patata"))
+	char **args;
+
+	args = parse_token(command_buff);
+	if (!strcmp(args[0], "patata"))
 		printf("%s 👾\n", "chachi piruli!!!");
 	if (!strcmp(command_buff, "ls"))
 		printf("%s \n", find_path("ls"));
+	if (!strcmp(command_buff, "exit"))
+	{
+		printf("USER: %s\n", env->user);	//se ha de quitar antes de entrega	
+		rl_clear_history();
+		return (1);
+	}
+	return (0);
 }
