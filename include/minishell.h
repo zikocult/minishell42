@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2024/12/05 13:02:38 by pamanzan         ###   ########.fr       */
+/*   Updated: 2024/12/06 09:19:31 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 # define MINISHELL_H
 
 # include "../mylibft/include/libft.h"
-# include <stdlib.h>
-# include <stdio.h>
+# include "../mylibft/include/ft_printf.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-
-#include <unistd.h>   // For access() and X_OK
-#include <stdio.h>    // For printf() (or ft_printf if it's custom)
-# include "../mylibft/include/ft_printf.h"
-
+# include <stdlib.h>
+# include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
+
+typedef struct s_env_vars;
+{
+	char	*path;
+	char	*home;
+	char	*user;
+	char	*shell;
+	char	*pwd;
+	char	*oldpwd;
+	char	*env;
+}			t_env_vars;
 
 //TOKEN_FUNCTIONS
 char	*enviroment(char **env);
