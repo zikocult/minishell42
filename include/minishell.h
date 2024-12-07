@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2024/12/06 12:44:06 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/07 10:12:56 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct s_env_vars
 	char	*env;
 }			t_env_vars;
 
+//COMMAND_FUNCTIONS
+char	*find_path(char *command, t_env_vars *env);
+
 //TOKEN_FUNCTIONS
-char	*find_path(char *command);
 char	**parse_token(char *command_buff);
 
 //INIT_FUNCTIONS
