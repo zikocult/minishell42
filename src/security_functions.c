@@ -6,11 +6,11 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2024/12/06 11:57:48 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/08 10:58:01 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/minishell.h"
+#include "../include/minishell.h"
 
 void	free_memory(char **ptr)
 {
@@ -31,4 +31,3 @@ void	malloc_error(char *str)
 	perror(str);
 	exit(EXIT_FAILURE);
 }
-

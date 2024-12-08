@@ -6,11 +6,11 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2024/12/06 09:29:46 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/08 10:56:22 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/minishell.h"
+#include "../include/minishell.h"
 
 void	init_env_vars(t_env_vars *env)
 {

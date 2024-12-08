@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2024/12/06 12:44:06 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/08 09:56:40 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "../mylibft/include/ft_printf.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -35,8 +37,11 @@ typedef struct s_env_vars
 	char	*env;
 }			t_env_vars;
 
+//COMMAND_FUNCTIONS
+char	*find_path(char **command, t_env_vars *env);
+void	execute_command(char **command, t_env_vars *env);
+
 //TOKEN_FUNCTIONS
-char	*find_path(char *command);
 char	**parse_token(char *command_buff);
 
 //INIT_FUNCTIONS
