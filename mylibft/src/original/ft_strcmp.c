@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   security_functions.c                               :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2024/12/08 17:34:47 by patri            ###   ########.fr       */
+/*   Created: 2024/07/31 11:56:02 by pamanzan          #+#    #+#             */
+/*   Updated: 2024/12/08 12:37:00 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-void	free_memory(char **ptr)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int	i;
-
-	i = 0;
-	while (ptr[i])
+	while (*s1 && (*s1 == *s2))
 	{
-		free(ptr[i]);
-		i++;
+		s1++;
+		s2++;
 	}
-	free(ptr);
-	ptr = NULL;
-}
-
-void	malloc_error(char *str)
-{
-	perror(str);
-	exit(EXIT_FAILURE);
+	return((unsigned char)(*s1) - (unsigned char)(*s2));
 }

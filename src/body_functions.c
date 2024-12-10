@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2024/12/08 10:45:37 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/10 17:37:26 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@ int	select_type(char *command_buff, t_env_vars *env)
 {
 	char	**args;
 
-	args = parse_token(command_buff);
-	if (!strcmp(args[0], "patata"))
+	args = parse_token(command_buff, env);
+	if (!ft_strcmp(args[0], "patata"))
 	{
 		printf("%s 👾\n", "chachi piruli!!!");
 		free_memory(args);
 		return (0);
 	}
-	if (!strcmp(command_buff, "exit")) //TODO
+	if (!ft_strcmp(args[0], "echo"))
+	{
+		handle_echo(args);
+		free_memory(args);
+		return (0);
+	}
+	if (!ft_strcmp(args[0], "exit")) //TODO
 	{ // definir si necesita manejo de "exit" 'exit' exit
 		printf("USER: %s\n", env->user);//se ha de quitar antes de entrega	
 		rl_clear_history();
@@ -31,5 +37,6 @@ int	select_type(char *command_buff, t_env_vars *env)
 		return (1);
 	}
 	execute_command(args, env);
+	free_memory(args);
 	return (0);
 }

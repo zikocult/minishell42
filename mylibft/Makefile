@@ -6,7 +6,7 @@
 #    By: gbarulls <gbarulls@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/25 18:02:47 by gbarulls          #+#    #+#              #
-#    Updated: 2024/07/30 13:01:06 by gbaruls-         ###   ########.fr        #
+#    Updated: 2024/12/10 18:55:17 by patri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS_FILES	=	src/printf/ft_strings src/printf/ft_number src/printf/ft_pointer \
 				src/original/ft_striteri src/original/ft_isalnum src/original/ft_putchar_fd \
 				src/original/ft_isprint src/original/ft_isalpha src/original/ft_isascii \
 				src/original/ft_memchr src/original/ft_toupper src/original/ft_strrchr \
+				src/original/ft_strcmp src/original/ft_strcpy\
 				src/extra/ft_uitoa src/extra/ft_str_rm_str src/extra/ft_num_len
 
 SRCS 		= $(addsuffix .c, $(SRCS_FILES))

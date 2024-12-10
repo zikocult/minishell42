@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2024/12/08 09:56:40 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/10 18:29:49 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,20 @@ typedef struct s_env_vars
 	char	*env;
 }			t_env_vars;
 
+typedef struct s_parse_state {
+    char *cmbuff;
+    char *new_cmbuff;
+    int i;
+    int j;
+} t_parse_state;
+
 //COMMAND_FUNCTIONS
 char	*find_path(char **command, t_env_vars *env);
 void	execute_command(char **command, t_env_vars *env);
 
 //TOKEN_FUNCTIONS
-char	**parse_token(char *command_buff);
+char	**parse_token(char *command_buff, t_env_vars *env);
+int		count_args(char **args);
 
 //INIT_FUNCTIONS
 void	init_env_vars(t_env_vars *env);
@@ -50,8 +58,18 @@ void	init_env_vars(t_env_vars *env);
 //BODY_FUNCTIONS
 int		select_type(char *command_buff, t_env_vars *env);
 
-//SECURITY FUNCTIONS
+//SECURITY_FUNCTIONS
 void	free_memory(char **ptr);
 void	malloc_error(char *str);
+
+//VARS_FUNCTIONS
+char	*get_env_value(t_env_vars *env, const char *var_name);
+void	handle_squotes(t_parse_state *state);
+void	handle_dquotes(t_parse_state *state, t_env_vars *env);
+char	*expand_variable(const char *input, t_env_vars *env);
+void	handle_echo(char **args);
+
+
+
 
 #endif
