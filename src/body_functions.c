@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2024/12/10 17:37:26 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/12 09:23:14 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int	select_type(char *command_buff, t_env_vars *env)
 		return (1);
 	}
 	execute_command(args, env);
-	free_memory(args);
+//	free_memory(args);
 	return (0);
 }

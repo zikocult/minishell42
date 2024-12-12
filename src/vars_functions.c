@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2024/12/10 19:01:49 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/12 10:33:03 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,46 +28,6 @@ char	*get_env_value(t_env_vars *env, const char *var_name)
 		return (env->oldpwd);
 	else
 		return (NULL);
-}
-
-void	handle_squotes(t_parse_state *state)
-{
-    while (state->cmbuff[state->i] && state->cmbuff[state->i] != '\'')
-	{
-        state->new_cmbuff[state->j++] = state->cmbuff[state->i++];
-	}
-	if (state->cmbuff[state->i] == '\'')
-		state->i++;
-}
-
-void	handle_dquotes(t_parse_state *state, t_env_vars *env)
-{
-	char	*var_value;
-	int		k;
-
-	while (state->cmbuff[state->i] && state->cmbuff[state->i] != '\"')
-	{
-		if (state->cmbuff[state->i] == '$')
-		{
-			state->i++;
-			var_value = expand_variable(&state->cmbuff[state->i], env);
-			if (var_value)
-			{
-				k = 0;
-				while (var_value[k])
-					state->new_cmbuff[state->j++] = var_value[k++];
-			}
-			while (state->cmbuff[state->i] &&
-				(ft_isalpha(state->cmbuff[state->i]
-				) || (state->cmbuff[state->i] == '_')))
-				state->i++;
-		}
-		else
-			state->new_cmbuff[state->j++] = state->cmbuff[state->i++];
-	}
-	if (state->cmbuff[state->i] == '\"')
-		state->i++;
-	free(var_value);
 }
 
 char	*expand_variable(const char *input, t_env_vars *env)
