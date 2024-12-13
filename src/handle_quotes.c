@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:09:45 by patri             #+#    #+#             */
-/*   Updated: 2024/12/12 10:32:29 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/13 13:19:24 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,17 @@ void	handle_dquotes(t_parse_state *state, t_env_vars *env)
 		if (state->cmbuff[state->i] == '$')
 		{
 			state->i++;
+			var_value = (char *)malloc(1000);
+			if (!var_value)
+				malloc_error("error en handle_dquotes var_value malloc");
 			var_value = expand_variable(&state->cmbuff[state->i], env);
-			if (var_value)
+			if (var_value && var_value != NULL)
 			{
 				k = 0;
 				while (var_value[k])
 					state->new_cmbuff[state->j++] = var_value[k++];
 			}
+
 			while (state->cmbuff[state->i] && (
 					ft_isalpha(state->cmbuff[state->i]
 					) || (state->cmbuff[state->i] == '_')))
@@ -61,4 +65,5 @@ void	handle_dquotes(t_parse_state *state, t_env_vars *env)
 	}
 	if (state->cmbuff[state->i] == '\"')
 		state->i++;
+//	free(var_value);
 }

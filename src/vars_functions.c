@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2024/12/12 10:33:03 by patri            ###   ########.fr       */
+/*   Updated: 2024/12/13 13:01:45 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,28 @@ char	*get_env_value(t_env_vars *env, const char *var_name)
 char	*expand_variable(const char *input, t_env_vars *env)
 {
 	char		*var_name;
-	const char	*ptr;
+//	const char	*ptr;
 	char		*value;
-	char		*result;
+//	char		*result; en return si se descomenta
 	int			i;
 
 	i = 0;
-	ptr = input;
-	var_name = (char *)malloc(1000);
+//	ptr = input;
+	var_name = (char *)malloc(ft_strlen(input) + 1);
 	if (!var_name)
 		return (NULL);
-	while (*ptr && (ft_isalpha(*ptr) || (*ptr == '_')))
-		var_name[i++] = *ptr++;
+	while (*input && (ft_isalpha(*input) || (*input == '_')))
+		var_name[i++] = *input++;
 	var_name[i] = '\0';
+	value = (char *)malloc(1000);
+	if(!value)
+		return (NULL);
 	value = get_env_value(env, var_name);
 	if (!value)
 		return (ft_strdup(""));
-	result = ft_strdup(value);
+//	result = ft_strdup(value);
 	free(var_name);
-	return (result);
+	return (value);
 }
 
 void	handle_echo(char **args)
