@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:37:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/13 10:02:57 by pamanzan         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:36:52 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ char	**parse_token(char *command_buff, t_env_vars *env)
 	{
 		handle_quotes_general(state, env);
 		state->new_cmbuff[state->j++] = state->cmbuff[state->i++];
+//		printf("hey %s\n", state->new_cmbuff);
 	}
+
 	state->new_cmbuff[state->j] = '\0';
 	args = ft_split(state->new_cmbuff, ' ');
 //	free(state->new_cmbuff);
