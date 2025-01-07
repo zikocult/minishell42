@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/07 12:27:36 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:54:33 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,19 @@ char	*get_env_value(t_env_vars *env, const char *var_name)
 char	*expand_variable(const char *input, t_env_vars *env)
 {
 	char		*var_name;
-//	const char	*ptr;
 	char		*value;
-//	char		*result; en return si se descomenta
 	int			i;
 
 	i = 0;
-//	ptr = input;
 	var_name = (char *)malloc(ft_strlen(input) + 1);
 	if (!var_name)
 		return (NULL);
 	while (*input && (ft_isalnum(*input) || (*input == '_')))
 		var_name[i++] = *input++;
 	var_name[i] = '\0';
-	//value = (char *)malloc(10000);
-	//if(!value)
-	//	return (NULL);
 	value = get_env_value(env, var_name);
-
 	if (!value)
 		return (ft_strdup(""));
-//	result = ft_strdup(value);
 	free(var_name);
 	return (value);
 }
