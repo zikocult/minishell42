@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/07 11:35:04 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:27:36 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*expand_variable(const char *input, t_env_vars *env)
 	var_name = (char *)malloc(ft_strlen(input) + 1);
 	if (!var_name)
 		return (NULL);
-	while (*input && (ft_isalpha(*input) || (*input == '_')))
+	while (*input && (ft_isalnum(*input) || (*input == '_')))
 		var_name[i++] = *input++;
 	var_name[i] = '\0';
 	//value = (char *)malloc(10000);

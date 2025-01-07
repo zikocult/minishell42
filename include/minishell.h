@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2024/12/13 13:09:38 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:03:52 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		count_args(char **args);
 void	handle_quotes_general(t_parse_state *state, t_env_vars *env);
 void	handle_squotes(t_parse_state *state);
 void	handle_dquotes(t_parse_state *state, t_env_vars *env);
+void	without_quotes(t_parse_state *state, t_env_vars *env);
 
 //INIT_FUNCTIONS
 void	init_env_vars(t_env_vars *env);
