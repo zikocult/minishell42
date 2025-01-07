@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2024/12/13 16:38:48 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:35:04 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env_value(t_env_vars *env, const char *var_name)
 	else if (ft_strcmp(var_name, "OLDPWD") == 0)
 		return (env->oldpwd);
 	else
-		return (NULL);
+		return (NULL); //TODO comprobar si es necesario despues de modificar manejo en init
 }
 
 char	*expand_variable(const char *input, t_env_vars *env)

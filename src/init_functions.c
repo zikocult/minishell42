@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2024/12/13 16:35:57 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:16:08 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	init_env_vars(t_env_vars *env)
 {
+
+//TODO trabajar env en general no solo estas variables
+
 	env->path = getenv("PATH");
 	env->home = getenv("HOME");
 	env->user = getenv("USER");
