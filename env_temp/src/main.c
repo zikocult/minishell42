@@ -7,7 +7,7 @@ void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 
 	name_length = equal_sign - env_var;
 	i = 0;
-	new_node->var_name = (char *)malloc(name_lenght + 1);
+	new_node->var_name = (char *)malloc(name_length + 1);
 	if (!new_node->var_name)
 	{
 		free(new_node);
