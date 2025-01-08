@@ -2,10 +2,10 @@
 
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 {
-	size_t	name_lenght;
+	size_t	name_length;
 	size_t	i;
 
-	name_lenght = equal_sign - env_var;
+	name_length = equal_sign - env_var;
 	i = 0;
 	new_node->var_name = (char *)malloc(name_lenght + 1);
 	if (!new_node->var_name)
@@ -13,12 +13,12 @@ void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 		free(new_node);
 		return (NULL);
 	}
-	while (i < name_lenght) 
+	while (i < name_length) 
 	{
 		new_node->var_name[i] = env_var[i];
 		i++;
 	}
-	new_node->var_name[name_lenght] = '\0';
+	new_node->var_name[name_length] = '\0';
 	new_node->content = ft_strdup(equal_sign + 1);
 	if (!new_node->content)
 	{
@@ -57,34 +57,6 @@ t_var	*create_node(char *env_var)
 	return (new_node);
 }
 
-void	init_list(t_env *data, char **env)
-{
-	t_var	*new_node;
-	int		i;
-	
-	data->head = NULL;
-	data->tail = NULL;
-	i = 0;
-	while (env[i])
-	{
-		new_node = create_node(env[i]);
-		if (!new_node)
-			return ;
-		if (!data->head)
-		{
-			data->head = new_node;
-			data->tail = new_node;
-		}
-		else
-		{
-			data->tail->next = new_node;
-			data->tail = new_node;
-		}
-		i++;
-		printf("var_name: %s\nContent: %s\n\n", data->tail->var_name, data->tail->content);
-	}
-}
-
 void	free_list(t_env	*data)
 {
     t_var *current = data->head;
@@ -99,6 +71,37 @@ void	free_list(t_env	*data)
     }
     data->head = NULL;
     data->tail = NULL;
+}
+
+void	init_list(t_env *data, char **env)
+{
+	t_var	*new_node;
+	int		i;
+	
+	data->head = NULL;
+	data->tail = NULL;
+	i = 0;
+	while (env[i])
+	{
+		new_node = create_node(env[i]);
+		if (!new_node)
+		{
+			free_list(data);
+			return ;
+		}
+		if (!data->head)
+		{
+			data->head = new_node;
+			data->tail = new_node;
+		}
+		else
+		{
+			data->tail->next = new_node;
+			data->tail = new_node;
+		}
+		i++;
+		printf("var_name: %s\nContent: %s\n\n", data->tail->var_name, data->tail->content);
+	}
 }
 
 int main (int argc, char **argv, char **env)
