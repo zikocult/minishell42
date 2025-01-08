@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 21:39:54 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/08 21:51:33 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/08 21:57:31 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	init_list(t_env *data, char **env)
 			data->tail = new_node;
 		}
 		i++;
+		// Eliminar este printf, es sólo para comprobar, pero lo dejo de momento para que el programa haga algo, es realmente el único error de norminette si no fuera por los comentarios.
 		printf("var_name: %s\nContent: %s\n\n", data->tail->var_name, data->tail->content);
 	}
 }
@@ -119,7 +120,8 @@ void	init_list(t_env *data, char **env)
 int	main(int argc, char **argv, char **env)
 {
 	t_env	data;
-
+	// Estas dos asignaciones a NULL se deberían subir a init_list, pero me supera entonces el número de lineas
+	// El subirlas a init, significará, que el main se deberá modificar muy poco
 	data.head = NULL;
 	data.tail = NULL;
 	if (argc == 2)
