@@ -1,4 +1,16 @@
-# include "../include/env_temp.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/08 21:39:54 by Guillem Barulls   #+#    #+#             */
+/*   Updated: 2025/01/08 21:51:33 by Guillem Barulls  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/env_temp.h"
 
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 {
@@ -13,7 +25,7 @@ void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 		free(new_node);
 		return (NULL);
 	}
-	while (i < name_length) 
+	while (i < name_length)
 	{
 		new_node->var_name[i] = env_var[i];
 		i++;
@@ -37,10 +49,10 @@ t_var	*create_node(char *env_var)
 	new_node = (t_var *)malloc(sizeof(t_var));
 	if (!new_node)
 		return (NULL);
-    equal_sign = ft_strchr(env_var, '=');
+	equal_sign = ft_strchr(env_var, '=');
 	if (equal_sign)
 	{
-		if(!create_node2(env_var, new_node, equal_sign))
+		if (!create_node2(env_var, new_node, equal_sign))
 			return (NULL);
 	}
 	else
@@ -59,27 +71,27 @@ t_var	*create_node(char *env_var)
 
 void	free_list(t_env	*data)
 {
-    t_var *current = data->head;
-    t_var *next_node;
+	t_var	*current;
+	t_var	*next_node;
 
-    while (current) {
-        next_node = current->next;
-        free(current->var_name);
-        free(current->content);
-        free(current);
-        current = next_node;
-    }
-    data->head = NULL;
-    data->tail = NULL;
+	current = data->head;
+	while (current)
+	{
+		next_node = current->next;
+		free(current->content);
+		free(current->var_name);
+		free(current);
+		current = next_node;
+	}
+	data->head = NULL;
+	data->tail = NULL;
 }
 
 void	init_list(t_env *data, char **env)
 {
 	t_var	*new_node;
 	int		i;
-	
-	data->head = NULL;
-	data->tail = NULL;
+
 	i = 0;
 	while (env[i])
 	{
@@ -104,10 +116,12 @@ void	init_list(t_env *data, char **env)
 	}
 }
 
-int main (int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_env	data;
 
+	data.head = NULL;
+	data.tail = NULL;
 	if (argc == 2)
 	{
 		printf("%s\n", argv[1]);
