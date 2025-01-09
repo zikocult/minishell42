@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/08 21:39:54 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/08 21:57:31 by Guillem Barulls  ###   ########.fr       */
+/*   Created: 2025/01/08 21:39:54 by Guillem Bar       #+#    #+#             */
+/*   Updated: 2025/01/09 14:59:27 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/env_temp.h"
+
+//Te voy subiendo comentarios para que te sea mas fácil la integración en minishell.
+// Si quieres que te explique, estaré luchando por una lavadora, pero te respondo rápido jejeje
 
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 {
@@ -43,12 +46,18 @@ void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 
 t_var	*create_node(char *env_var)
 {
+	// De esta función no te voy a contar mucho, sólo que tuve que crear create node2 por tema
+	// de norminette, pero es una función que se podría haber metido dentro de create_node.
 	t_var	*new_node;
 	char	*equal_sign;
 
 	new_node = (t_var *)malloc(sizeof(t_var));
 	if (!new_node)
 		return (NULL);
+	// si ves el truquito que he usado aquí te gustará, como contar el número de carácteres sin contar
+	// el número de carácteres, pues aquí tienes un ejemplo jejejee
+	// el truqui, sólo funciona luego volcando a un size_t, si no, no funciona y la parte mas guai, está
+	// en la otra función: name_length = equal_sign - env_var
 	equal_sign = ft_strchr(env_var, '=');
 	if (equal_sign)
 	{
@@ -71,6 +80,10 @@ t_var	*create_node(char *env_var)
 
 void	free_list(t_env	*data)
 {
+	// YO esta función la sacaría de este fichero, sirve para limpiar todo lo que tenga
+	// la lista. A modo personal siempre creo un fichero con todas las funciones de limpieza
+	// y una función que las llama a todas, esta podría ser una de ellas.
+	// Eso si, sacarla del fichero no quiere decir que no sea necesaria, si no se pone hay leaks.
 	t_var	*current;
 	t_var	*next_node;
 
@@ -89,6 +102,9 @@ void	free_list(t_env	*data)
 
 void	init_list(t_env *data, char **env)
 {
+	// No es necesario realizar la asignación de tail, la he puesto, pues me iba bien para las pruebas
+	// y a lo mejor tu la puedes usar, lo dejo a tu elección si lo ves necesario o no.
+	// Lo anterior puede ser muy útil si nos ponemos a limpiar lineas.
 	t_var	*new_node;
 	int		i;
 
@@ -121,7 +137,10 @@ int	main(int argc, char **argv, char **env)
 {
 	t_env	data;
 	// Estas dos asignaciones a NULL se deberían subir a init_list, pero me supera entonces el número de lineas
-	// El subirlas a init, significará, que el main se deberá modificar muy poco
+	// El subirlas a init, significará, que el main se deberá modificar muy poco,
+	// básicamente el main de minishell sólo deberemos llamar a init_list y free_list, de manera directa o no.
+	// evidentemente también deben ser creadas las listas, pero mi pensamiento es que data, sea la lista genérica
+	// la que usamos para traspasar datos por todo el programa.
 	data.head = NULL;
 	data.tail = NULL;
 	if (argc == 2)
