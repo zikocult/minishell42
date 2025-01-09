@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/09 17:51:26 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:40:24 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 		return (NULL); //TODO comprobar si es necesario despues de modificar manejo en init
 }*/
 
-char	*expand_variable(const char *input, t_env *data)
+char	*expand_variable(char *input, t_env *data)
 {
 	char		*var_name;
 	char		*value;

@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:00:05 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/09 17:56:21 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:45:38 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,13 @@ void	init_list(t_env *data, char **env)
 	}
 }
 
-t_var	env_search(t_env *data, char *str)
+char	*env_search(t_env *data, char *str)
 {
 	while (data != NULL)
 	{
-		if(ft_strcmp(data->head, str) == 0)
-			return (data->tail)
-		data = data->next;
+		if(ft_strcmp(data->head->var_name, str) == 0)
+			return (data->head->content);
+		data->head = data->head->next;
 	}
+	return (NULL);
 }

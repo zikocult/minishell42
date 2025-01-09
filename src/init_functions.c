@@ -6,13 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/07 17:24:49 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:05:15 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	init_env_vars(t_env_vars *env)
+/*void	init_env_vars(t_env_vars *env)
 {
 
 //TODO trabajar env en general no solo estas variables
@@ -25,16 +25,8 @@ void	init_env_vars(t_env_vars *env)
 	env->oldpwd = getenv("OLDPWD");
 	env->env = getenv("ENV");
 	
-}
-
-/*void	env_vars(char command_buf, char **env)
-{
-	char **enviroment;
-
-	*enviroment = *ft_split(*env, '\n');
-	if(ft_strcmp(&command_buf, *enviroment))
-		printf("funciona");
 }*/
+
 
 void	init_parse_state(t_parse_state *state, char *command_buff)
 {
