@@ -6,13 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:09:45 by patri             #+#    #+#             */
-/*   Updated: 2025/01/07 13:11:29 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:47:05 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handle_quotes_general(t_parse_state *state, t_env_vars *env)
+void	handle_quotes_general(t_parse_state *state, t_env *data)
 {
 	if (state->cmbuff[state->i] == '\'')
 	{
@@ -22,10 +22,10 @@ void	handle_quotes_general(t_parse_state *state, t_env_vars *env)
 	else if (state->cmbuff[state->i] == '\"')
 	{
 		state->i++;
-		handle_dquotes(state, env);
+		handle_dquotes(state, data);
 	}
 	else
-		without_quotes(state, env);
+		without_quotes(state, data);
 }
 
 void	handle_squotes(t_parse_state *state)
@@ -36,7 +36,7 @@ void	handle_squotes(t_parse_state *state)
 		state->i++;
 }
 
-void	handle_dquotes(t_parse_state *state, t_env_vars *env)
+void	handle_dquotes(t_parse_state *state, t_env *data)
 {
 	char	*var_value;
 	int		k;
@@ -46,7 +46,7 @@ void	handle_dquotes(t_parse_state *state, t_env_vars *env)
 		if (state->cmbuff[state->i] == '$')
 		{
 			state->i++;
-			var_value = expand_variable(&state->cmbuff[state->i], env);
+			var_value = expand_variable(&state->cmbuff[state->i], data);
 
 			if (var_value && var_value != NULL)
 			{
@@ -68,7 +68,7 @@ void	handle_dquotes(t_parse_state *state, t_env_vars *env)
 		state->i++;
 }
 
-void	without_quotes(t_parse_state *state, t_env_vars *env)
+void	without_quotes(t_parse_state *state, t_env *data)
 {
 	char	*var_value;
 	int		k;
@@ -78,7 +78,7 @@ void	without_quotes(t_parse_state *state, t_env_vars *env)
 		if (state->cmbuff[state->i] == '$')
 		{
 			state->i++;
-			var_value = expand_variable(&state->cmbuff[state->i], env);
+			var_value = expand_variable(&state->cmbuff[state->i], data);
 
 			if (var_value && var_value != NULL)
 			{

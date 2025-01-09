@@ -6,13 +6,13 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:37:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/07 10:29:33 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:44:19 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**parse_token(char *command_buff, t_env_vars *env)
+char	**parse_token(char *command_buff, t_env *data)
 {
 	char			**args;
 	t_parse_state	*state;
@@ -23,12 +23,11 @@ char	**parse_token(char *command_buff, t_env_vars *env)
 	init_parse_state(state, command_buff);
 	while (state->cmbuff[state->i])
 	{
-		handle_quotes_general(state, env);
+		handle_quotes_general(state, data);
 		state->new_cmbuff[state->j++] = state->cmbuff[state->i++];
 	}
 	state->new_cmbuff[state->j] = '\0';
 	args = ft_split(state->new_cmbuff, ' ');
-//	free(state->new_cmbuff);
 	free(state);
 	return (args);
 }

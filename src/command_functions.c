@@ -6,20 +6,22 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2024/12/13 13:57:22 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:55:44 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*find_path(char **command, t_env_vars *env)
+char	*find_path(char **command, t_env *data)
 {
 	char	**paths;
 	char	*path;
 	char	*full_path;
 	int		i;
+	char	*search;
 
-	paths = ft_split(env->path, ':');
+	search = env_search(data, "PATH");
+	paths = ft_split(search, ':');
 	if (!paths)
 		return (printf("Error al dividir el PATH\n"), NULL);
 	i = 0;
@@ -41,13 +43,13 @@ char	*find_path(char **command, t_env_vars *env)
 	return (full_path);
 }
 
-void	execute_command(char **command, t_env_vars *env)
+void	execute_command(char **command, t_env *data)
 {
 	char	*path;
 	pid_t	pid;
 	int		status;
 
-	path = find_path(command, env);
+	path = find_path(command, data);
 	pid = fork();
 	if (pid == 0)
 	{

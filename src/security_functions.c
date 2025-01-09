@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2024/12/08 17:34:47 by patri            ###   ########.fr       */
+/*   Updated: 2025/01/09 17:18:32 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,22 @@ void	malloc_error(char *str)
 {
 	perror(str);
 	exit(EXIT_FAILURE);
+}
+
+void	free_list(t_env	*data)
+{
+	t_var	*current;
+	t_var	*next_node;
+
+	current = data->head;
+	while (current)
+	{
+		next_node = current->next;
+		free(current->content);
+		free(current->var_name);
+		free(current);
+		current = next_node;
+	}
+	data->head = NULL;
+	data->tail = NULL;
 }

@@ -6,13 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/07 13:14:59 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:51:26 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*get_env_value(t_env_vars *env, const char *var_name)
+/*char	*get_env_value(t_env_vars *env, const char *var_name)
 {
 	if (ft_strcmp(var_name, "PATH") == 0)
 		return (env->path);
@@ -28,9 +28,9 @@ char	*get_env_value(t_env_vars *env, const char *var_name)
 		return (env->oldpwd);
 	else
 		return (NULL); //TODO comprobar si es necesario despues de modificar manejo en init
-}
+}*/
 
-char	*expand_variable(const char *input, t_env_vars *env)
+char	*expand_variable(const char *input, t_env *data)
 {
 	char		*var_name;
 	char		*value;
@@ -38,12 +38,14 @@ char	*expand_variable(const char *input, t_env_vars *env)
 
 	i = 0;
 	var_name = (char *)malloc(ft_strlen(input) + 1);
+	//TODO posible error de size con value
 	if (!var_name)
 		return (NULL);
 	while (*input && (ft_isalnum(*input) || (*input == '_')))
 		var_name[i++] = *input++;
 	var_name[i] = '\0';
-	value = get_env_value(env, var_name);
+/*	value = get_env_value(env, var_name);*/
+	value = env_search(data, input);
 	if (!value)
 		return (ft_strdup(" "));
 	free(var_name);
