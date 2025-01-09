@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/13 09:24:20 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:25:01 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main(void)
 		}
 		if (ft_strlen(command_buff) > 0)
 			add_history(command_buff);
+	//	env_vars(command_buff, env);
 		if (select_type(command_buff, &env))
 		{
 			free(command_buff);

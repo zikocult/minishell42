@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/07 12:03:52 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:08:37 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	without_quotes(t_parse_state *state, t_env_vars *env);
 
 //INIT_FUNCTIONS
 void	init_env_vars(t_env_vars *env);
+void	env_vars(char command_buf, char **env);
 void	init_parse_state(t_parse_state *state, char *command_buff);
 
 //BODY_FUNCTIONS

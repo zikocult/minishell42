@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/07 12:54:33 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:14:59 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*expand_variable(const char *input, t_env_vars *env)
 	var_name[i] = '\0';
 	value = get_env_value(env, var_name);
 	if (!value)
-		return (ft_strdup(""));
+		return (ft_strdup(" "));
 	free(var_name);
 	return (value);
 }

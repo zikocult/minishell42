@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/07 10:16:08 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:24:49 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,17 @@ void	init_env_vars(t_env_vars *env)
 	env->pwd = getenv("PWD");
 	env->oldpwd = getenv("OLDPWD");
 	env->env = getenv("ENV");
+	
 }
+
+/*void	env_vars(char command_buf, char **env)
+{
+	char **enviroment;
+
+	*enviroment = *ft_split(*env, '\n');
+	if(ft_strcmp(&command_buf, *enviroment))
+		printf("funciona");
+}*/
 
 void	init_parse_state(t_parse_state *state, char *command_buff)
 {
