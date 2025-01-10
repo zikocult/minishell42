@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:00:05 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/09 18:45:38 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:08:50 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,21 @@ t_var	*create_node(char *env_var)
 	return (new_node);
 }
 
+t_var	*insert_blank_node(t_env *data)
+{
+	t_var	*new_node;
+
+	new_node = (t_var *)malloc(sizeof(t_var));
+	if (!new_node)
+		return (NULL);
+	new_node->content = "\0";
+	new_node->var_name = "\0";
+	new_node->next = NULL;
+	data->tail->next = new_node;
+	data->tail = new_node;
+	return (new_node);
+}
+
 void	init_list(t_env *data, char **env)
 {
 	t_var	*new_node;
@@ -94,18 +109,20 @@ void	init_list(t_env *data, char **env)
 			data->tail = new_node;
 		}
 		i++;
-		// Eliminar este printf, es sólo para comprobar,
-	//	printf("var_name: %s\nContent: %s\n\n", data->tail->var_name, data->tail->content);
 	}
+	insert_blank_node(data);
 }
 
-char	*env_search(t_env *data, char *str)
+t_var	*env_search(t_env *data, char *str)
 {
-	while (data != NULL)
+	t_var *current;
+	current = data->head;
+	while (current != NULL)
 	{
-		if(ft_strcmp(data->head->var_name, str) == 0)
-			return (data->head->content);
-		data->head = data->head->next;
+		if(ft_strcmp(current->var_name, str) == 0)
+			return (current);
+		// printf("%s\n", current->var_name);
+		current = current->next;
 	}
 	return (NULL);
 }

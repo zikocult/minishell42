@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/09 17:56:26 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:14:29 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ int main(int argc, char **argv, char **env)
 	data.head = NULL;
 	data.tail = NULL;
 	
-	if (argc == 2)
-	{
-		printf("%s\n", argv[1]);
+	if (argc == 1 && argv[0])
 		init_list(&data, env);
-	}
-	free_list(&data);
 	while (1)
 	{
 		command_buff = readline("minishell> ");
@@ -44,5 +40,6 @@ int main(int argc, char **argv, char **env)
 		}
 		free(command_buff);
 	}
+	free_list(&data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2025/01/09 17:18:32 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:12:59 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_list(t_env	*data)
 	t_var	*next_node;
 
 	current = data->head;
-	while (current)
+	while (current->next)
 	{
 		next_node = current->next;
 		free(current->content);
@@ -46,6 +46,7 @@ void	free_list(t_env	*data)
 		free(current);
 		current = next_node;
 	}
+	free(data->tail);
 	data->head = NULL;
 	data->tail = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/09 18:41:37 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:14:11 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	handle_echo(char **args);
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
 t_var	*create_node(char *env_var);
 void	init_list(t_env *data, char **env);
-char	*env_search(t_env *data, char *str);
-
+t_var	*env_search(t_env *data, char *str);
+t_var	*insert_blank_node(t_env *data);
 
 
 
