@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/01/09 17:25:12 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/11 08:26:10 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int	select_type(char *command_buff, t_env *data)
 		free_memory(args);
 		return (0);
 	}*/
-	else if (!ft_strcmp(args[0], "exit")) //TODO
-	{ // definir si necesita manejo de "exit" 'exit' exit
-	//	printf("USER: %s\n", env->user);//se ha de quitar antes de entrega	
+	else if (!ft_strcmp(args[0], "exit"))
+	{
 		rl_clear_history();
 		free_memory(args);
 		return (1);

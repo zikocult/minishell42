@@ -6,26 +6,24 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/10 17:14:29 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/11 08:36:55 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/minishell.h"
+#include "../include/minishell.h"
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	char	*command_buff;
 	t_env	data;
 
 	data.head = NULL;
 	data.tail = NULL;
-	
 	if (argc == 1 && argv[0])
 		init_list(&data, env);
 	while (1)
 	{
 		command_buff = readline("minishell> ");
-		
 		if (*command_buff == '\0')
 		{
 			free(command_buff);
@@ -40,6 +38,5 @@ int main(int argc, char **argv, char **env)
 		}
 		free(command_buff);
 	}
-	free_list(&data);
-	return (0);
+	return (free_list(&data), 0);
 }

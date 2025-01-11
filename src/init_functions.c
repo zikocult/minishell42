@@ -6,31 +6,15 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/09 18:05:15 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/11 09:18:01 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*void	init_env_vars(t_env_vars *env)
-{
-
-//TODO trabajar env en general no solo estas variables
-
-	env->path = getenv("PATH");
-	env->home = getenv("HOME");
-	env->user = getenv("USER");
-	env->shell = getenv("SHELL");
-	env->pwd = getenv("PWD");
-	env->oldpwd = getenv("OLDPWD");
-	env->env = getenv("ENV");
-	
-}*/
-
-
 void	init_parse_state(t_parse_state *state, char *command_buff)
 {
-	char *new_cmbuff;
+	char	*new_cmbuff;
 
 	new_cmbuff = malloc(1000);
 	if (!new_cmbuff)
@@ -39,4 +23,33 @@ void	init_parse_state(t_parse_state *state, char *command_buff)
 	state->new_cmbuff = new_cmbuff;
 	state->i = 0;
 	state->j = 0;
+}
+
+void	init_list(t_env *data, char **env)
+{
+	t_var	*new_node;
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		new_node = create_node(env[i]);
+		if (!new_node)
+		{
+			free_list(data);
+			return ;
+		}
+		if (!data->head)
+		{
+			data->head = new_node;
+			data->tail = new_node;
+		}
+		else
+		{
+			data->tail->next = new_node;
+			data->tail = new_node;
+		}
+		i++;
+	}
+	insert_blank_node(data);
 }

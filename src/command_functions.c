@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/01/10 18:23:01 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/11 09:02:48 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ char	*find_path(char **command, t_env *data)
 	t_var	*search;
 
 	search = env_search(data, "PATH");
-	if (!search)
-		return (NULL);
 	paths = ft_split(search->content, ':');
-	if (!paths)
-		return (printf("Error al dividir el PATH\n"), NULL);
+	if_notstr(*paths);
 	i = 0;
 	full_path = NULL;
 	while (paths[i])
@@ -40,8 +37,7 @@ char	*find_path(char **command, t_env *data)
 		i++;
 	}
 	free_memory(paths);
-	if (!full_path)
-		return (NULL);
+	if_notstr(full_path);
 	return (full_path);
 }
 

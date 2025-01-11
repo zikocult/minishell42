@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:00:05 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/10 18:08:50 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/11 09:20:55 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,44 +84,15 @@ t_var	*insert_blank_node(t_env *data)
 	return (new_node);
 }
 
-void	init_list(t_env *data, char **env)
-{
-	t_var	*new_node;
-	int		i;
-
-	i = 0;
-	while (env[i])
-	{
-		new_node = create_node(env[i]);
-		if (!new_node)
-		{
-			free_list(data);
-			return ;
-		}
-		if (!data->head)
-		{
-			data->head = new_node;
-			data->tail = new_node;
-		}
-		else
-		{
-			data->tail->next = new_node;
-			data->tail = new_node;
-		}
-		i++;
-	}
-	insert_blank_node(data);
-}
-
 t_var	*env_search(t_env *data, char *str)
 {
-	t_var *current;
+	t_var	*current;
+
 	current = data->head;
 	while (current != NULL)
 	{
-		if(ft_strcmp(current->var_name, str) == 0)
+		if (ft_strcmp(current->var_name, str) == 0)
 			return (current);
-		// printf("%s\n", current->var_name);
 		current = current->next;
 	}
 	return (NULL);

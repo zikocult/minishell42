@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2025/01/10 18:12:59 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/11 08:55:41 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,11 @@ void	free_list(t_env	*data)
 	free(data->tail);
 	data->head = NULL;
 	data->tail = NULL;
+}
+
+char	*if_notstr(char *str)
+{
+	if (!str)
+		return (NULL);
+	return (str);
 }
