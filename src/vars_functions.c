@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/11 09:28:44 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:55:52 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ char	*expand_variable(char *input, t_env *data)
 		var_name[i++] = *input++;
 	var_name[i] = '\0';
 	value = env_search(data, var_name);
+	if (!value)
+	{
+		printf("HOLA\n");
+//		return (ft_strdup("toma"));
+//hasta aqui llega el hilo del segfault... si es return (ft_strdup("") da segfault)
+	}
 	free(var_name);
 	return (value->content);
 }
