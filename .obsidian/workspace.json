@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/00_TODO.md",
+                "file": "doc/02_readline.h_and_history.h.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "00_TODO"
+              "title": "02_readline.h_and_history.h"
             }
           }
         ]
@@ -164,21 +164,22 @@
   },
   "active": "f6d324236aaf34a3",
   "lastOpenFiles": [
+    "minishell",
+    "obj/vars_functions.o",
+    "obj/token_functions.o",
+    "obj/security_functions.o",
+    "obj/main.o",
+    "obj/init_functions.o",
+    "obj/handle_quotes.o",
+    "obj/env_functions.o",
+    "obj/command_functions.o",
+    "obj/body_functions.o",
+    "obj",
+    "doc/00_TODO.md",
     "doc/03_directories_work.md",
     "doc/01_Indice.md",
     "doc/05_tty.md",
-    "doc/00_TODO.md",
     "doc/02_readline.h_and_history.h.md",
-    "minishell",
-    "Makefile~",
-    "obj/main.o",
-    "obj",
-    "mylibft/st6R7baX",
-    "mylibft/st0rUXKP",
-    "mylibft/libft.a",
-    "mylibft/obj/extra/ft_num_len.o",
-    "mylibft/obj/extra/ft_str_rm_str.o",
-    "mylibft/obj/extra/ft_uitoa.o",
     "doc/assets/Pasted image 20241127194511.png",
     "doc/assets/Pasted image 20241127193227.png",
     "doc/assets/Pasted image 20241127190842.png",
