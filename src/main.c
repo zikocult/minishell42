@@ -6,22 +6,24 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/06 12:48:18 by patri            ###   ########.fr       */
+/*   Updated: 2025/01/11 08:36:55 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/minishell.h"
+#include "../include/minishell.h"
 
-int main(void)
+int	main(int argc, char **argv, char **env)
 {
-	char 		*command_buff;
-	t_env_vars	env;
+	char	*command_buff;
+	t_env	data;
 
-	init_env_vars(&env); 
+	data.head = NULL;
+	data.tail = NULL;
+	if (argc == 1 && argv[0])
+		init_list(&data, env);
 	while (1)
 	{
 		command_buff = readline("minishell> ");
-		
 		if (*command_buff == '\0')
 		{
 			free(command_buff);
@@ -29,12 +31,12 @@ int main(void)
 		}
 		if (ft_strlen(command_buff) > 0)
 			add_history(command_buff);
-		if (select_type(command_buff, &env))
+		if (select_type(command_buff, &data))
 		{
 			free(command_buff);
 			break ;
 		}
 		free(command_buff);
 	}
-	return (0);
+	return (free_list(&data), 0);
 }

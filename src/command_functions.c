@@ -6,22 +6,25 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2024/12/08 10:54:56 by patri            ###   ########.fr       */
+/*   Updated: 2025/01/11 10:29:12 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*find_path(char **command, t_env_vars *env)
+char	*find_path(char **command, t_env *data)
 {
 	char	**paths;
 	char	*path;
 	char	*full_path;
 	int		i;
+	t_var	*search;
 
-	paths = ft_split(env->path, ':');
-	if (!paths)
-		return (printf("Error al dividir el PATH\n"), NULL);
+	search = env_search(data, "PATH");
+	if (!search)
+		return (NULL);
+	paths = ft_split(search->content, ':');
+	if_notstr(*paths);
 	i = 0;
 	full_path = NULL;
 	while (paths[i])
@@ -36,24 +39,23 @@ char	*find_path(char **command, t_env_vars *env)
 		i++;
 	}
 	free_memory(paths);
-	if (!full_path)
-		return (NULL);
+	if_notstr(full_path);
 	return (full_path);
 }
 
-void	execute_command(char **command, t_env_vars *env)
+void	execute_command(char **command, t_env *data)
 {
 	char	*path;
 	pid_t	pid;
 	int		status;
 
-	path = find_path(command, env);
+	path = find_path(command, data);
 	pid = fork();
 	if (pid == 0)
 	{
 		if (execve(path, command, NULL) == -1)
 		{
-			printf("command not found: %s\n", command[0]);
+			printf("%s: command not found\n", command[0]);
 			free(path);
 			exit(EXIT_FAILURE);
 		}

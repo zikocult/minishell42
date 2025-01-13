@@ -6,7 +6,7 @@
 #    By: gbaruls- <gbaruls-@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 16:54:00 by gbaruls-          #+#    #+#              #
-#    Updated: 2024/12/03 17:04:42 by pamanzan         ###   ########.fr        #
+#    Updated: 2025/01/10 16:33:39 by pamanzan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJSTEMP	= $(patsubst $(SRC_DIR)%,$(OBJ_DIR)%,$(SRCS_FILES))
 OBJS		= $(addsuffix .o, $(OBJSTEMP))
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror 
+CFLAGS		= -Wall -Wextra -Werror -g 
 AR			= ar rcs
 RANLIB		= ranlib
 RM			= rm -rf

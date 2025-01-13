@@ -6,36 +6,38 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:37:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2024/12/08 11:01:10 by patri            ###   ########.fr       */
+/*   Updated: 2025/01/09 17:44:19 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**parse_token(char *command_buff)
+char	**parse_token(char *command_buff, t_env *data)
 {
-	char	**args;
-	char	*new_cmbuff;
-	int		i;
-	int		j;
+	char			**args;
+	t_parse_state	*state;
 
-	new_cmbuff = malloc(ft_strlen(command_buff) + 1);
-	if (!new_cmbuff)
-		malloc_error("error de malloc en el parseo");
-	i = 0;
-	j = 0;
-	while (command_buff[i])
+	state = malloc(sizeof(t_parse_state));
+	if (!state)
+		malloc_error("error de malloc en el parseo, state struct");
+	init_parse_state(state, command_buff);
+	while (state->cmbuff[state->i])
 	{
-		if (command_buff[i] == 39)
-			i++;
-		if (command_buff[i] == 34)
-			i++;
-		new_cmbuff[j] = command_buff[i];
-		i++;
-		j++;
+		handle_quotes_general(state, data);
+		state->new_cmbuff[state->j++] = state->cmbuff[state->i++];
 	}
-	new_cmbuff[j] = '\0';
-	args = ft_split(new_cmbuff, ' ');
-	free(new_cmbuff);
+	state->new_cmbuff[state->j] = '\0';
+	args = ft_split(state->new_cmbuff, ' ');
+	free(state);
 	return (args);
+}
+
+int	count_args(char **args)
+{
+	int	count;
+
+	count = 0;
+	while (args[count] != NULL)
+		count++;
+	return (count);
 }
