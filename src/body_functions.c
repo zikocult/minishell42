@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/01/11 08:26:10 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:52:43 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	select_type(char *command_buff, t_env *data)
 	char	**args;
 
 	args = parse_token(command_buff, data);
+	if (!args[0])
+		return (0);
 	if (!ft_strcmp(args[0], "patata"))
 	{
 		printf("%s 👾\n", "chachi piruli!!!");
