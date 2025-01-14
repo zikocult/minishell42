@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/14 17:28:21 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:03:53 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ t_var	*create_node(char *env_var);
 t_var	*env_search(t_env *data, char *str);
 t_var	*insert_blank_node(t_env *data);
 
+//ECHO_FUNCTIONS
+void	handle_echo(char **args);
+
 //ENV_BUILTIN
 void	env_builtin(t_env *data);
 void	add_elem(t_env *data, char *name, char *content);
-
 
 #endif
