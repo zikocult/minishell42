@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/13 19:49:15 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/14 17:10:11 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ char	*if_notstr(char *str);
 
 //VARS_FUNCTIONS
 char	*expand_variable(char *input, t_env *data);
-void	handle_echo(char **args);
 
 //ENV_FUNCTIONS
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
 t_var	*create_node(char *env_var);
 t_var	*env_search(t_env *data, char *str);
 t_var	*insert_blank_node(t_env *data);
+
+//ECHO_FUNCTIONS
+void	handle_echo(char **args);
 
 #endif

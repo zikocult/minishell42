@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/13 16:52:02 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:54:29 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,3 @@ char	*expand_variable(char *input, t_env *data)
 	return (value->content);
 }
 
-void	handle_echo(char **args)
-{
-	int	i;
-
-	i = 1;
-	if (args[i] && ft_strcmp(args[i], "-n") == 0)
-		i++;
-	while (args[i])
-	{
-		printf("%s", args[i]);
-		if (args[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (!(args[1] && ft_strcmp(args[1], "-n") == 0))
-		printf("\n");
-}
