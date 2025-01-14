@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/01/13 16:52:43 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:30:14 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	select_type(char *command_buff, t_env *data)
 		free_memory(args);
 		return (0);
 	}*/
+	else if (!ft_strcmp(args[0], "env"))
+		env_builtin(data);
 	else if (!ft_strcmp(args[0], "exit"))
 	{
 		rl_clear_history();
