@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:37:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/09 17:44:19 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:38:51 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ char	**parse_token(char *command_buff, t_env *data)
 	if (!state)
 		malloc_error("error de malloc en el parseo, state struct");
 	init_parse_state(state, command_buff);
+	handle_quotes_general(state, data);
 	while (state->cmbuff[state->i])
-	{
-		handle_quotes_general(state, data);
 		state->new_cmbuff[state->j++] = state->cmbuff[state->i++];
-	}
 	state->new_cmbuff[state->j] = '\0';
 	args = ft_split(state->new_cmbuff, ' ');
 	free(state);
