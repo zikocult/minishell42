@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:09:45 by patri             #+#    #+#             */
-/*   Updated: 2025/01/13 15:57:16 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:22:41 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,24 @@ void	handle_quotes_general(t_parse_state *state, t_env *data)
 
 void	handle_squotes(t_parse_state *state)
 {
-	while (state->cmbuff[state->i] && state->cmbuff[state->i] != '\'')
-		state->new_cmbuff[state->j++] = state->cmbuff[state->i++];
-	if (state->cmbuff[state->i] == '\'')
+	int		len;
+	char	*start; 
+
+	start = state->cmbuff;
+	len = ft_strlen(state->cmbuff) - 1;
+	if (start[state->i] == '\'' && start[len] != '\'')
+		printf("Aqui llamamos a HereDoc y salimos \n");
+	if (start[len] != '\'' && start[len] == '\'')
+		printf("Aqui llamamos a HereDoc y salimos\n");
+	if (start[state->i] == '\'' && start[len] == '\'')
+	{
 		state->i++;
+		len = len - 1;
+	}
+	while (start[state->i] && start[state->i] != '\'' && start[len] != '\'')
+		state->new_cmbuff[state->j++] = start[state->i++];
+	/*if (start[state->i] == '\'' && start[len] != '\'')
+		state->i++;*/
 }
 
 void	handle_dquotes(t_parse_state *state, t_env *data)
