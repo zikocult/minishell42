@@ -29,6 +29,7 @@ OBJS		= $(addsuffix .o, $(OBJSTEMP))
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g 
+DFLAGS		= -g -fsanitize=address
 AR			= ar rcs
 RANLIB		= ranlib
 RM			= rm -rf
@@ -39,10 +40,10 @@ MKDIR		= mkdir -p
 all:		libft $(NAME)
 
 $(NAME):	$(LIBFT) $(OBJSDIRS) $(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+			$(CC) $(CFLAGS) $(DFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(LIBS) Makefile
-			$(CC) $(CFLAGS) -c $< -o $@
+			$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@
 
 $(OBJSDIRS) :
 			$(MKDIR) $(OBJSDIRS)

@@ -44,7 +44,7 @@ OBJSTEMP	= $(patsubst $(SRC_DIR)%,$(OBJ_DIR)%,$(SRCS_FILES))
 OBJS		= $(addsuffix .o, $(OBJSTEMP))
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Iinclude/
+CFLAGS		= -Wall -Wextra -Werror -Iinclude/ -g
 AR			= ar rcs
 RANLIB		= ranlib
 RM			= rm -rf
