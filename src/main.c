@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/11 08:36:55 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:21:23 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 		init_list(&data, env);
 	while (1)
 	{
-		command_buff = readline("minishell> ");
+		command_buff = readline("💃 Minishell y olé 💃> ");
 		if (*command_buff == '\0')
 		{
 			free(command_buff);
