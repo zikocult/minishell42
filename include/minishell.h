@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/14 19:03:53 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/18 13:21:15 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_parse_state
 {
 	char	*cmbuff;
 	char	*new_cmbuff;
+	int		len;
 	int		i;
 	int		j;
 }			t_parse_state;
@@ -60,6 +61,7 @@ void	handle_quotes_general(t_parse_state *state, t_env *data);
 void	handle_squotes(t_parse_state *state);
 void	handle_dquotes(t_parse_state *state, t_env *data);
 void	without_quotes(t_parse_state *state, t_env *data);
+void	clean_quotes(t_parse_state *state, char c);
 
 //INIT_FUNCTIONS
 void	init_parse_state(t_parse_state *state, char *command_buff);

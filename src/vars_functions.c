@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/01/14 18:54:29 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/18 13:21:20 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,6 @@ char	*expand_variable(char *input, t_env *data)
 	free(var_name);
 	return (value->content);
 }
+
+
 

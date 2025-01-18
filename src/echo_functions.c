@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:23:37 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/14 18:08:08 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/18 08:09:12 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handle_echo(char **args)
 	i = 1;
 	if (args[i] && ft_strcmp(args[i], "-n") == 0)
 		i++;
+	printf("📝  ");
 	while (args[i])
 	{
 		printf("%s", args[i]);
