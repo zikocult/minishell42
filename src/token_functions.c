@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:37:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/20 18:58:23 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/20 21:14:04 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@
 // 	/* init_parse_state(state, command_buff); */
 // }
 //
+//
+// int	count_args(char **args)
+// {
+// 	int	count;
+//
+// 	count = 0;
+// 	while (args[count] != NULL)
+// 		count++;
+// 	return (count);
+// }
 
 int	count_cmds(char *cmd_buff, t_parse *state)
 {
@@ -55,6 +65,16 @@ int	count_cmds(char *cmd_buff, t_parse *state)
 	return (len);
 }
 
+void	init_state(char *command_buff, t_parse *state)
+{
+	state->infile = NULL;
+	state->outfile = NULL;
+	state->symbol = '\0';
+	state->new_cmbuff = (char **)malloc(count_cmds(command_buff, state) + 1);
+	if (!state->new_cmbuff)
+		// liberar y salir
+}
+
 char	**parse_token(char *command_buff, t_env *data, t_parse *state)
 {
 	int	i;
@@ -64,20 +84,15 @@ char	**parse_token(char *command_buff, t_env *data, t_parse *state)
 	i = 0;
 	j = 0;
 	len = 0;
+	// Recordar que el siguiente IF es sólo para que no dé por culo al compilar
 	if (!data)
 		return (NULL);
-	state->infile = NULL;
-	state->outfile = NULL;
-	state->symbol = '\0';
-	state->new_cmbuff = (char **)malloc(count_cmds(command_buff, state) + 1);
-	if (!state)
-		// LIMPIAR BIEN TODO
-		return (NULL);
+	init_state(command_buff, state);
 	while (command_buff[i])
 	{
 		if (command_buff[i] == '>')
 		{
-			// Malloc del tamano de len
+			// Malloc del tamano de len o de i - j.
 			// recorrer desde j hasta i guardando el resultado
 			j = i;
 			len = 0;
@@ -95,17 +110,14 @@ char	**parse_token(char *command_buff, t_env *data, t_parse *state)
 	}
 	if (state->symbol)
 	{
+		// si hay símbolo significa que hay que copiar algo extra, 
+		// habrá que hacer otros "IFs"
 
 	}
+	else
+	{
+		// Si no hay nada significa que todo command_buff es una orden,
+		// hay que copiar la linea entera.
+	}
 	return (state->new_cmbuff);
-}
-
-int	count_args(char **args)
-{
-	int	count;
-
-	count = 0;
-	while (args[count] != NULL)
-		count++;
-	return (count);
 }
