@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/20 17:22:32 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:52:38 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ typedef struct s_env
 typedef struct s_parse
 {
 	char	**new_cmbuff;
+	char	*infile;
+	char	*outfile;
+	char	symbol;
+	int		cmds_len;
 	int		len;
 	int		i;
 	int		j;
@@ -77,7 +81,6 @@ char	*if_notstr(char *str);
 
 //VARS_FUNCTIONS
 char	*expand_variable(char *input, t_env *data);
-void	handle_echo(char **args);
 
 //ENV_FUNCTIONS
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
