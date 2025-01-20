@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/01/18 08:08:15 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:18:05 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	select_type(char *command_buff, t_env *data)
 {
+
+	t_parse	state;
 	char	**args;
 
-	args = parse_token(command_buff, data);
+	args = parse_token(command_buff, data, &state);
 	if (!args[0])
 		return (0);
 	if (!ft_strcmp(args[0], "patata"))

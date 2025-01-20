@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/18 13:21:15 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:22:32 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,31 @@ typedef struct s_env
 	t_var	*tail;
 }	t_env;
 
-typedef struct s_parse_state
+typedef struct s_parse
 {
-	char	*cmbuff;
-	char	*new_cmbuff;
+	char	**new_cmbuff;
 	int		len;
 	int		i;
 	int		j;
-}			t_parse_state;
+}			t_parse;
 
 //COMMAND_FUNCTIONS
 char	*find_path(char **command, t_env *data);
 void	execute_command(char **command, t_env *data);
 
 //TOKEN_FUNCTIONS
-char	**parse_token(char *command_buff, t_env *env);
+char	**parse_token(char *command_buff, t_env *env, t_parse *state);
 int		count_args(char **args);
 
 //HANDLE_QUOTES
-void	handle_quotes_general(t_parse_state *state, t_env *data);
-void	handle_squotes(t_parse_state *state);
-void	handle_dquotes(t_parse_state *state, t_env *data);
-void	without_quotes(t_parse_state *state, t_env *data);
-void	clean_quotes(t_parse_state *state, char c);
+void	handle_quotes_general(t_parse *state, t_env *data, char *cmd_buff);
+void	handle_squotes(t_parse *state, char *cmd_buff);
+void	handle_dquotes(t_parse *state, t_env *data, char *cmd_buff);
+void	without_quotes(t_parse *state, t_env *data, char *cmd_buff);
+void	clean_quotes(t_parse *state, char c, char *cmd_buff);
 
 //INIT_FUNCTIONS
-void	init_parse_state(t_parse_state *state, char *command_buff);
+void	init_parse_state(t_parse *state, char *command_buff);
 void	init_list(t_env *data, char **env);
 
 //BODY_FUNCTIONS

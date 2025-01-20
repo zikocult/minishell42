@@ -6,13 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/18 12:27:03 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:35:42 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	init_parse_state(t_parse_state *state, char *command_buff)
+void	init_parse_state(t_parse *state, char *command_buff)
 {
 	char	*new_cmbuff;
 
@@ -20,8 +20,7 @@ void	init_parse_state(t_parse_state *state, char *command_buff)
 	new_cmbuff = malloc(1000);
 	if (!new_cmbuff)
 		malloc_error("error de malloc en el parseo, new_cmbuff");
-	state->cmbuff = command_buff;
-	state->new_cmbuff = new_cmbuff;
+	/* state->new_cmbuff[0] = new_cmbuff; */
 	state->i = 0;
 	state->j = 0;
 }
