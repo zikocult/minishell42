@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:37:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/20 21:14:04 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/21 18:14:18 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,53 +65,65 @@ int	count_cmds(char *cmd_buff, t_parse *state)
 	return (len);
 }
 
-void	init_state(char *command_buff, t_parse *state)
+char	*parse_buff(int i, int j, char *cmd_buff)
 {
-	state->infile = NULL;
-	state->outfile = NULL;
-	state->symbol = '\0';
-	state->new_cmbuff = (char **)malloc(count_cmds(command_buff, state) + 1);
-	if (!state->new_cmbuff)
-		// liberar y salir
+	char	*temp_buff;
+	int		k;
+
+	k = 0;
+	temp_buff = malloc((i - j + 1) * sizeof(char));
+	while (j < i)
+	{
+		temp_buff[k] = cmd_buff[j];
+		k++;
+		j++;
+	}
+	temp_buff[k] = '\0';
+	return (temp_buff);
 }
 
 char	**parse_token(char *command_buff, t_env *data, t_parse *state)
 {
-	int	i;
-	int	j;
-	int	len;
+	int		i;
+	int		j;
+	int		k;
+	bool	parse;
 
 	i = 0;
 	j = 0;
-	len = 0;
-	// Recordar que el siguiente IF es sólo para que no dé por culo al compilar
+	k = 0;
+	parse = false;
 	if (!data)
 		return (NULL);
-	init_state(command_buff, state);
-	while (command_buff[i])
+	if (!init_state(command_buff, state))
+		return (NULL);
+	while (command_buff[i] && parse == false)
 	{
 		if (command_buff[i] == '>')
 		{
-			// Malloc del tamano de len o de i - j.
-			// recorrer desde j hasta i guardando el resultado
-			j = i;
-			len = 0;
+			state->new_cmdbuff[k] = parse_buff(i, j, command_buff);
+			j = i + 1;
+			parse = true;
 			state->symbol = '>';
 		}
 		if (command_buff[i] == '<')
 		{
-
+			state->infile = parse_buff(i, j, command_buff);
+			j = i + 1;
+			state->symbol = '<';
 		}
 		if (command_buff[i] == '|')
 		{
-	
+			state->new_cmdbuff[k] = parse_buff(i, j, command_buff);
+			j = i + 1;
+			k++;
+			state->symbol = '|';
 		}
 		i++;
 	}
 	if (state->symbol)
 	{
-		// si hay símbolo significa que hay que copiar algo extra, 
-		// habrá que hacer otros "IFs"
+		if (state->symbol == '>')
 
 	}
 	else

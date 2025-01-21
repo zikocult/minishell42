@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/20 18:52:38 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:37:20 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
+# include <stdbool.h>
 
 typedef struct s_var
 {
@@ -41,7 +42,7 @@ typedef struct s_env
 
 typedef struct s_parse
 {
-	char	**new_cmbuff;
+	char	**new_cmdbuff;
 	char	*infile;
 	char	*outfile;
 	char	symbol;
@@ -69,6 +70,7 @@ void	clean_quotes(t_parse *state, char c, char *cmd_buff);
 //INIT_FUNCTIONS
 void	init_parse_state(t_parse *state, char *command_buff);
 void	init_list(t_env *data, char **env);
+void	init_parse(char *command_buff, t_parse *state);
 
 //BODY_FUNCTIONS
 int		select_type(char *command_buff, t_env *data);

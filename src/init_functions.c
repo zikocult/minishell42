@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/20 17:35:42 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:28:19 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ void	init_parse_state(t_parse *state, char *command_buff)
 	/* state->new_cmbuff[0] = new_cmbuff; */
 	state->i = 0;
 	state->j = 0;
+}
+
+bool	init_state(char *command_buff, t_parse *state)
+{
+	state->infile = NULL;
+	state->outfile = NULL;
+	state->symbol = '\0';
+	state->new_cmbuff = (char *)malloc(count_cmds(command_buff, state) + 1);
+	if (!state->new_cmbuff)
+	{
+		free_memory(state->new_cmbuff); //esto lo he puesto yo :>
+		return (0);
+	}
+	return (1);
 }
 
 void	init_list(t_env *data, char **env)
