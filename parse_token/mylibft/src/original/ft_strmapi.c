@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 11:56:02 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/22 20:03:49 by Guillem Barulls  ###   ########.fr       */
+/*   Created: 2024/06/18 12:49:10 by gbaruls-          #+#    #+#             */
+/*   Updated: 2024/06/20 19:27:03 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	while (*s1 && (*s1 == *s2))
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = ft_strdup(s);
+	if (!str)
+		return (NULL);
+	while (str[i] != '\0')
 	{
-		s1++;
-		s2++;
+		str[i] = (*f)(i, str[i]);
+		i++;
 	}
-	return ((unsigned char)(*s1) - (unsigned char)(*s2));
+	return (str);
 }

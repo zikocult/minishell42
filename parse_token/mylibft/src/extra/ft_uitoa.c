@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_uitoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
+/*   By: gbarulls <gbarulls@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 11:56:02 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/22 20:03:49 by Guillem Barulls  ###   ########.fr       */
+/*   Created: 2023/03/22 23:36:54 by gbarulls          #+#    #+#             */
+/*   Updated: 2023/05/26 22:08:00 by gbarulls         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	*ft_uitoa(unsigned int n)
 {
-	while (*s1 && (*s1 == *s2))
+	char	*num;
+	int		len;
+
+	len = ft_num_len(n);
+	num = ft_calloc(sizeof(char), (len + 1));
+	if (!num)
+		return (0);
+	while (n != 0)
 	{
-		s1++;
-		s2++;
+		num[len - 1] = (n % 10) + 48;
+		n /= 10;
+		len--;
 	}
-	return ((unsigned char)(*s1) - (unsigned char)(*s2));
+	return (num);
 }

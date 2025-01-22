@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 11:56:02 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/22 20:03:49 by Guillem Barulls  ###   ########.fr       */
+/*   Created: 2024/06/11 15:55:05 by gbaruls-          #+#    #+#             */
+/*   Updated: 2024/06/20 19:25:09 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	while (*s1 && (*s1 == *s2))
+	size_t	i;
+
+	i = 0;
+	if (!dest && !src)
+		return (0);
+	while (i < n)
 	{
-		s1++;
-		s2++;
+		((unsigned char *) dest)[i] = ((unsigned char *)src)[i];
+		i++;
 	}
-	return ((unsigned char)(*s1) - (unsigned char)(*s2));
+	return (dest);
 }
