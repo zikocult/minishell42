@@ -6,11 +6,50 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:05:42 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/23 19:24:22 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/24 16:54:08 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../include/parse.h"
+
+char	*ft_strndup(const char *s, size_t n)
+{
+	size_t	i;
+	char	*ptr;
+	size_t	len;
+
+	i = 0;
+	if (n < ft_strlen(s))
+		len = n;
+	else
+	 	len = ft_strlen(s);
+	ptr = (char *)ft_calloc(len + 1, sizeof(char));
+	if (!ptr)
+		return (NULL);
+	while (s[i] && i < n)
+	{
+		ptr[i] = (char)s[i];
+		i++;
+	}
+	return (ptr);
+}
+
+char	*ft_strcat(char *dst, const char *src)
+{
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = ft_strlen(dst);
+	while (src[i] != '\0')
+	{
+		dst[len] = src[i];
+		i++;
+		len++;
+	}
+	dst[len] = '\0';
+	return (dst);
+}
 
 void add_node(t_parse *data)
 {
@@ -19,7 +58,7 @@ void add_node(t_parse *data)
         return;
 
     new_node->command = NULL;
-    new_node->variable = NULL;
+    new_node->parameter = NULL;
     new_node->infile = NULL;
     new_node->outfile = NULL;
     new_node->a_infile = NULL;
@@ -28,32 +67,32 @@ void add_node(t_parse *data)
 
     if (data->command)
 	{
-        new_node->command = strdup(data->command);
+        new_node->command = ft_strdup(data->command);
 		free(data->command);
 	}
-    if (data->variable)
+    if (data->parameter)
     {
-        new_node->variable = strdup(data->variable);
-        free(data->variable);
+        new_node->parameter = ft_strdup(data->parameter);
+        free(data->parameter);
     }
     if (data->infile)
     {
-        new_node->infile = strdup(data->infile);
+        new_node->infile = ft_strdup(data->infile);
         free(data->infile);
     }
     if (data->outfile)
     {
-        new_node->outfile = strdup(data->outfile);
+        new_node->outfile = ft_strdup(data->outfile);
         free(data->outfile);
     }
     if (data->a_infile)
     {
-        new_node->a_infile = strdup(data->a_infile);
+        new_node->a_infile = ft_strdup(data->a_infile);
         free(data->a_infile);
     }
     if (data->a_outfile)
     {
-        new_node->a_outfile = strdup(data->a_outfile);
+        new_node->a_outfile = ft_strdup(data->a_outfile);
         free(data->a_outfile);
     }
 
@@ -68,31 +107,31 @@ void add_node(t_parse *data)
         data->tail = new_node;
     }
     data->command = NULL;
-    data->variable = NULL;
+    data->parameter = NULL;
     data->infile = NULL;
     data->outfile = NULL;
     data->a_infile = NULL;
     data->a_outfile = NULL;
 }
 
-void append_variable(char **variable, const char *token)
+void append_parameter(char **parameter, const char *token)
 {
-    if (*variable)
+    if (*parameter)
     {
-        size_t len = strlen(*variable) + strlen(token) + 2;
+        size_t len = ft_strlen(*parameter) + ft_strlen(token) + 2;
         char *temp = (char *)malloc(len);
         if (temp)
         {
-            strcpy(temp, *variable);
-            strcat(temp, " ");
-            strcat(temp, token);
-            free(*variable);
-            *variable = temp;
+            ft_strcpy(temp, *parameter);
+            ft_strcat(temp, " ");
+            ft_strcat(temp, token);
+            free(*parameter);
+            *parameter = temp;
         }
     }
     else
     {
-        *variable = strdup(token);
+        *parameter = ft_strdup(token);
     }
 }
 
@@ -101,6 +140,7 @@ void parse_token(char *cmd_buff, t_parse *data)
     char *start = cmd_buff;
     char *end = cmd_buff;
     int mode = 0;
+	char	*token;
 
     while (*end)
     {
@@ -108,7 +148,7 @@ void parse_token(char *cmd_buff, t_parse *data)
         {
             if (start != end)
             {
-                char *token = strndup(start, end - start);
+                token = ft_strndup(start, end - start);
                 if (mode == 1)
                 {
                     data->infile = token;
@@ -130,19 +170,15 @@ void parse_token(char *cmd_buff, t_parse *data)
                     mode = 0;
                 }
                 else if (!data->command)
-                {
                     data->command = token;
-                }
                 else
                 {
-                    append_variable(&data->variable, token);
+                    append_parameter(&data->parameter, token);
                     free(token);
                 }
             }
             if (*end == '|')
-            {
                 add_node(data);
-            }
             else if (*end == '<')
             {
                 if (*(end + 1) == '<')
@@ -151,9 +187,7 @@ void parse_token(char *cmd_buff, t_parse *data)
                     end++;
                 }
                 else
-                {
                     mode = 1;
-                }
             }
             else if (*end == '>')
             {
@@ -163,9 +197,7 @@ void parse_token(char *cmd_buff, t_parse *data)
                     end++;
                 }
                 else
-                {
                     mode = 2;
-                }
             }
             start = end + 1;
         }
@@ -173,30 +205,20 @@ void parse_token(char *cmd_buff, t_parse *data)
     }
     if (start != end)
     {
-        char *token = strndup(start, end - start);
+        token = ft_strndup(start, end - start);
         if (mode == 1)
-        {
             data->infile = token;
-        }
         else if (mode == 2)
-        {
             data->outfile = token;
-        }
         else if (mode == 3)
-        {
             data->a_infile = token;
-        }
         else if (mode == 4)
-        {
             data->a_outfile = token;
-        }
         else if (!data->command)
-        {
             data->command = token;
-        }
         else
         {
-            append_variable(&data->variable, token);
+            append_parameter(&data->parameter, token);
             free(token);
         }
     }
@@ -213,8 +235,8 @@ void free_parse(t_parse *data)
         next = current->next;
         if (current->command)
             free(current->command);
-        if (current->variable)
-            free(current->variable);
+        if (current->parameter)
+            free(current->parameter);
         if (current->infile)
             free(current->infile);
         if (current->outfile)
@@ -236,7 +258,7 @@ int main(int argc, char **argv)
     data.head = NULL;
     data.tail = NULL;
     data.command = NULL;
-    data.variable = NULL;
+    data.parameter = NULL;
     data.infile = NULL;
     data.outfile = NULL;
     data.a_infile = NULL;
@@ -249,8 +271,8 @@ int main(int argc, char **argv)
     t_par *current = data.head;
     while (current)
     {
-        printf("Command: %s, Variable: %s, Infile: %s, Outfile: %s, A_Infile: %s, A_Outfile: %s\n",
-               current->command, current->variable, current->infile, current->outfile, current->a_infile, current->a_outfile);
+        printf("Command: %s, parameter: %s, Infile: %s, Outfile: %s, A_Infile: %s, A_Outfile: %s\n",
+               current->command, current->parameter, current->infile, current->outfile, current->a_infile, current->a_outfile);
         current = current->next;
     }
     free_parse(&data);

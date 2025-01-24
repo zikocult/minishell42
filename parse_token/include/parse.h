@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:01:48 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/23 19:23:57 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/24 16:27:17 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct s_par
 {
     char            *command;
-    char            *variable;
+    char            *parameter;
     char            *infile;
     char            *outfile;
     char            *a_infile;
@@ -35,7 +35,7 @@ typedef struct s_par
 typedef struct s_parse
 {
     char *command;
-    char *variable;
+    char *parameter;
     char *infile;
     char *outfile;
     char *a_infile;
