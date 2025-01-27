@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 10:09:45 by patri             #+#    #+#             */
-/*   Updated: 2025/01/20 17:26:33 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:20:02 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handle_squotes(t_parse *state, char *cmd_buff)
 		state->len--;
 	}
 	while (start[state->i] && (start[state->i] != '\'' && start[state->len] != '\''))
-		state->new_cmbuff[state->j++] = &start[state->i++];
+		state->new_cmdbuff[state->j++] = &start[state->i++];
 	if (start[state->i] == '\'')
 		state->i++;
 	if (start[state->len] == '\'')
@@ -60,13 +60,13 @@ void	handle_dquotes(t_parse *state, t_env *data, char *cmd_buff)
 			var_value = expand_variable(&start[state->i], data);
 			k = 0;
 			while (var_value[k])
-				state->new_cmbuff[state->j++] = &var_value[k++];
+				state->new_cmdbuff[state->j++] = &var_value[k++];
 			while (start[state->i] && (ft_isalnum(start[state->i]
 					) || (start[state->i] == '_')))
 					state->i++;
 		}	
 		else
-			state->new_cmbuff[state->j++] = &start[state->i++];
+			state->new_cmdbuff[state->j++] = &start[state->i++];
 	}
 	if (start[state->i] == '\"')
 		state->i++;
@@ -87,13 +87,13 @@ void	without_quotes(t_parse *state, t_env *data, char *cmd_buff)
 			var_value = expand_variable(&cmd_buff[state->i], data);
 			k = 0;
 			while (var_value[k])
-				state->new_cmbuff[state->j++] = &var_value[k++];
+				state->new_cmdbuff[state->j++] = &var_value[k++];
 			while (cmd_buff[state->i] && (ft_isalnum(cmd_buff[state->i])
 					|| (cmd_buff[state->i] == '_')))
 				state->i++;
 		}
 		else
-			state->new_cmbuff[state->j++] = &cmd_buff[state->i++];
+			state->new_cmdbuff[state->j++] = &cmd_buff[state->i++];
 	}
 }
 

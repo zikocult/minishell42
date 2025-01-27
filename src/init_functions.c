@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/21 16:28:19 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:23:13 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ bool	init_state(char *command_buff, t_parse *state)
 	state->infile = NULL;
 	state->outfile = NULL;
 	state->symbol = '\0';
-	state->new_cmbuff = (char *)malloc(count_cmds(command_buff, state) + 1);
-	if (!state->new_cmbuff)
+	state->new_cmdbuff = (char *)malloc(count_cmds(command_buff, state) + 1);
+	if (!state->new_cmdbuff)
 	{
-		free_memory(state->new_cmbuff); //esto lo he puesto yo :>
+		free_memory(state->new_cmdbuff); //esto lo he puesto yo :>
 		return (0);
 	}
 	return (1);
