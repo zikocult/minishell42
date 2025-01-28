@@ -6,11 +6,11 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:00:05 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/13 15:56:21 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:11:37 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 {
