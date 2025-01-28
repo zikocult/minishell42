@@ -6,38 +6,38 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/23 16:23:13 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:30:53 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	init_parse_state(t_parse *state, char *command_buff)
-{
-	char	*new_cmbuff;
-
-	state->len = ft_strlen(command_buff) - 1;
-	new_cmbuff = malloc(1000);
-	if (!new_cmbuff)
-		malloc_error("error de malloc en el parseo, new_cmbuff");
-	/* state->new_cmbuff[0] = new_cmbuff; */
-	state->i = 0;
-	state->j = 0;
-}
-
-bool	init_state(char *command_buff, t_parse *state)
-{
-	state->infile = NULL;
-	state->outfile = NULL;
-	state->symbol = '\0';
-	state->new_cmdbuff = (char *)malloc(count_cmds(command_buff, state) + 1);
-	if (!state->new_cmdbuff)
-	{
-		free_memory(state->new_cmdbuff); //esto lo he puesto yo :>
-		return (0);
-	}
-	return (1);
-}
+// void	init_parse_state(t_parse *state, char *command_buff)
+// {
+// 	char	*new_cmbuff;
+//
+// 	state->len = ft_strlen(command_buff) - 1;
+// 	new_cmbuff = malloc(1000);
+// 	if (!new_cmbuff)
+// 		malloc_error("error de malloc en el parseo, new_cmbuff");
+// 	/* state->new_cmbuff[0] = new_cmbuff; */
+// 	state->i = 0;
+// 	state->j = 0;
+// }
+//
+// bool	init_state(char *command_buff, t_parse *state)
+// {
+// 	state->infile = NULL;
+// 	state->outfile = NULL;
+// 	state->symbol = '\0';
+// 	state->new_cmdbuff = (char *)malloc(count_cmds(command_buff, state) + 1);
+// 	if (!state->new_cmdbuff)
+// 	{
+// 		free_memory(state->new_cmdbuff); //esto lo he puesto yo :>
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
 void	init_list(t_env *data, char **env)
 {

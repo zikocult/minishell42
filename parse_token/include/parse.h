@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:01:48 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/28 11:29:53 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/28 16:47:13 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_parse
 
 
 bool	validate_cmdbuff(char *cmd_buff);
+void	jump_quotes(char *cmd_buff, int *i);
+
 
 void	init_newnode(t_par *new_node);
 void	init_data(t_parse *data);

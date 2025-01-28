@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/21 17:37:20 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:19:01 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,32 @@ typedef struct s_env
 	t_var	*tail;
 }	t_env;
 
+typedef struct s_par
+{
+    char            *command;
+    char            *parameter;
+    char            *infile;
+    char            *outfile;
+    char            *a_infile;
+    char            *a_outfile;
+    struct s_par    *next;
+}   t_par;
+
 typedef struct s_parse
 {
-	char	**new_cmdbuff;
-	char	*infile;
-	char	*outfile;
-	char	symbol;
-	int		cmds_len;
-	int		len;
-	int		i;
-	int		j;
+    char	*command;
+    char	*parameter;
+    char	*infile;
+    char	*outfile;
+    char	*a_infile;
+    char	*a_outfile;
+    t_par	*head;
+    t_par	*tail;
 }			t_parse;
 
 //COMMAND_FUNCTIONS
 char	*find_path(char **command, t_env *data);
 void	execute_command(char **command, t_env *data);
-
-//TOKEN_FUNCTIONS
-char	**parse_token(char *command_buff, t_env *env, t_parse *state);
-int		count_args(char **args);
 
 //HANDLE_QUOTES
 void	handle_quotes_general(t_parse *state, t_env *data, char *cmd_buff);
@@ -96,5 +103,31 @@ void	handle_echo(char **args);
 //ENV_BUILTIN
 void	env_builtin(t_env *data);
 void	add_elem(t_env *data, char *name, char *content);
+
+//VALIDATE_BUFF
+bool	validate_cmdbuff(char *cmd_buff);
+
+//VALIDATE_UTILS
+void	jump_quotes(char *cmd_buff, int *i);
+
+//PARSE_NODE
+void	free_temp_data(t_parse *data);
+void	copy_data(t_par *new_node, t_parse *data);
+void	add_node(t_parse *data);
+
+//PARSE_INIT
+void	init_newnode(t_par *new_node);
+void	init_data(t_parse *data);
+void	free_parse(t_parse *data);
+
+//PARSE_UTILS
+void	append_parameter(char **parameter, const char *token);
+char	*ft_strndup(const char *s, size_t n);
+char	*ft_strcat(char *dst, const char *src);
+
+//PARSE_TOKEN
+void	process_token(char *start, char *end, int *mode, t_parse *data);
+char	*handle_special_char(char *end, int *mode, t_parse *data);
+void	parse_token(char *cmd_buff, t_parse *data);
 
 #endif

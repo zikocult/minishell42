@@ -6,11 +6,11 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:32:18 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 16:57:37 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:10:27 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "../../include/minishell.h"
 
 void	free_temp_data(t_parse *data)
 {

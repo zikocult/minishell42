@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:05:42 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 11:29:27 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/28 17:13:25 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int main(int argc, char **argv)
     t_parse data;
 
 	init_data(&data);
-	data.head = NULL;
-    data.tail = NULL;
-
     if (argc == 2)
     {
 		if (!validate_cmdbuff(argv[1]))

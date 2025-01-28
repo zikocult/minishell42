@@ -6,11 +6,11 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 18:01:26 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:11:10 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "../../include/minishell.h"
 
 static bool	check_parse_error(char c, int count)
 {
@@ -90,7 +90,5 @@ bool	validate_cmdbuff(char *cmd_buff)
 		}
 		i++;
 	}
-	//Controlar :
-	// 		- < < a ls
 	return (true);
 }
