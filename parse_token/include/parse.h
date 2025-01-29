@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:01:48 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/28 16:47:13 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:30:51 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,16 @@ typedef struct s_par
 
 typedef struct s_parse
 {
-    char *command;
-    char *parameter;
-    char *infile;
-    char *outfile;
-    char *a_infile;
-    char *a_outfile;
-    t_par *head;
-    t_par *tail;
-} t_parse;
+    char	*command;
+    char	*parameter;
+    char	*infile;
+    char	*outfile;
+	char	*a_infile;
+    char	*a_outfile;
+	int		in_quotes;
+    t_par	*head;
+    t_par	*tail;
+}	t_parse;
 
 
 bool	validate_cmdbuff(char *cmd_buff);

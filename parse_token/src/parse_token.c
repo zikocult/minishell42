@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:37:06 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 10:49:41 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:29:30 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,17 @@ char	*handle_special_char(char *end, int *mode, t_parse *data)
 	return (end);
 }
 
+static bool	between_quotes(char **end, int *in_quotes)
+{
+	if (**end == '"')
+	{
+		*in_quotes = !(*in_quotes);
+		(*end)++;
+		return (true);
+	}
+	return (false);
+}
+
 void	parse_token(char *cmd_buff, t_parse *data)
 {
 	char	*start;
@@ -74,7 +85,10 @@ void	parse_token(char *cmd_buff, t_parse *data)
 	mode = 0;
 	while (*end)
 	{
-		if (*end == ' ' || *end == '|' || *end == '<' || *end == '>')
+		if (between_quotes(&end, &data->in_quotes))
+			continue ;
+		if (!data->in_quotes && (*end == ' ' || *end == '|' || *end == '<'
+				|| *end == '>'))
 		{
 			if (start != end)
 				process_token(start, end, &mode, data);
