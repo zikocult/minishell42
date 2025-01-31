@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:24:41 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 10:50:01 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:49:38 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strcat(char *dst, const char *src)
 	return (dst);
 }
 
-void	append_parameter(char **parameter, const char *token)
+void	append_parameter(char **parameter, char *token, int mode)
 {
 	size_t	len;
 	char	*temp;
@@ -63,7 +63,10 @@ void	append_parameter(char **parameter, const char *token)
 		if (temp)
 		{
 			ft_strcpy(temp, *parameter);
-			ft_strcat(temp, " ");
+			if (mode == 3 || mode == 4)
+				ft_strcat(temp, " A_");
+			else
+				ft_strcat(temp, " ");
 			ft_strcat(temp, token);
 			free(*parameter);
 			*parameter = temp;
@@ -73,4 +76,5 @@ void	append_parameter(char **parameter, const char *token)
 	{
 		*parameter = ft_strdup(token);
 	}
+	free(token);
 }

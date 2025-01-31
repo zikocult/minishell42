@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:26:46 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/29 11:29:53 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/31 13:51:33 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ void	init_newnode(t_par *new_node)
 	new_node->parameter = NULL;
 	new_node->infile = NULL;
 	new_node->outfile = NULL;
-	new_node->a_infile = NULL;
-	new_node->a_outfile = NULL;
 	new_node->next = NULL;
 }
 
-void	init_data(t_parse *data)
+void	init_data(t_parse *data, bool mode)
 {
+	if (mode)
+	{
+		data->head = NULL;
+		data->tail = NULL;
+	}
 	data->command = NULL;
 	data->parameter = NULL;
 	data->infile = NULL;
 	data->outfile = NULL;
-	data->a_infile = NULL;
-	data->a_outfile = NULL;
 	data->in_quotes = 0;
 }
 
@@ -51,10 +52,6 @@ void	free_parse(t_parse *data)
 			free(current->infile);
 		if (current->outfile)
 			free(current->outfile);
-		if (current->a_outfile)
-			free(current->a_outfile);
-		if (current->a_infile)
-			free(current->a_infile);
 		free(current);
 		current = next;
 	}

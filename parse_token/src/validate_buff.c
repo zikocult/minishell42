@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 18:01:26 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:39:36 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ static void	init_vars(int *i, int *count, char *last_char)
 	*last_char = '\0';
 }
 
+// TODO: Se deben controlar cuando hay dos redirecciones seguidas sin contenido en medio:
+// 		Ejemplo: < < a ls
+// TODO: Parece que no valida despues de tener una serie de cosas entre comilladas, revisar
 
 bool	validate_cmdbuff(char *cmd_buff)
 {
@@ -90,7 +93,5 @@ bool	validate_cmdbuff(char *cmd_buff)
 		}
 		i++;
 	}
-	//Controlar :
-	// 		- < < a ls
 	return (true);
 }

@@ -6,13 +6,13 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:46:46 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/28 16:46:51 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:23:02 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
 
-void jump_quotes(char *cmd_buff, int *i)
+void	jump_quotes(char *cmd_buff, int *i)
 {
 	if (cmd_buff[*i] == '"')
 	{
@@ -20,4 +20,3 @@ void jump_quotes(char *cmd_buff, int *i)
 			*i = *i + 1;
 	}
 }
-

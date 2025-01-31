@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:01:48 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/29 11:30:51 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/31 13:50:45 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ typedef struct s_par
     char            *parameter;
     char            *infile;
     char            *outfile;
-    char            *a_infile;
-    char            *a_outfile;
     struct s_par    *next;
 }   t_par;
 
@@ -38,8 +36,6 @@ typedef struct s_parse
     char	*parameter;
     char	*infile;
     char	*outfile;
-	char	*a_infile;
-    char	*a_outfile;
 	int		in_quotes;
     t_par	*head;
     t_par	*tail;
@@ -51,10 +47,10 @@ void	jump_quotes(char *cmd_buff, int *i);
 
 
 void	init_newnode(t_par *new_node);
-void	init_data(t_parse *data);
+void	init_data(t_parse *data, bool mode);
 void	free_parse(t_parse *data);
 
-void	append_parameter(char **parameter, const char *token);
+void	append_parameter(char **parameter, char *token, int mode);
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strcat(char *dst, const char *src);
 

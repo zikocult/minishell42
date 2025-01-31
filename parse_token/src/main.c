@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:05:42 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/31 12:37:11 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:53:39 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int main(int argc, char **argv)
 {
     t_parse data;
 
-	init_data(&data);
-	data.head = NULL;
-	data.tail = NULL;
+	init_data(&data, 1);
     if (argc == 2)
     {
 		if (!validate_cmdbuff(argv[1]))
@@ -30,8 +28,8 @@ int main(int argc, char **argv)
 	printf("\n**************");
     while (current)
     {
-        printf("\nCommand: %s\nParameter: %s\nInfile: %s\nOutfile: %s\nA_Infile: %s\nA_Outfile: %s\n\n**************\n",
-        current->command, current->parameter, current->infile, current->outfile, current->a_infile, current->a_outfile);
+        printf("\nCommand: %s\nParameter: %s\nInfile: %s\nOutfile: %s\n\n**************\n",
+        current->command, current->parameter, current->infile, current->outfile);
         current = current->next;
     }
     free_parse(&data);

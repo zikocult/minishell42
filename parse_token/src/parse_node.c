@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:32:18 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 16:57:37 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:52:03 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ void	free_temp_data(t_parse *data)
 		free(data->infile);
 	if (data->outfile)
 		free(data->outfile);
-	if (data->a_infile)
-		free(data->a_infile);
-	if (data->a_outfile)
-		free(data->a_outfile);
 }
 
 void	copy_data(t_par *new_node, t_parse *data)
@@ -38,10 +34,6 @@ void	copy_data(t_par *new_node, t_parse *data)
 		new_node->infile = ft_strdup(data->infile);
 	if (data->outfile)
 		new_node->outfile = ft_strdup(data->outfile);
-	if (data->a_infile)
-		new_node->a_infile = ft_strdup(data->a_infile);
-	if (data->a_outfile)
-		new_node->a_outfile = ft_strdup(data->a_outfile);
 }
 
 void	add_node(t_parse *data)
@@ -64,5 +56,5 @@ void	add_node(t_parse *data)
 		data->tail->next = new_node;
 		data->tail = new_node;
 	}
-	init_data(data);
+	init_data(data, 0);
 }

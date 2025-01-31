@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:37:06 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/29 11:29:30 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/01/31 13:47:59 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,17 @@ void	process_token(char *start, char *end, int *mode, t_parse *data)
 
 	token = ft_strndup(start, end - start);
 	if (*mode == 1)
-		data->infile = token;
+		append_parameter(&data->infile, token, *mode);
 	else if (*mode == 2)
-		data->outfile = token;
+		append_parameter(&data->outfile, token, *mode);
 	else if (*mode == 3)
-		data->a_infile = token;
+		append_parameter(&data->infile, token, *mode);
 	else if (*mode == 4)
-		data->a_outfile = token;
+		append_parameter(&data->outfile, token, *mode);
 	else if (!data->command)
 		data->command = token;
 	else
-	{
-		append_parameter(&data->parameter, token);
-		free(token);
-	}
+		append_parameter(&data->parameter, token, *mode);
 	if (*mode >= 1 && *mode <= 4)
 		*mode = 0;
 }
