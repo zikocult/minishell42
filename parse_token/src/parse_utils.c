@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:24:41 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/31 13:49:38 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:59:50 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	append_parameter(char **parameter, char *token, int mode)
 
 	if (*parameter)
 	{
-		len = ft_strlen(*parameter) + ft_strlen(token) + 2;
-		temp = (char *)malloc(len);
+		len = ft_strlen(*parameter) + ft_strlen(token) + 4;
+		t>>emp = (char *)malloc(len);
 		if (temp)
 		{
 			ft_strcpy(temp, *parameter);
