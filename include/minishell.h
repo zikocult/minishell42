@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/01/28 17:19:01 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/02 01:42:58 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ typedef struct s_parse
 
 //COMMAND_FUNCTIONS
 char	*find_path(char **command, t_env *data);
-void	execute_command(char **command, t_env *data);
+//void	execute_command(char **command, t_env *data);
+void	execute_command(t_parse *parse_data, t_env *data);
 
 //HANDLE_QUOTES
 void	handle_quotes_general(t_parse *state, t_env *data, char *cmd_buff);

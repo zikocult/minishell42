@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/01/28 19:01:31 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/01 20:06:30 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	select_type(char *command_buff, t_env *data)
 	if (!ft_strcmp(&state.head->command[0], "patata"))
 	{
 	 	printf("%s 👾\n", "chachi piruli!!!");
-	 //	free(state);
+	 	free_parse(&state);
 	 	return (0);
 	}
 	// else if (!ft_strcmp(args[0], "echo"))
@@ -59,15 +59,15 @@ int	select_type(char *command_buff, t_env *data)
 	if (!ft_strcmp(&state.head->command[0], "exit"))
 	{
 		rl_clear_history();
-	// 	free_memory(args);
+		free_parse(&state);
 	 	return (1);
 	}
-	// else
-	// {
-	// 	execute_command(args, data);
-	// 	free_memory(args);
-	// 	return (0);
-	// }
+	else
+	{
+	 	execute_command(&state, data);
+	 	free_parse(&state);
+	 	return (0);
+	}
 	free_parse(&state);
 	return (0);
 }
