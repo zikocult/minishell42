@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:24:41 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/31 13:59:50 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:39:58 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,23 @@ char	*ft_strcat(char *dst, const char *src)
 	return (dst);
 }
 
+static void	consecutive_copy_param(int mode, char *temp, char **parameter,
+		char *token)
+{
+	ft_strcpy(temp, *parameter);
+	if (mode == 1)
+		ft_strcat(temp, " <_");
+	else if (mode == 2)
+		ft_strcat(temp, " >_");
+	else if (mode == 4)
+		ft_strcat(temp, " >>");
+	else if (mode == 3)
+		ft_strcat(temp, " <<");
+	ft_strcat(temp, token);
+	free(*parameter);
+	*parameter = temp;
+}
+
 void	append_parameter(char **parameter, char *token, int mode)
 {
 	size_t	len;
@@ -59,22 +76,22 @@ void	append_parameter(char **parameter, char *token, int mode)
 	if (*parameter)
 	{
 		len = ft_strlen(*parameter) + ft_strlen(token) + 4;
-		t>>emp = (char *)malloc(len);
+		temp = (char *)malloc(len);
 		if (temp)
-		{
-			ft_strcpy(temp, *parameter);
-			if (mode == 3 || mode == 4)
-				ft_strcat(temp, " A_");
-			else
-				ft_strcat(temp, " ");
-			ft_strcat(temp, token);
-			free(*parameter);
-			*parameter = temp;
-		}
+			consecutive_copy_param(mode, temp, parameter, token);
 	}
 	else
 	{
-		*parameter = ft_strdup(token);
+		if (mode == 1)
+			*parameter = ft_strjoin(" <_", token);
+		else if (mode == 2)
+			*parameter = ft_strjoin(" _>", token);
+		else if (mode == 4)
+			*parameter = ft_strjoin(" >>", token);
+		else if (mode == 3)
+			*parameter = ft_strjoin(" <<", token);
+		else
+			*parameter = ft_strdup(token);
 	}
 	free(token);
 }

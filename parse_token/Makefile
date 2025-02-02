@@ -42,11 +42,9 @@ all:		libft $(NAME)
 $(NAME):	$(LIBFT) $(OBJSDIRS) $(OBJS)
 	$(CC) $(CFLAGS) $(DFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
-# $(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(LIBS) Makefile
 	$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@
 
-# $(CC) $(CFLAGS) -c $< -o $@
 $(OBJSDIRS) :
 			$(MKDIR) $(OBJSDIRS)
 

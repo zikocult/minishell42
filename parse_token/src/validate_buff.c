@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/31 13:39:36 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/02 12:29:43 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,33 @@ static void	update_count_and_last_char(char c, char *last_char, int *count)
 	}
 }
 
-static void	init_vars(int *i, int *count, char *last_char)
+static bool	check_consecutive_redirections(char *cmd_buff)
 {
-	*i = 0;
-	*count = 0;
-	*last_char = '\0';
-}
+	int		i;
+	bool	in_quotes;
 
-// TODO: Se deben controlar cuando hay dos redirecciones seguidas sin contenido en medio:
-// 		Ejemplo: < < a ls
-// TODO: Parece que no valida despues de tener una serie de cosas entre comilladas, revisar
+	i = 0;
+	in_quotes = false;
+	while (cmd_buff[i])
+	{
+		if (cmd_buff[i] == '"')
+			in_quotes = !in_quotes;
+		if (!in_quotes && (cmd_buff[i] == '<' || cmd_buff[i] == '>'))
+		{
+			i++;
+			while (cmd_buff[i] == ' ')
+				i++;
+			if (cmd_buff[i] == '<' || cmd_buff[i] == '>')
+			{
+				printf("minishell: parse_error '%c'\n", cmd_buff[i]);
+				return (false);
+			}
+		}
+		else
+			i++;
+	}
+	return (true);
+}
 
 bool	validate_cmdbuff(char *cmd_buff)
 {
@@ -74,6 +91,8 @@ bool	validate_cmdbuff(char *cmd_buff)
 	int		count;
 	char	last_char;
 
+	if (!check_consecutive_redirections(cmd_buff))
+		return (false);
 	init_vars(&i, &count, &last_char);
 	while (cmd_buff[i])
 	{
@@ -87,10 +106,7 @@ bool	validate_cmdbuff(char *cmd_buff)
 				return (false);
 		}
 		else
-		{
-			count = 0;
-			last_char = '\0';
-		}
+			validation_reset(&count, &last_char);
 		i++;
 	}
 	return (true);
