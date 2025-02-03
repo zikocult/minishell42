@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:26:46 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/31 13:51:33 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/03 09:26:23 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	init_data(t_parse *data, bool mode)
 	data->parameter = NULL;
 	data->infile = NULL;
 	data->outfile = NULL;
-	data->in_quotes = 0;
+	data->in_single_quotes = 0;
+	data->in_double_quotes = 0;
 }
 
 void	free_parse(t_parse *data)

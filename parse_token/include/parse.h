@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:01:48 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/02 12:41:06 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/03 09:31:37 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ typedef struct s_parse
 	char			*parameter;
 	char			*infile;
 	char			*outfile;
-	int				in_quotes;
+	int				in_single_quotes;
+	int				in_double_quotes;
 	t_par			*head;
 	t_par			*tail;
 }					t_parse;
 
 bool				validate_cmdbuff(char *cmd_buff);
-void				jump_quotes(char *cmd_buff, int *i);
+void				jump_single_quotes(char *cmd_buff, int *i);
+void				jump_double_quotes(char *cmd_buff, int *i);
 void				validation_reset(int *count, char *last_char);
 void				init_vars(int *i, int *count, char *last_char);
 
