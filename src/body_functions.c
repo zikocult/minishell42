@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/01/28 17:57:27 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/01 20:06:30 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	select_type(char *command_buff, t_env *data)
 {
 	t_parse	state;
 
+
 	state.head = NULL;
 	state.tail = NULL;
 	if (!data->head)
@@ -41,12 +42,12 @@ int	select_type(char *command_buff, t_env *data)
 	print_token(&state);
 	// if (!args[0])
 	// 	return (0);
-	// if (!ft_strcmp(args[0], "patata"))
-	// {
-	// 	printf("%s 👾\n", "chachi piruli!!!");
-	// 	free_memory(args);
-	// 	return (0);
-	// }
+	if (!ft_strcmp(&state.head->command[0], "patata"))
+	{
+	 	printf("%s 👾\n", "chachi piruli!!!");
+	 	free_parse(&state);
+	 	return (0);
+	}
 	// else if (!ft_strcmp(args[0], "echo"))
 	// {
 	// 	handle_echo(args);
@@ -55,18 +56,18 @@ int	select_type(char *command_buff, t_env *data)
 	// }
 	// else if (!ft_strcmp(args[0], "env"))
 	// 	env_builtin(data);
-	// else if (!ft_strcmp(args[0], "exit"))
-	// {
-	// 	rl_clear_history();
-	// 	free_memory(args);
-	// 	return (1);
-	// }
-	// else
-	// {
-	// 	execute_command(args, data);
-	// 	free_memory(args);
-	// 	return (0);
-	// }
+	if (!ft_strcmp(&state.head->command[0], "exit"))
+	{
+		rl_clear_history();
+		free_parse(&state);
+	 	return (1);
+	}
+	else
+	{
+	 	execute_command(&state, data);
+	 	free_parse(&state);
+	 	return (0);
+	}
 	free_parse(&state);
 	return (0);
 }
