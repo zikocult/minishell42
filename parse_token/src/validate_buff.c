@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/03 09:30:39 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/03 18:50:58 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,33 @@ static void	update_count_and_last_char(char c, char *last_char, int *count)
 static bool	check_consecutive_redirections(char *cmd_buff)
 {
 	int		i;
-	bool	in_quotes;
+	bool	empty_space;
+	bool	in_single_quotes;
+	bool	in_double_quotes;
 
 	i = 0;
-	in_quotes = false;
+	empty_space = false;
+	in_single_quotes = false;
+	in_double_quotes = false;
 	while (cmd_buff[i])
 	{
+		if (cmd_buff[i] == '\'')
+			in_single_quotes = !in_single_quotes;
 		if (cmd_buff[i] == '"')
-			in_quotes = !in_quotes;
-		if (!in_quotes && (cmd_buff[i] == '<' || cmd_buff[i] == '>'))
+			in_double_quotes = !in_double_quotes;
+		if ((!in_single_quotes || !in_double_quotes) && (cmd_buff[i] == '<' || cmd_buff[i] == '>'))
 		{
 			i++;
+			if (cmd_buff[i] == ' ')
+				empty_space = true;
 			while (cmd_buff[i] == ' ')
 				i++;
-			if (cmd_buff[i] == '<' || cmd_buff[i] == '>')
+			if (empty_space && (cmd_buff[i] == '<' || cmd_buff[i] == '>'))
 			{
 				printf("minishell: parse_error '%c'\n", cmd_buff[i]);
 				return (false);
 			}
+			empty_space = false;
 		}
 		else
 			i++;
