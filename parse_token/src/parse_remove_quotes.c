@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/04 11:43:58 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:42:31 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*create_new_string(const char *str, size_t new_len)
 	char	*temp;
 	char	*dst;
 
-	temp = (char *)malloc(new_len + 1);
+	temp = (char *)ft_calloc(new_len + 1, sizeof(char));
 	dst = temp;
 	if (!temp)
 		return (NULL);
@@ -59,7 +59,7 @@ static char	*create_new_string(const char *str, size_t new_len)
 			*dst++ = *str;
 		str++;
 	}
-	*dst = '\0';
+	// *dst = '\0';
 	return (temp);
 }
 
