@@ -6,47 +6,76 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/04 10:23:35 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:43:58 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
 
-static void	trim_quotes(char **str, size_t start, size_t end)
-{
-	char	*new_str;
+// static void	remove_double_quotes(char **str)
+// {
+// 	char	*src;
+// 	char	*dst;
+//
+// 	if (!str || !(*str))
+// 		return ;
+// 	src = *str;
+// 	dst = *str;
+// 	while (*src)
+// 	{
+// 		if (*src != '"')
+// 			*dst++ = *src;
+// 		src++;
+// 	}
+// 	*dst = '\0';
+// }
 
-	new_str = (char *)malloc(end - start + 2);
-	if (!new_str)
-		return ;
-	ft_strncpy(new_str, *str + start, end - start + 1);
-	new_str[end - start + 1] = '\0';
-	free(*str);
-	*str = new_str;
+static size_t	calculate_new_length(const char *str)
+{
+	size_t	new_len;
+
+	new_len = 0;
+	while (*str)
+	{
+		if (*str != '"')
+			new_len++;
+		str++;
+	}
+	return (new_len);
+}
+
+static char	*create_new_string(const char *str, size_t new_len)
+{
+	char	*temp;
+	char	*dst;
+
+	temp = (char *)malloc(new_len + 1);
+	dst = temp;
+	if (!temp)
+		return (NULL);
+	while (*str)
+	{
+		if (*str != '"')
+			*dst++ = *str;
+		str++;
+	}
+	*dst = '\0';
+	return (temp);
 }
 
 static void	remove_double_quotes(char **str)
 {
-	size_t	len;
-	size_t	start;
-	size_t	end;
+	size_t	new_len;
+	char	*new_str;
 
 	if (!str || !(*str))
 		return ;
-	len = strlen(*str);
-	start = 0;
-	end = len - 1;
-	if ((*str)[start] == '"')
-		start++;
-	if ((*str)[end] == '"')
-		end--;
-	if (start > end)
-	{
-		free(*str);
-		*str = NULL;
+	new_len = calculate_new_length(*str);
+	new_str = create_new_string(*str, new_len);
+	if (!new_str)
 		return ;
-	}
-	trim_quotes(str, start, end);
+	free(*str);
+	*str = new_str;
 }
 
 void	remove_quotes_from_par(t_par *current)
