@@ -6,29 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/02 01:50:34 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:57:27 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**generate_command(t_par *current)
-{
-	char	**command;
-
-	command = malloc(3 * sizeof(char *));
-	if (!command)
-	{
-		perror("Error allocating memory");
-		return (NULL);
-	}
-	command[0] = current->command;
-	command[1] = current->parameter;
-	command[2] = NULL;
-	return (command);
-}
-
-void	child_process(char *path, char **command)
+void	child_process(char *path, t_par *current)
 {
 	pid_t	pid;
 	int		*status;
@@ -37,11 +21,11 @@ void	child_process(char *path, char **command)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(path, command, NULL) == -1)
+		if (execve(path, &current->command, NULL) == -1)
 		{
-			printf("%s: command not found\n", command[0]);
+			printf("%s: command not found\n", current->command);
 			free(path);
-			free(command);
+			free(current);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -54,34 +38,46 @@ void	child_process(char *path, char **command)
 void	execute_command(t_parse *parse_data, t_env *data)
 {
 	char	*path;
-	char	**command;
 	t_par	*current;
+	char	*expansion;
+
+	int i;
+
+	i = 0;
 
 	current = parse_data->head;
-	while (current != NULL)
+	while (current)
 	{
-		command = generate_command(current);
-		if (command == NULL)
+		if (!current->command && !current->infile && !current->outfile)
 		{
-			current = current->next;
+			if (current->next)
+				current = current->next;
 			continue ;
 		}
-		path = find_path(command, data);
-		if (!path) //MIRAR COMO QUEREMOS MANEJAR ERROR DE PATH... 
+		if (current->command[0] == '$')
 		{
-			printf("%s: command not found\n", command[0]);
-			free(command);
-			current = current->next;
-			continue ;
-		}
-		child_process(path, command);
+			i++;
+			expansion = expand_variable(&current->command[i], data);
+			free(current->command);
+			current->command = ft_strdup(expansion);
+			printf("patata: %s\n", current->command);
+	
+		}	
+		path = find_path(current, data);
+//		if (!path) //MIRAR COMO QUEREMOS MANEJAR ERROR DE PATH... 
+		/* { */
+		/* 	printf("%s: command not found\n", current->command); */
+
+	//		current = current->next;
+	//		continue ;
+	//	}
+		child_process(path, current);
 		free(path);
-		free(command);
 		current = current->next;
 	}
 }
 
-char	*find_path(char **command, t_env *data)
+char	*find_path(t_par *current, t_env *data)
 {
 	char	**paths;
 	char	*path;
@@ -99,7 +95,7 @@ char	*find_path(char **command, t_env *data)
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin(path, command[0]);
+		full_path = ft_strjoin(path, current->command);
 		free(path);
 		if (access(full_path, X_OK) == 0)
 			break ;

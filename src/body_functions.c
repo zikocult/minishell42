@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/02/01 20:06:30 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:44:08 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	select_type(char *command_buff, t_env *data)
 	if (!validate_cmdbuff(command_buff))
 		return (0);
 	parse_token(command_buff, &state);
-	print_token(&state);
 	// if (!args[0])
 	// 	return (0);
 	if (!ft_strcmp(&state.head->command[0], "patata"))
@@ -64,10 +63,11 @@ int	select_type(char *command_buff, t_env *data)
 	}
 	else
 	{
+//		commands(&state, data);
 	 	execute_command(&state, data);
-	 	free_parse(&state);
-	 	return (0);
+	//	free_parse(&state); 
 	}
+	print_token(&state);
 	free_parse(&state);
 	return (0);
 }

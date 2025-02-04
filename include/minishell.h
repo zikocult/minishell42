@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/02 01:42:58 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:11:02 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <string.h>
 # include <errno.h>
 # include <stdbool.h>
-
+	
 typedef struct s_var
 {
 	char			*var_name;
@@ -63,17 +63,17 @@ typedef struct s_parse
     t_par	*tail;
 }			t_parse;
 
-//COMMAND_FUNCTIONS
-char	*find_path(char **command, t_env *data);
-//void	execute_command(char **command, t_env *data);
-void	execute_command(t_parse *parse_data, t_env *data);
-
 //HANDLE_QUOTES
 void	handle_quotes_general(t_parse *state, t_env *data, char *cmd_buff);
 void	handle_squotes(t_parse *state, char *cmd_buff);
 void	handle_dquotes(t_parse *state, t_env *data, char *cmd_buff);
 void	without_quotes(t_parse *state, t_env *data, char *cmd_buff);
 void	clean_quotes(t_parse *state, char c, char *cmd_buff);
+
+//COMMAND
+void	child_process(char *path, t_par *current);
+char	*find_path(t_par *current, t_env *data);
+void	execute_command(t_parse *parse_data, t_env *data);
 
 //INIT_FUNCTIONS
 void	init_parse_state(t_parse *state, char *command_buff);
@@ -90,7 +90,10 @@ void	free_list(t_env	*data);
 char	*if_notstr(char *str);
 
 //VARS_FUNCTIONS
+//char	*expand_variable(t_parse *parse_data, t_env *data);
 char	*expand_variable(char *input, t_env *data);
+void	commands(t_parse *parse_data, t_env *data);
+
 
 //ENV_FUNCTIONS
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
