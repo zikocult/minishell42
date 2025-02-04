@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:01:48 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/04 10:30:51 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/04 18:42:44 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_par
 {
 	char			*command;
 	char			*parameter;
-	char			*infile;
-	char			*outfile;
+	char			**infile;
+	char			**outfile;
 	struct s_par	*next;
 }					t_par;
 
@@ -44,6 +44,7 @@ typedef struct s_parse
 }					t_parse;
 
 void				remove_quotes_from_par(t_par *current);
+void				remove_single_quotes(char **str);
 
 bool				check_consecutive_redirections(char *cmd_buff);
 bool				validate_cmdbuff(char *cmd_buff);

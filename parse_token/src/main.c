@@ -6,16 +6,18 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:05:42 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/31 13:56:11 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:39:23 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include <stdio.h>
 
 
 int main(int argc, char **argv)
 {
     t_parse data;
+	int	i;
 
 	init_data(&data, 1);
     if (argc == 2)
@@ -28,11 +30,33 @@ int main(int argc, char **argv)
 	printf("\n**************");
     while (current)
     {
-        printf("\nCommand: %s\nParameter: %s\nInfile: %s\nOutfile: %s\n\n**************\n",
-        current->command, current->parameter, current->infile, current->outfile);
+        printf("\nCommand: %s\nParameter: %s\n",
+        current->command, current->parameter);
+		if (current->infile)
+		{
+			i = 0;
+			while (current->infile[i])
+			{
+				printf("Infile[%d]: %s\n", i, current->infile[i]);
+				i++;
+			}
+		}
+		else 
+			printf("Infile: No infiles\n");
+		if (current->outfile)
+		{
+			i = 0;
+			while (current->outfile[i])
+			{
+				printf("Outfile[%d]: %s\n", i, current->outfile[i]);
+				i++;
+			}
+		}
+		else 
+			printf("Infile: No Outfiles\n");
+		printf("\n******************\n");
         current = current->next;
     }
     free_parse(&data);
-
     return (0);
 }

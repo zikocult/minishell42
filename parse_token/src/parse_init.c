@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:26:46 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/02/03 09:26:23 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/04 18:05:13 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ void	init_data(t_parse *data, bool mode)
 	data->in_double_quotes = 0;
 }
 
+void	free_pointer(char **pointer)
+{
+	int	i;
+
+	i = 0;
+	while (pointer[i])
+		i++;
+	while (i >= 0)
+	{
+		free(pointer[i]);
+		i--;
+	}
+	free(pointer);
+}
+
 void	free_parse(t_parse *data)
 {
 	t_par	*current;
@@ -50,9 +65,9 @@ void	free_parse(t_parse *data)
 		if (current->parameter)
 			free(current->parameter);
 		if (current->infile)
-			free(current->infile);
+			free_pointer(current->infile);
 		if (current->outfile)
-			free(current->outfile);
+			free_pointer(current->outfile);
 		free(current);
 		current = next;
 	}

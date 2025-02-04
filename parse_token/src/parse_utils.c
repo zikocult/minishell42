@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:24:41 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/04 10:24:04 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:24:51 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ static void	consecutive_copy_param(int mode, char *temp, char **parameter,
 	if (mode == 0)
 		ft_strcat(temp, " ");
 	else if (mode == 1)
-		ft_strcat(temp, " <_");
+		ft_strcat(temp, " &_");
 	else if (mode == 2)
-		ft_strcat(temp, " >_");
+		ft_strcat(temp, " &_");
 	else if (mode == 4)
-		ft_strcat(temp, " >>");
+		ft_strcat(temp, " &>");
 	else if (mode == 3)
-		ft_strcat(temp, " <<");
+		ft_strcat(temp, " &<");
 	ft_strcat(temp, token);
 	free(*parameter);
 	*parameter = temp;
@@ -103,13 +103,13 @@ void	append_parameter(char **parameter, char *token, int mode)
 	else
 	{
 		if (mode == 1)
-			*parameter = ft_strjoin(" <_", token);
+			*parameter = ft_strjoin("&_", token);
 		else if (mode == 2)
-			*parameter = ft_strjoin(" >_", token);
+			*parameter = ft_strjoin("&_", token);
 		else if (mode == 4)
-			*parameter = ft_strjoin(" >>", token);
+			*parameter = ft_strjoin("&>", token);
 		else if (mode == 3)
-			*parameter = ft_strjoin(" <<", token);
+			*parameter = ft_strjoin("&<", token);
 		else
 			*parameter = ft_strdup(token);
 	}
