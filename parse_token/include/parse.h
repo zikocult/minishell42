@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:01:48 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/03 09:31:37 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/04 10:30:51 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@ typedef struct s_parse
 	char			*outfile;
 	int				in_single_quotes;
 	int				in_double_quotes;
+	int				mode;
 	t_par			*head;
 	t_par			*tail;
 }					t_parse;
 
+void				remove_quotes_from_par(t_par *current);
+
+bool				check_consecutive_redirections(char *cmd_buff);
 bool				validate_cmdbuff(char *cmd_buff);
 void				jump_single_quotes(char *cmd_buff, int *i);
 void				jump_double_quotes(char *cmd_buff, int *i);
@@ -55,6 +59,7 @@ void				free_parse(t_parse *data);
 void				append_parameter(char **parameter, char *token, int mode);
 char				*ft_strndup(const char *s, size_t n);
 char				*ft_strcat(char *dst, const char *src);
+char				*ft_strncpy(char *dest, const char *src, size_t n);
 
 void				free_temp_data(t_parse *data);
 void				copy_data(t_par *new_node, t_parse *data);

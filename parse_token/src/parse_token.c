@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:37:06 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/03 09:42:25 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:26:35 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,27 @@ void	parse_token(char *cmd_buff, t_parse *data)
 {
 	char	*start;
 	char	*end;
-	int		mode;
 
 	start = cmd_buff;
 	end = cmd_buff;
-	mode = 0;
+	data->mode = 0;
 	while (*end)
 	{
 		if (between_double_quotes(&end, &data->in_double_quotes)
-			&& between_single_quotes(&end, &data->in_single_quotes))
+			|| between_single_quotes(&end, &data->in_single_quotes))
 			continue ;
 		if (!data->in_single_quotes && !data->in_double_quotes && (*end == ' '
 				|| *end == '|' || *end == '<' || *end == '>'))
 		{
 			if (start != end)
-				process_token(start, end, &mode, data);
-			end = handle_special_char(end, &mode, data);
+				process_token(start, end, &data->mode, data);
+			end = handle_special_char(end, &data->mode, data);
 			start = end + 1;
 		}
 		end++;
 	}
 	if (start != end)
-		process_token(start, end, &mode, data);
+		process_token(start, end, &data->mode, data);
 	add_node(data);
+	remove_quotes_from_par(data->head);
 }

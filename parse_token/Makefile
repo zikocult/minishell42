@@ -29,7 +29,7 @@ OBJS		= $(addsuffix .o, $(OBJSTEMP))
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror 
-DFLAGS		= -g -fsanitize=address
+DFLAGS		= -g #-fsanitize=address
 AR			= ar rcs
 RANLIB		= ranlib
 RM			= rm -rf
