@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 20:05:42 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/04 18:39:23 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:11:47 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 			}
 		}
 		else 
-			printf("Infile: No Outfiles\n");
+			printf("Outfile: No Outfiles\n");
 		printf("\n******************\n");
         current = current->next;
     }
