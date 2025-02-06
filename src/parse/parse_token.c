@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:37:06 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 17:10:49 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:18:04 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,17 @@ void	process_token(char *start, char *end, int *mode, t_parse *data)
 
 	token = ft_strndup(start, end - start);
 	if (*mode == 1)
-		data->infile = token;
+		append_parameter(&data->infile, token, *mode);
 	else if (*mode == 2)
-		data->outfile = token;
+		append_parameter(&data->outfile, token, *mode);
 	else if (*mode == 3)
-		data->a_infile = token;
+		append_parameter(&data->infile, token, *mode);
 	else if (*mode == 4)
-		data->a_outfile = token;
+		append_parameter(&data->outfile, token, *mode);
 	else if (!data->command)
 		data->command = token;
 	else
-	{
-		append_parameter(&data->parameter, token);
-		free(token);
-	}
+		append_parameter(&data->parameter, token, *mode);
 	if (*mode >= 1 && *mode <= 4)
 		*mode = 0;
 }
@@ -63,27 +60,53 @@ char	*handle_special_char(char *end, int *mode, t_parse *data)
 	return (end);
 }
 
+static bool	between_double_quotes(char **end, int *in_quotes)
+{
+	if (**end == '"')
+	{
+		*in_quotes = !(*in_quotes);
+		(*end)++;
+		return (true);
+	}
+	return (false);
+}
+
+static bool	between_single_quotes(char **end, int *in_quotes)
+{
+	if (**end == '\'')
+	{
+		*in_quotes = !(*in_quotes);
+		(*end)++;
+		return (true);
+	}
+	return (false);
+}
+
 void	parse_token(char *cmd_buff, t_parse *data)
 {
 	char	*start;
 	char	*end;
-	int		mode;
 
 	start = cmd_buff;
 	end = cmd_buff;
-	mode = 0;
+	data->mode = 0;
 	while (*end)
 	{
-		if (*end == ' ' || *end == '|' || *end == '<' || *end == '>')
+		if (between_double_quotes(&end, &data->in_double_quotes)
+			|| between_single_quotes(&end, &data->in_single_quotes))
+			continue ;
+		if (!data->in_single_quotes && !data->in_double_quotes && (*end == ' '
+				|| *end == '|' || *end == '<' || *end == '>'))
 		{
 			if (start != end)
-				process_token(start, end, &mode, data);
-			end = handle_special_char(end, &mode, data);
+				process_token(start, end, &data->mode, data);
+			end = handle_special_char(end, &data->mode, data);
 			start = end + 1;
 		}
 		end++;
 	}
 	if (start != end)
-		process_token(start, end, &mode, data);
+		process_token(start, end, &data->mode, data);
 	add_node(data);
+	remove_quotes_from_par(data->head);
 }

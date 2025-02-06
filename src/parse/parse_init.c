@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:26:46 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/01/28 17:53:19 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:15:45 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,37 @@ void	init_newnode(t_par *new_node)
 	new_node->parameter = NULL;
 	new_node->infile = NULL;
 	new_node->outfile = NULL;
-	new_node->a_infile = NULL;
-	new_node->a_outfile = NULL;
 	new_node->next = NULL;
 }
 
-void	init_data(t_parse *data)
+void	init_data(t_parse *data, bool mode)
 {
+	if (mode)
+	{
+		data->head = NULL;
+		data->tail = NULL;
+	}
 	data->command = NULL;
 	data->parameter = NULL;
 	data->infile = NULL;
 	data->outfile = NULL;
-	data->a_infile = NULL;
-	data->a_outfile = NULL;
+	data->in_single_quotes = 0;
+	data->in_double_quotes = 0;
+}
+
+void	free_pointer(char **pointer)
+{
+	int	i;
+
+	i = 0;
+	while (pointer[i])
+		i++;
+	while (i >= 0)
+	{
+		free(pointer[i]);
+		i--;
+	}
+	free(pointer);
 }
 
 void	free_parse(t_parse *data)
@@ -47,13 +65,9 @@ void	free_parse(t_parse *data)
 		if (current->parameter)
 			free(current->parameter);
 		if (current->infile)
-			free(current->infile);
+			free_pointer(current->infile);
 		if (current->outfile)
-			free(current->outfile);
-		if (current->a_outfile)
-			free(current->a_outfile);
-		if (current->a_infile)
-			free(current->a_infile);
+			free_pointer(current->outfile);
 		free(current);
 		current = next;
 	}

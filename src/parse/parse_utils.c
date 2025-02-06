@@ -6,11 +6,29 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:24:41 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 17:10:45 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:15:54 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*ft_strncpy(char *dest, const char *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
 
 char	*ft_strndup(const char *s, size_t n)
 {
@@ -51,26 +69,49 @@ char	*ft_strcat(char *dst, const char *src)
 	return (dst);
 }
 
-void	append_parameter(char **parameter, const char *token)
+static void	consecutive_copy_param(int mode, char *temp, char **parameter,
+		char *token)
+{
+	ft_strcpy(temp, *parameter);
+	if (mode == 0)
+		ft_strcat(temp, " ");
+	else if (mode == 1)
+		ft_strcat(temp, " &_");
+	else if (mode == 2)
+		ft_strcat(temp, " &_");
+	else if (mode == 4)
+		ft_strcat(temp, " &>");
+	else if (mode == 3)
+		ft_strcat(temp, " &<");
+	ft_strcat(temp, token);
+	free(*parameter);
+	*parameter = temp;
+}
+
+void	append_parameter(char **parameter, char *token, int mode)
 {
 	size_t	len;
 	char	*temp;
 
 	if (*parameter)
 	{
-		len = ft_strlen(*parameter) + ft_strlen(token) + 2;
+		len = ft_strlen(*parameter) + ft_strlen(token) + 4;
 		temp = (char *)malloc(len);
 		if (temp)
-		{
-			ft_strcpy(temp, *parameter);
-			ft_strcat(temp, " ");
-			ft_strcat(temp, token);
-			free(*parameter);
-			*parameter = temp;
-		}
+			consecutive_copy_param(mode, temp, parameter, token);
 	}
 	else
 	{
-		*parameter = ft_strdup(token);
+		if (mode == 1)
+			*parameter = ft_strjoin("&_", token);
+		else if (mode == 2)
+			*parameter = ft_strjoin("&_", token);
+		else if (mode == 4)
+			*parameter = ft_strjoin("&>", token);
+		else if (mode == 3)
+			*parameter = ft_strjoin("&<", token);
+		else
+			*parameter = ft_strdup(token);
 	}
+	free(token);
 }

@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/02/04 18:44:08 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:21:34 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,39 @@
 static void print_token(t_parse *data)
 {
 	t_par	*current;
+	int		i;
 
 	current = data->head;
 	printf("\n**************");
     while (current)
     {
-        printf("\nCommand: %s\nParameter: %s\nInfile: %s\nOutfile: %s\nA_Infile: %s\nA_Outfile: %s\n\n**************\n",
-        current->command, current->parameter, current->infile, current->outfile, current->a_infile, current->a_outfile);
+        printf("\nCommand: %s\nParameter: %s\n",
+        current->command, current->parameter);
+		if (current->infile)
+		{
+			i = 0;
+			while (current->infile[i])
+			{
+				printf("Infile[%d]: %s\n", i, current->infile[i]);
+				i++;
+			}
+		}
+		else 
+			printf("Infile: No infiles\n");
+		if (current->outfile)
+		{
+			i = 0;
+			while (current->outfile[i])
+			{
+				printf("Outfile[%d]: %s\n", i, current->outfile[i]);
+				i++;
+			}
+		}
+		else 
+			printf("Outfile: No Outfiles\n");
+		printf("\n******************\n");
         current = current->next;
-	}
+    }
 }
 
 int	select_type(char *command_buff, t_env *data)
@@ -35,7 +59,7 @@ int	select_type(char *command_buff, t_env *data)
 	state.tail = NULL;
 	if (!data->head)
 		printf("Hello world\n");
-	init_data(&state);
+	init_data(&state, 1);
 	if (!validate_cmdbuff(command_buff))
 		return (0);
 	parse_token(command_buff, &state);

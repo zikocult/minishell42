@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/04 18:11:02 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:19:13 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,24 @@ typedef struct s_env
 
 typedef struct s_par
 {
-    char            *command;
-    char            *parameter;
-    char            *infile;
-    char            *outfile;
-    char            *a_infile;
-    char            *a_outfile;
+	char			*command;
+	char			*parameter;
+	char			**infile;
+	char			**outfile;
     struct s_par    *next;
 }   t_par;
 
 typedef struct s_parse
 {
-    char	*command;
-    char	*parameter;
-    char	*infile;
-    char	*outfile;
-    char	*a_infile;
-    char	*a_outfile;
-    t_par	*head;
-    t_par	*tail;
+	char			*command;
+	char			*parameter;
+	char			*infile;
+	char			*outfile;
+	int				in_single_quotes;
+	int				in_double_quotes;
+	int				mode;
+	t_par			*head;
+	t_par			*tail;
 }			t_parse;
 
 //HANDLE_QUOTES
@@ -108,11 +107,17 @@ void	handle_echo(char **args);
 void	env_builtin(t_env *data);
 void	add_elem(t_env *data, char *name, char *content);
 
+//VALIDATE_REDIRECTIONS
+bool				check_consecutive_redirections(char *cmd_buff);
+
 //VALIDATE_BUFF
 bool	validate_cmdbuff(char *cmd_buff);
 
 //VALIDATE_UTILS
-void	jump_quotes(char *cmd_buff, int *i);
+void				jump_single_quotes(char *cmd_buff, int *i);
+void				jump_double_quotes(char *cmd_buff, int *i);
+void				init_vars(int *i, int *count, char *last_char);
+void				validation_reset(int *count, char *last_char);
 
 //PARSE_NODE
 void	free_temp_data(t_parse *data);
@@ -121,17 +126,22 @@ void	add_node(t_parse *data);
 
 //PARSE_INIT
 void	init_newnode(t_par *new_node);
-void	init_data(t_parse *data);
+void				init_data(t_parse *data, bool mode);
 void	free_parse(t_parse *data);
 
 //PARSE_UTILS
-void	append_parameter(char **parameter, const char *token);
+void				append_parameter(char **parameter, char *token, int mode);
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strcat(char *dst, const char *src);
+char				*ft_strncpy(char *dest, const char *src, size_t n);
 
 //PARSE_TOKEN
 void	process_token(char *start, char *end, int *mode, t_parse *data);
 char	*handle_special_char(char *end, int *mode, t_parse *data);
 void	parse_token(char *cmd_buff, t_parse *data);
+
+//PARSE_REMOVE_QUOTES
+void				remove_quotes_from_par(t_par *current);
+void				remove_single_quotes(char **str);
 
 #endif

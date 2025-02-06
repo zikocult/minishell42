@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/01/28 17:11:10 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:15:50 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,19 @@ static void	update_count_and_last_char(char c, char *last_char, int *count)
 	}
 }
 
-static void	init_vars(int *i, int *count, char *last_char)
-{
-	*i = 0;
-	*count = 0;
-	*last_char = '\0';
-}
-
-
 bool	validate_cmdbuff(char *cmd_buff)
 {
 	int		i;
 	int		count;
 	char	last_char;
 
+	if (!check_consecutive_redirections(cmd_buff))
+		return (false);
 	init_vars(&i, &count, &last_char);
 	while (cmd_buff[i])
 	{
-		jump_quotes(cmd_buff, &i);
+		jump_single_quotes(cmd_buff, &i);
+		jump_double_quotes(cmd_buff, &i);
 		if (cmd_buff[i] == '<' || cmd_buff[i] == '>' || cmd_buff[i] == '|')
 		{
 			update_count_and_last_char(cmd_buff[i], &last_char, &count);
@@ -84,10 +79,7 @@ bool	validate_cmdbuff(char *cmd_buff)
 				return (false);
 		}
 		else
-		{
-			count = 0;
-			last_char = '\0';
-		}
+			validation_reset(&count, &last_char);
 		i++;
 	}
 	return (true);
