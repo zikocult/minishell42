@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/08 09:45:25 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:15:28 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	child_process(char *path, t_par *current)
 	{
 		if (execve(path, &current->command, NULL) == -1)
 		{
-			free(path);
-			free(current);
+//			free(path);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -39,20 +38,16 @@ char	*command_needed(char *command, t_env *data)
 	int		i;
 	char	*expansion;
 
+	i = 0;
 	if (command[0] == '$')
 	{
-		i = 1;
+		i++;
 		expansion = expand_variable(&command[i], data);
 		if (expansion)
 		{
 			free(command);
 			command = ft_strdup(expansion);
 			free(expansion);
-		}
-		else
-		{
-			printf("Variable not found: %s\n", command);
-			return (NULL);
 		}
 	}
 	return (command);
@@ -62,16 +57,38 @@ void	execute_command(t_parse *parse_data, t_env *data)
 {
 	t_par	*current;
 	char	*path;
+	int		i;
+	char	*expansion;
 
 	current = parse_data->head;
 	while (current)
 	{
 		if (!current->command && !current->infile && !current->outfile)
 		{
-			current = current->next;
+			if (current->next)
+				current = current->next;
 			continue ;
 		}
-		current->command = command_needed(current->command, data);
+		/* if (current->command[0] == '$') */
+		/* 	current->command = command_needed(current->command, data); */
+		i = 0;
+		if (current->command[0] == '$')
+		{
+			i++;
+			expansion = expand_variable(&current->command[i], data);
+			if (!expansion)
+			{
+				current = current->next;
+				continue ;
+			}
+			else
+			{
+			free(current->command);
+			current->command = ft_strdup(expansion);
+		//	free(expansion);
+			}
+		}
+
 		if (!current->command)
 		{
 			current = current->next;
