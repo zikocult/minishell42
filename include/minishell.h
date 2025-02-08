@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/08 10:05:16 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:05:51 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H 
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "../mylibft/include/libft.h"
@@ -26,7 +26,7 @@
 # include <string.h>
 # include <errno.h>
 # include <stdbool.h>
-	
+
 typedef struct s_var
 {
 	char			*var_name;
@@ -144,6 +144,6 @@ void	parse_token(char *cmd_buff, t_parse *data);
 
 //PARSE_REMOVE_QUOTES
 void	remove_quotes_from_par(t_par *current);
-void	remove_single_quotes(char **str);
+char	*remove_single_quotes(char *str);
 
 #endif

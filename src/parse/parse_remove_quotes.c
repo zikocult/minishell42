@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/08 12:25:23 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:03:42 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,20 @@ static char	*create_new_string(const char *str, size_t new_len)
 	return (temp);
 }
 
-static void	remove_double_quotes(char **str)
+char	*remove_double_quotes(char *str)
 {
 	size_t	new_len;
 	char	*new_str;
 
-	if (!str || !(*str))
-		return ;
-	new_len = calculate_new_length(*str);
-	new_str = create_new_string(*str, new_len);
+	if (!str)
+		return (NULL);
+	new_len = calculate_new_length(str);
+	new_str = create_new_string(str, new_len);
 	if (!new_str)
-		return ;
-	free(*str);
-	*str = new_str;
+		return (NULL);
+	free(str);
+	//str = new_str;
+	return (new_str);
 }
 
 void	remove_quotes_from_par(t_par *current)
@@ -85,14 +86,14 @@ void	remove_quotes_from_par(t_par *current)
 	i = 0;
 	while (current)
 	{
-		remove_double_quotes(&current->command);
-		remove_double_quotes(&current->parameter);
+		current->command = remove_double_quotes(current->command);
+		current->parameter = remove_double_quotes(current->parameter);
 		if (current->infile)
 		{
 			while (current->infile[i])
 			{
-				remove_single_quotes(&current->infile[i]);
-				remove_double_quotes(&current->infile[i]);
+				current->infile[i] = remove_single_quotes(current->infile[i]);
+				current->infile[i] = remove_double_quotes(current->infile[i]);
 				i++;
 			}
 		}
@@ -101,8 +102,8 @@ void	remove_quotes_from_par(t_par *current)
 		{
 			while (current->outfile[i])
 			{
-				remove_single_quotes(&current->outfile[i]);
-				remove_double_quotes(&current->outfile[i]);
+				current->outfile[i] = remove_single_quotes(current->outfile[i]);
+				current->outfile[i] = remove_double_quotes(current->outfile[i]);
 				i++;
 			}
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_remove_quotes2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 18:41:12 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/08 12:37:04 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/08 13:05:54 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,18 @@ static char	*create_new_string(const char *str, size_t new_len)
 	return (temp);
 }
 
-void	remove_single_quotes(char **str)
+char	*remove_single_quotes(char *str)
 {
 	size_t	new_len;
 	char	*new_str;
 
-	if (!str || !(*str))
-		return ;
-	new_len = calculate_new_length(*str);
-	new_str = create_new_string(*str, new_len);
+	if (!str)
+		return (NULL);
+	new_len = calculate_new_length(str);
+	new_str = create_new_string(str, new_len);
 	if (!new_str)
-		return ;
-	free(*str);
-	*str = new_str;
+		return (NULL);
+	free(str);
+	// str = new_str;
+	return (new_str);
 }
