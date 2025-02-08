@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/08 13:03:42 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:46:25 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*remove_double_quotes(char *str)
 	if (!new_str)
 		return (NULL);
 	free(str);
-	//str = new_str;
 	return (new_str);
 }
 
