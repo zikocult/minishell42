@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/06 16:39:02 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/08 09:47:25 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,12 @@ void	clean_quotes(t_parse *state, char c, char *cmd_buff);
 
 //COMMAND
 void	child_process(char *path, t_par *current);
-char	*find_path(t_par *current, t_env *data);
+char	*command_needed(char *command, t_env *data);
 void	execute_command(t_parse *parse_data, t_env *data);
+
+//PATH
+char	*find_path(t_par *current, t_env *data);
+char	*check_path(t_par *current, t_env *data);
 
 //INIT_FUNCTIONS
 void	init_parse_state(t_parse *state, char *command_buff);
@@ -92,7 +96,6 @@ char	*if_notstr(char *str);
 char	*expand_variable(char *input, t_env *data);
 void	commands(t_parse *parse_data, t_env *data);
 
-
 //ENV_FUNCTIONS
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
 t_var	*create_node(char *env_var);
@@ -107,16 +110,16 @@ void	env_builtin(t_env *data);
 void	add_elem(t_env *data, char *name, char *content);
 
 //VALIDATE_REDIRECTIONS
-bool				check_consecutive_redirections(char *cmd_buff);
+bool	check_consecutive_redirections(char *cmd_buff);
 
 //VALIDATE_BUFF
 bool	validate_cmdbuff(char *cmd_buff);
 
 //VALIDATE_UTILS
-void				jump_single_quotes(char *cmd_buff, int *i);
-void				jump_double_quotes(char *cmd_buff, int *i);
-void				init_vars(int *i, int *count, char *last_char);
-void				validation_reset(int *count, char *last_char);
+void	jump_single_quotes(char *cmd_buff, int *i);
+void	jump_double_quotes(char *cmd_buff, int *i);
+void	init_vars(int *i, int *count, char *last_char);
+void	validation_reset(int *count, char *last_char);
 
 //PARSE_NODE
 void	free_temp_data(t_parse *data);
@@ -129,10 +132,10 @@ void				init_data(t_parse *data, bool mode);
 void	free_parse(t_parse *data);
 
 //PARSE_UTILS
-void				append_parameter(char **parameter, char *token, int mode);
+void	append_parameter(char **parameter, char *token, int mode);
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strcat(char *dst, const char *src);
-char				*ft_strncpy(char *dest, const char *src, size_t n);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
 
 //PARSE_TOKEN
 void	process_token(char *start, char *end, int *mode, t_parse *data);
@@ -140,7 +143,7 @@ char	*handle_special_char(char *end, int *mode, t_parse *data);
 void	parse_token(char *cmd_buff, t_parse *data);
 
 //PARSE_REMOVE_QUOTES
-void				remove_quotes_from_par(t_par *current);
-void				remove_single_quotes(char **str);
+void	remove_quotes_from_par(t_par *current);
+void	remove_single_quotes(char **str);
 
 #endif
