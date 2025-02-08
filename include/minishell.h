@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/08 09:47:25 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/08 10:05:16 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	execute_command(t_parse *parse_data, t_env *data);
 //PATH
 char	*find_path(t_par *current, t_env *data);
 char	*check_path(t_par *current, t_env *data);
+char	*get_full_path(char *path, char *command);
 
 //INIT_FUNCTIONS
 void	init_parse_state(t_parse *state, char *command_buff);
@@ -94,7 +95,6 @@ char	*if_notstr(char *str);
 
 //VARS_FUNCTIONS
 char	*expand_variable(char *input, t_env *data);
-void	commands(t_parse *parse_data, t_env *data);
 
 //ENV_FUNCTIONS
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
@@ -128,7 +128,7 @@ void	add_node(t_parse *data);
 
 //PARSE_INIT
 void	init_newnode(t_par *new_node);
-void				init_data(t_parse *data, bool mode);
+void	init_data(t_parse *data, bool mode);
 void	free_parse(t_parse *data);
 
 //PARSE_UTILS

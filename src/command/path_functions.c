@@ -6,16 +6,26 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/08 09:45:06 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/08 10:03:19 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+char	*get_full_path(char *path, char *command)
+{
+	char	*full_path;
+	char	*temp_path;
+
+	temp_path = ft_strjoin(path, "/");
+	full_path = ft_strjoin(temp_path, command);
+	free(temp_path);
+	return (full_path);
+}
+
 char	*find_path(t_par *current, t_env *data)
 {
 	char	**paths;
-	char	*path;
 	char	*full_path;
 	int		i;
 	t_var	*search;
@@ -29,9 +39,7 @@ char	*find_path(t_par *current, t_env *data)
 	full_path = NULL;
 	while (paths[i])
 	{
-		path = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin(path, current->command);
-		free(path);
+		full_path = get_full_path(paths[i], current->command);
 		if (access(full_path, X_OK) == 0)
 			break ;
 		free(full_path);
@@ -56,4 +64,3 @@ char	*check_path(t_par *current, t_env *data)
 	}
 	return (path);
 }
-
