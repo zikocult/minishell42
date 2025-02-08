@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/08 10:08:30 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:18:59 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ char	*expand_variable(char *input, t_env *data)
 		var_name[i++] = *input++;
 	var_name[i] = '\0';
 	value = env_search(data, var_name);
-	if (!value)
-		return (NULL);
 	free(var_name);
+	if (!value)
+	{
+		free(value);
+		return (NULL);
+	}
+	free(value->var_name);
 	return (value->content);
 }
