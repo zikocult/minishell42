@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/06 16:19:13 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:39:02 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	free_list(t_env	*data);
 char	*if_notstr(char *str);
 
 //VARS_FUNCTIONS
-//char	*expand_variable(t_parse *parse_data, t_env *data);
 char	*expand_variable(char *input, t_env *data);
 void	commands(t_parse *parse_data, t_env *data);
 

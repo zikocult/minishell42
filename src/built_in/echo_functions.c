@@ -6,11 +6,11 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:23:37 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/18 08:09:12 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:36:11 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	handle_echo(char **args)
 {

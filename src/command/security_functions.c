@@ -6,11 +6,11 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2025/01/11 12:21:47 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:35:05 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	free_memory(char **ptr)
 {

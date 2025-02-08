@@ -6,11 +6,11 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/04 18:57:27 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:34:50 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	child_process(char *path, t_par *current)
 {

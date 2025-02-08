@@ -6,11 +6,11 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/01/28 17:30:53 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:34:33 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 // void	init_parse_state(t_parse *state, char *command_buff)
 // {
