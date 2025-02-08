@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/06 16:16:11 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/08 12:25:23 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*create_new_string(const char *str, size_t new_len)
 			*dst++ = *str;
 		str++;
 	}
-	// *dst = '\0';
+	*dst = '\0';
 	return (temp);
 }
 

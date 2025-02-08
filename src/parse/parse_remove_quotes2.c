@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 18:41:12 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/06 16:16:08 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/08 12:37:04 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static char	*create_new_string(const char *str, size_t new_len)
 			*dst++ = *str;
 		str++;
 	}
+	*dst = '\0';
 	return (temp);
 }
 

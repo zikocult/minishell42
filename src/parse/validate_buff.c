@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/06 16:15:50 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/08 12:34:53 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ bool	validate_cmdbuff(char *cmd_buff)
 	int		count;
 	char	last_char;
 
+	if (!cmd_buff || !*cmd_buff)
+		return (false);
 	if (!check_consecutive_redirections(cmd_buff))
 		return (false);
 	init_vars(&i, &count, &last_char);
-	while (cmd_buff[i])
+	while (cmd_buff[i] && i < (int)ft_strlen(cmd_buff))
 	{
 		jump_single_quotes(cmd_buff, &i);
 		jump_double_quotes(cmd_buff, &i);
