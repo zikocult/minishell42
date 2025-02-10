@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/08 13:15:28 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:15:02 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	child_process(char *path, t_par *current)
 	if (pid == 0)
 	{
 		if (execve(path, &current->command, NULL) == -1)
-		{
-//			free(path);
 			exit(EXIT_FAILURE);
-		}
 	}
 	else if (pid > 0)
 		waitpid(pid, status, 0);
@@ -33,24 +30,24 @@ void	child_process(char *path, t_par *current)
 		perror("Error en fork");
 }
 
-char	*command_needed(char *command, t_env *data)
+static void	next_node(t_par *current)
 {
-	int		i;
-	char	*expansion;
-
-	i = 0;
-	if (command[0] == '$')
+	if (!current->command && !current->infile && !current->outfile)
 	{
-		i++;
-		expansion = expand_variable(&command[i], data);
-		if (expansion)
-		{
-			free(command);
-			command = ft_strdup(expansion);
-			free(expansion);
-		}
+		if (current->next)
+			current = current->next;
 	}
-	return (command);
+}
+
+static void	not_expansion(t_par *current, char *expansion)
+{
+	if (!expansion)
+		current = current->next;
+	else
+	{
+		free(current->command);
+		current->command = ft_strdup(expansion);
+	}
 }
 
 void	execute_command(t_parse *parse_data, t_env *data)
@@ -63,37 +60,16 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	current = parse_data->head;
 	while (current)
 	{
-		if (!current->command && !current->infile && !current->outfile)
-		{
-			if (current->next)
-				current = current->next;
-			continue ;
-		}
-		/* if (current->command[0] == '$') */
-		/* 	current->command = command_needed(current->command, data); */
+		next_node(current);
 		i = 0;
 		if (current->command[0] == '$')
 		{
 			i++;
 			expansion = expand_variable(&current->command[i], data);
-			if (!expansion)
-			{
-				current = current->next;
-				continue ;
-			}
-			else
-			{
-			free(current->command);
-			current->command = ft_strdup(expansion);
-		//	free(expansion);
-			}
+			not_expansion(current, expansion);
 		}
-
 		if (!current->command)
-		{
 			current = current->next;
-			continue ;
-		}
 		path = check_path(current, data);
 		child_process(path, current);
 		free(path);
