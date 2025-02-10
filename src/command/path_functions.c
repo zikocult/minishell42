@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/10 16:38:36 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:45:40 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	path_messages(char *str)
 char	*check_path(t_par *current, t_env *data)
 {
 	char	*path;
-
+//PONER EN ESTA FUNCION COMPROBANTE DE QUE LA VARIABLE EXISTE ANTES DE PRINTAR MENSAJES 
 	path = find_path(current, data);
 	if (!path)
 	{
