@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/08 13:46:25 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/11 15:06:52 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,34 +78,36 @@ char	*remove_double_quotes(char *str)
 	return (new_str);
 }
 
+static void	remove_quotes_from_par2(t_par *current, int i)
+{
+	current->command = remove_double_quotes(current->command);
+	current->parameter = remove_double_quotes(current->parameter);
+	if (current->infile)
+	{
+		while (current->infile[i])
+		{
+			current->infile[i] = remove_single_quotes(current->infile[i]);
+			current->infile[i] = remove_double_quotes(current->infile[i]);
+			i++;
+		}
+	}
+	i = 0;
+	if (current->outfile)
+	{
+		while (current->outfile[i])
+		{
+			current->outfile[i] = remove_single_quotes(current->outfile[i]);
+			current->outfile[i] = remove_double_quotes(current->outfile[i]);
+			i++;
+		}
+	}
+}
+
 void	remove_quotes_from_par(t_par *current)
 {
-	int	i;
-
-	i = 0;
 	while (current)
 	{
-		current->command = remove_double_quotes(current->command);
-		current->parameter = remove_double_quotes(current->parameter);
-		if (current->infile)
-		{
-			while (current->infile[i])
-			{
-				current->infile[i] = remove_single_quotes(current->infile[i]);
-				current->infile[i] = remove_double_quotes(current->infile[i]);
-				i++;
-			}
-		}
-		i = 0;
-		if (current->outfile)
-		{
-			while (current->outfile[i])
-			{
-				current->outfile[i] = remove_single_quotes(current->outfile[i]);
-				current->outfile[i] = remove_double_quotes(current->outfile[i]);
-				i++;
-			}
-		}
+		remove_quotes_from_par2(current, 0);
 		current = current->next;
 	}
 }
