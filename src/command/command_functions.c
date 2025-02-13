@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/13 17:34:18 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:43:41 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ static int	single_quotes(t_par *current)
 	int		i;
 	int		len;
 	char	*new_com;
+
+/* IDEA: char **big; */
+/* 	  big = current; */
+/* 	  while (big[i]) */
+/* 	  { */
+/* 		  toda la funcion substituyendo current->command por str[j] */
+/* 	  } */
+/* problema: infile y outile son doble puntero... */
+/* duda: la expansion ha de funcionar tambien con infile y outfile, no se */
 
 	len = ft_strlen(current->command) - 1;
 	if (current->command[0] == '\'' && current->command[len] == '\'')
