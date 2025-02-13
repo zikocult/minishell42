@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/10 15:20:30 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:45:40 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,38 @@ char	*find_path(t_par *current, t_env *data)
 	if_notstr(full_path);
 	return (full_path);
 }
-static void path_messages(char *str)
+
+static void	path_messages(char *str)
 {
-	if (str[0] == '/')
-		printf("%s: directory NOT found\n", str);
-	else
+	int	i;
+	int	file;
+
+	i = 0;
+	file = 0;
+	while (str[i])
+	{
+		if (str[i] == '.')
+		{
+			printf("%s: Perimssion denied\n", str);
+			file = 1;
+		}
+		i++;
+	}
+	if (str[0] == '/' && file != 1)
+		printf("%s: Is a directory\n", str);
+	else if (str[0] != '/')
 		printf("%s: command NOT found\n", str);
 }
 
 char	*check_path(t_par *current, t_env *data)
 {
 	char	*path;
-
+//PONER EN ESTA FUNCION COMPROBANTE DE QUE LA VARIABLE EXISTE ANTES DE PRINTAR MENSAJES 
 	path = find_path(current, data);
 	if (!path)
 	{
 		path_messages(current->command);
 		current = current->next;
-		//free(current->command);
 		return (NULL);
 	}
 	return (path);
