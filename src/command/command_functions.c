@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/11 19:39:33 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:34:18 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ void	child_process(char *path, t_par *current)
 		perror("Error en fork");
 }
 
-/* static void	next_node(t_par *current) */
-/* { */
-/* 	if (!current->command && !current->infile && !current->outfile) */
-/* 	{ */
-/* 		if (current->next) */
-/* 			current = current->next; */
-/* 	} */
-/* } */
-
 static void	execute_command2(t_par *current, t_env *data)
 {
 	char	*path;
@@ -60,75 +51,75 @@ static int	dollar_search(char *str)
 	return (0);
 }
 
+static int	single_quotes(t_par *current)
+{
+	int		i;
+	int		len;
+	char	*new_com;
+
+	len = ft_strlen(current->command) - 1;
+	if (current->command[0] == '\'' && current->command[len] == '\'')
+	{
+		new_com = malloc(len);
+		i = 0;
+		while (++i < len)
+			new_com[i - 1] = current->command[i];
+		free(current->command);
+		current->command = new_com;
+		printf("%s\n", current->command);
+		return (1) ;
+	}
+	else if((current->command[0] == '\'' && current->command[len] != '\''
+			) || (current->command[0] != '\'' && current->command[len] == '\''))	
+	{
+		printf("syntax error \n");
+		return (1);
+	}
+	return (0);
+}
+
+static int	handle_dollar(t_par *current, t_env *data)
+{
+	int i;
+	char *temp;
+	char *expansion;
+
+	if (ft_strchr(current->command, '$'))
+	{
+		i = dollar_search(current->command);
+		temp = ft_strndup(current->command, i);
+		if (current->command[i++] == '$')
+		{
+			expansion = expand_variable(&current->command[i], data);
+			if (!expansion)
+				return (1);
+			else
+			{
+				free(current->command);
+				current->command = ft_strjoin(temp, expansion);
+			}
+		}
+		free(temp);
+	}
+	return (0);
+}
+
 void	execute_command(t_parse *parse_data, t_env *data)
 {
 	t_par	*current;
-	char	*expansion;
-	char	*temp;
-	char	*new_com;
-	int		i;
-	int		j;
-	int		len;
 
 	current = parse_data->head;
-	temp = NULL;
 	while (current)
 	{
-		len = ft_strlen(current->command) - 1;
-		new_com = malloc(len);
-		if (current->command[0] == '\'' && current->command[len] == '\'')
+		if (single_quotes(current))
 		{
-			i = 1;
-			j = 0;
-			while (i < len)
-				new_com[j++] = current->command[i++];
-			free(current->command);
-			current->command = ft_strdup(new_com);
-			free(new_com);
-			printf("%s\n", current->command);
 			current = current->next;
 			continue ;
 		}
-		if ((current->command[0] == '\'' && current->command[len] != '\''
-				) || (current->command[0] != '\'' && current->command[len] == '\''))	
+		if (handle_dollar(current, data))
 		{
-			printf("sytax error \n");
 			current = current->next;
 			continue ;
-		}
-		i = 0;
-		len = 0;
-		if (ft_strchr(current->command, '$'))
-		{
-			i = dollar_search(current->command);
-			temp = (char *)malloc(i + 1 * sizeof(char));
-			j = 0;
-			while (j < i)
-			{
-				temp[j] = current->command[j];
-				j++;
-			}
-			if (temp)
-				temp[i] = '\0';
-			if (current->command[i] == '$')
-			{
-				i++;
-				expansion = expand_variable(&current->command[i], data);
-				if (!expansion)
-				{
-					current = current->next;
-					continue ;
-				}
-				else
-				{
-					free(current->command);
-					if (temp)
-						current->command = ft_strjoin(temp, expansion);
-					else
-						current->command = ft_strdup(expansion);
-				}
-			}
-			free(temp);
 		}
 		if (!current->command)
 		{
