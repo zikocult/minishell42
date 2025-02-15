@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/15 13:33:11 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:32:38 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,68 +73,77 @@ int	dollar_search(char *str)
 	return (0);
 }
 
-int	handle_dollar(char *str, t_env *data)
+int	handle_dollar(char **str, t_env *data)
 {
-	int i;
-	char *temp;
-	char *expansion;
+    int i;
+    char *temp;
+    char *expansion;
 
-	if (ft_strchr(str, '$'))
+    if (ft_strchr(*str, '$'))  
+    {
+        i = dollar_search(*str);
+        temp = ft_strndup(*str, i);  
+        if ((*str)[i++] == '$')
+        {
+            expansion = expand_variable(&(*str)[i], data); 
+            free(*str);  
+            *str = ft_strjoin(temp, expansion); 
+			free(temp);  
+        }            
+    }
+    return (0);
+}
+
+char	process_pardata(t_parse *node, t_env *data, int (*func)(char **, t_env *))
+{
+	int	i;
+	t_par *temp;
+
+	temp = node->head;
+	while (temp)
 	{
-		i = dollar_search(str);
-		temp = ft_strndup(str, i);
-		if (str[i++] == '$')
+		if (temp->command)
+			func(&temp->command, data);
+		if (temp->parameter)
+			func(&temp->parameter, data); 
+		if (temp->infile || temp->outfile)
 		{
-			expansion = expand_variable(&str[i], data);
-			if (!expansion)
-				return (1);
-			else
-			{
-				free(str);
-				str = ft_strjoin(temp, expansion);
-			}
+			i = 0;
+			while (temp->infile[i++])
+				func(&temp->infile[i], data);
+			while (temp->outfile[i++])
+				func(&temp->outfile[i], data);
 		}
-		free(temp);
-	}
-	return (0);
-}
-
-int process_pardata(t_par *node, t_env *data, int (*func) (char *, t_env *))
-{
-	int	i;
-
-    if (node->command)
-		return(func(node->command, data));
-	if (node->parameter)
-		return (func(node->parameter, data)); 
-	if (node->infile || node->outfile)
-	{
-		i = 0;
-		while (node->infile[i++])
-			func(node->infile[i], data);
-		while (node->outfile[i++])
-			func(node->outfile[i], data);
+		temp = temp->next;
 		return (1);
 	}
 	return (0);
 }
 
-int process_par(t_par *node, int (*func) (char *))
+int process_par(t_parse *node, int (*func) (char *))
 {
 	int	i;
+	int result;
+	t_par *temp;
 
-    if (node->command)
-		return(func(node->command));
-	if (node->parameter)
-		return (func(node->parameter)); 
-	if (node->infile || node->outfile)
+	result = 0;
+	temp = node->head;
+	while (temp)
 	{
-		i = 0;
-		while (node->infile[i++])
-			func(node->infile[i]);
-		while (node->outfile[i++])
-			func(node->outfile[i]);
-		return (1);
+		if (temp->command)
+			result = func(temp->command);
+		if (temp->parameter)
+			result = func(temp->parameter); 
+		if (temp->infile || temp->outfile)
+		{
+			i = 0;
+			while (temp->infile[i++])
+				result = func(temp->infile[i]);
+			while (temp->outfile[i++])
+				result = func(temp->outfile[i]);
+		}
+		temp = temp->next;
+		return (result);
 	}
-	return (0);
+	return (result);
 }
