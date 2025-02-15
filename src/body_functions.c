@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/02/08 11:30:16 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/15 11:39:26 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void print_token(t_parse *data)
 int	select_type(char *command_buff, t_env *data)
 {
 	t_parse	state;
-
 
 	state.head = NULL;
 	state.tail = NULL;

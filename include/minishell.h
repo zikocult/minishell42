@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/08 15:54:52 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/15 13:34:05 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,13 @@ char				*if_notstr(char *str);
 
 // VARS_FUNCTIONS
 char				*expand_variable(char *input, t_env *data);
+
+int				process_par(t_par *node, int (*func)(char *));
+int				process_pardata(t_par *node, t_env *data, int (*func)(char *, t_env *));
+
+int				single_quotes(char *str);
+int				dollar_search(char *str);
+int				handle_dollar(char *str, t_env *data);
 
 // ENV_FUNCTIONS
 void				*create_node2(char *env_var, t_var *new_node,
