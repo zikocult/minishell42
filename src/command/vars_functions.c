@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 19:30:13 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:55:38 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,18 @@ int double_simple_dollar(char **str, t_env *data)
 	{
 		new_com = ft_strdup(return_str_parse(*str));
 		handle_dollar(&new_com, data);
-
 		len = ft_strlen(new_com);
-		*str = NULL;
+
+		*str = (char *)malloc(sizeof(char) * (len + 2 + 1));
 		(*str)[0] = '\'';
-		i = 1;
-		while (++i < len)
-			(*str)[i - 1] = new_com[i];
-		(*str)[len] = '\'';
-		(*str)[len + 1] = '\0';
+		i = 0;
+        while (i < len)
+        {
+            (*str)[i + 1] = new_com[i];
+            i++;
+        }		
+		(*str)[len + 1] = '\'';
+		(*str)[len + 2] = '\0';
 		free(new_com);
 		return (1);
 	}
