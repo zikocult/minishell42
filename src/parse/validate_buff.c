@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/17 16:39:12 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 23:39:11 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static bool	validate_cmdbuff2(char *cmd_buff)
 	return (true);
 }
 
-static bool	validate_cmdbuff3(char *cmd_buff, char *last_char,
-								int *count, int i)
+static bool	validate_cmdbuff3(char *cmd_buff, char *last_char, int *count,
+		int i)
 {
 	update_count_and_last_char(cmd_buff[i], last_char, count);
 	if (!check_parse_error(cmd_buff[i], *count))
@@ -68,7 +68,7 @@ bool	validate_cmdbuff(char *cmd_buff)
 	int		count;
 	char	last_char;
 
-	if (!validate_cmdbuff2(cmd_buff))
+	if (!validate_quotes(cmd_buff) || !validate_cmdbuff2(cmd_buff))
 		return (false);
 	init_vars(&i, &count, &last_char);
 	while (i < (int)ft_strlen(cmd_buff))

@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 20:05:13 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 23:35:39 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -25,7 +26,6 @@
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <linux/limits.h>
 # include <unistd.h>
 
 typedef struct s_var
@@ -97,18 +97,20 @@ void				free_list(t_env *data);
 char				*if_notstr(char *str);
 
 // VARS_FUNCTIONS
-char			*expand_variable(char *input, t_env *data);
-int				double_simple_dollar(char **str, t_env *data);
-int				single_quotes(char **str);
-int				dollar_search(char *str);
-int				handle_dollar(char **str, t_env *data);
+char				*expand_variable(char *input, t_env *data);
+int					double_simple_dollar(char **str, t_env *data);
+int					single_quotes(char **str);
+int					dollar_search(char *str);
+int					handle_dollar(char **str, t_env *data);
 
-//STD_UTILS
-int				process_par(t_parse *node, int (*func)(char **));
-char			process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
+// STD_UTILS
+int					process_par(t_parse *node, int (*func)(char **));
+char				process_data(t_parse *node, t_env *data,
+						int (*func)(char **, t_env *));
 
 // ENV_FUNCTIONS
-void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
+void				*create_node2(char *env_var, t_var *new_node,
+						char *equal_sign);
 t_var				*create_node(char *env_var);
 t_var				*env_search(t_env *data, char *str);
 t_var				*insert_blank_node(t_env *data);
@@ -162,5 +164,8 @@ bool				search_dollar_parse(char *str);
 char				*return_str_parse(char *str);
 char				*remove_single_quotes(char *str);
 char				*remove_double_quotes(char *str);
+
+// VALIDATE_QUOTES
+bool				validate_quotes(char *cmd_buff);
 
 #endif
