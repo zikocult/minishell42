@@ -1,27 +1,46 @@
 
 - [ ]  [[#Github]]
-- [ ] [[#Organización inicio]]
-- [ ] [[#Programación]]
+- [x] [[#Organización inicio]]
+- [ ] [[#TODO actual para Guillem]]
+	- [ ] Parseo
+	- [ ] ENV
+	- [ ] Signals
+	- [ ] Movimiento de directorios
 - [ ] [[#Documentación por finalizar]]
 
 ## Github
 
 - [x] Crear repositorio
 - [x] Invitar a Patri al GitHub
-- [ ] Acabar de ver como se trabaja entre dos y con las ramas
-- [ ] Realizar alguna prueba
-- [ ] Crear rama desarrollo con toda la documentación ya acabada
+- [x] Acabar de ver como se trabaja entre dos y con las ramas
+- [x] Realizar alguna prueba
+- [x] Crear rama desarrollo con toda la documentación ya acabada
+- [ ] Aprender a usar la linea de comandos para los merge
 
 >*Nota  para Guillem*: Debo leer todo lo referente a git branch y similares.
 
 ## Organización inicio
 
 - [x] Estructura de carpetas, Makefile y Libft (se ha subido el de Guillem)
-- [ ] Organigrama y primeras ideas (Patri)
+- [x] Organigrama y primeras ideas (Patri)
 - [x] Siguiente reunión el *martes 26 por la tarde, después de comer
-- [ ] Siguiente reunión a concretar por falta de fechas.
-	- [ ] Queda saber los nuevos horarios de Patri, yo la semana que viene estaré por las tardes en el Hackaton de Mataró
-- [ ] Este es un video interesante, crea una shell de 0, aunque con otras funciones, nos dará ideas de como parsear... el [video](https://www.youtube.com/watch?v=yTR00r8vBH8)
+- [x] Siguiente reunión a concretar por falta de fechas.
+	- [x] Queda saber los nuevos horarios de Patri, yo la semana que viene estaré por las tardes en el Hackaton de Mataró
+- [x] Este es un video interesante, crea una shell de 0, aunque con otras funciones, nos dará ideas de como parsear... el [video](https://www.youtube.com/watch?v=yTR00r8vBH8)
+
+## TODO actual para Guillem
+
+- [ ] **PARSEO**
+	- [ ] Hay que revisar las entradas con *'* y *"*, per ejemplo una entrada com *" ' $USER " '* tendria que dar error.
+	- [ ] Incluir lo anterior en el *validation_parse*
+- [ ] **ENV**
+	- [ ] Separación de la entrada de comando *a=a* por ejemplo, para realizar la asignación, va ligado al siguiente punto, pero en este caso tenemos que revisar.
+	- [ ] La revisión la quiero realizar con una función que revise el comando y que dicho comando tenga "*variable=contenido*"
+	- [ ] Export, set, unset, que como he comentado, va atado a lo anterior.
+- [ ] **Signals**
+	- [ ] Empezar al acabar con **ENV**
+- [ ] **CD y movimientos por directorio**
+	- [ ] Empezar al acabar con **signals**
 ## Documentación por finalizar
 
 [Indice de la documentación generada](01_Indice.md)

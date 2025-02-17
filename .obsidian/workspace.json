@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/03_directories_work.md",
+                "file": "doc/00_TODO.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "03_directories_work"
+              "title": "00_TODO"
             }
           }
         ]
@@ -165,27 +165,28 @@
   },
   "active": "f6d324236aaf34a3",
   "lastOpenFiles": [
+    "src/env/unset_builtin.c~",
+    "src/env/unset_builtin.c",
     "minishell",
     "obj/main.o",
-    "obj/main-4f06e881.o.tmp",
+    "obj/main-284dc4a2.o.tmp",
     "obj/std_utils.o",
-    "obj/std_utils-fdbc95f1.o.tmp",
+    "obj/std_utils-a77e05d4.o.tmp",
     "obj/parse/validate_utils.o",
-    "obj/parse/validate_utils-43182dd7.o.tmp",
+    "obj/parse/validate_utils-e5354c1f.o.tmp",
     "obj/parse/validate_redirections.o",
-    "obj/parse/validate_redirections-ff628af3.o.tmp",
-    "obj/parse/validate_buff2.o",
-    "obj/parse/validate_buff2-1abb3b9d.o.tmp",
-    "doc/02_readline.h_and_history.h.md",
+    "obj/parse/validate_redirections-7fc0d03b.o.tmp",
+    "Untitled.md",
     "doc/00_TODO.md",
-    "doc/03_directories_work.md",
-    "doc/01_Indice.md",
     "doc/05_tty.md",
+    "doc/04_stats.md",
+    "doc/03_directories_work.md",
+    "doc/02_readline.h_and_history.h.md",
+    "doc/01_Indice.md",
     "doc/assets/Pasted image 20241127194511.png",
     "doc/assets/Pasted image 20241127193227.png",
     "doc/assets/Pasted image 20241127190842.png",
     "doc/assets/Pasted image 20241127190341.png",
-    "doc/04_stats.md",
     "doc/assets/Pasted image 20241127125032.png",
     "doc/assets/Pasted image 20241127123251.png",
     "doc/Funciones pendientes de documentar.md",
