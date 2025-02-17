@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/15 17:32:38 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:18:39 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,17 @@ int	single_quotes(char *str)
 		i = 0;
 		while (++i < len)
 			new_com[i - 1] = str[i];
-		new_com[len - 1] = '\0'; 
+		new_com[len - 1] = '\0';
 		str = NULL;
 		str = ft_strdup(new_com);
 		free(new_com);
 		printf("%s\n", str);
 		free(str);
-		return (1) ;
-	}
-	else if((str[0] == '\'' && str[len] != '\''
-		) || (str[0] != '\'' && str[len] == '\''))
-	{
-		printf("syntax error \n");
 		return (1);
 	}
+	else if ((str[0] == '\'' && str[len] != '\''
+		) || (str[0] != '\'' && str[len] == '\''))
+		return (printf("syntax error \n"), 1);
 	return (0);
 }
 
@@ -75,75 +72,21 @@ int	dollar_search(char *str)
 
 int	handle_dollar(char **str, t_env *data)
 {
-    int i;
-    char *temp;
-    char *expansion;
+	int		i;
+	char	*temp;
+	char	*expansion;
 
-    if (ft_strchr(*str, '$'))  
-    {
-        i = dollar_search(*str);
-        temp = ft_strndup(*str, i);  
-        if ((*str)[i++] == '$')
-        {
-            expansion = expand_variable(&(*str)[i], data); 
-            free(*str);  
-            *str = ft_strjoin(temp, expansion); 
-			free(temp);  
-        }            
-    }
-    return (0);
-}
-
-char	process_pardata(t_parse *node, t_env *data, int (*func)(char **, t_env *))
-{
-	int	i;
-	t_par *temp;
-
-	temp = node->head;
-	while (temp)
+	if (ft_strchr(*str, '$'))
 	{
-		if (temp->command)
-			func(&temp->command, data);
-		if (temp->parameter)
-			func(&temp->parameter, data); 
-		if (temp->infile || temp->outfile)
+		i = dollar_search(*str);
+		temp = ft_strndup(*str, i);
+		if ((*str)[i++] == '$')
 		{
-			i = 0;
-			while (temp->infile[i++])
-				func(&temp->infile[i], data);
-			while (temp->outfile[i++])
-				func(&temp->outfile[i], data);
+			expansion = expand_variable(&(*str)[i], data);
+			free(*str);
+			*str = ft_strjoin(temp, expansion);
+			free(temp);
 		}
-		temp = temp->next;
-		return (1);
 	}
 	return (0);
-}
-
-int process_par(t_parse *node, int (*func) (char *))
-{
-	int	i;
-	int result;
-	t_par *temp;
-
-	result = 0;
-	temp = node->head;
-	while (temp)
-	{
-		if (temp->command)
-			result = func(temp->command);
-		if (temp->parameter)
-			result = func(temp->parameter); 
-		if (temp->infile || temp->outfile)
-		{
-			i = 0;
-			while (temp->infile[i++])
-				result = func(temp->infile[i]);
-			while (temp->outfile[i++])
-				result = func(temp->outfile[i]);
-		}
-		temp = temp->next;
-		return (result);
-	}
-	return (result);
 }

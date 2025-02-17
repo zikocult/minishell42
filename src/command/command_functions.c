@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/15 17:25:02 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:47:34 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	current = parse_data->head;
 	while (current)
 	{
-		if(process_par(parse_data, single_quotes))
+		if (process_par(parse_data, single_quotes))
 		{
 			current = current->next;
 			continue ;
