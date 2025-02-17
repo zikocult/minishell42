@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 18:43:17 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:05:13 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <linux/limits.h>
 # include <unistd.h>
 
 typedef struct s_var

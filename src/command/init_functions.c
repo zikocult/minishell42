@@ -6,11 +6,20 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 18:36:20 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:05:16 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	init_envi_list2(t_env *data)
+{
+	char	cwd[PATH_MAX];
+
+	getcwd(cwd, sizeof(cwd));
+	data->head->var_name = ft_strdup("PWD");
+	data->head->content = ft_strdup(cwd);
+}
 
 void	init_envi_list(t_env *data)
 {
@@ -29,8 +38,7 @@ void	init_envi_list(t_env *data)
 		return ;
 	data->head = new_node;
 	data->tail = new_node3;
-	new_node->var_name = ft_strdup("PWD");
-	new_node->content = ft_strdup("\0"); //directorio actual
+	init_envi_list2(data);
 	new_node->next = new_node2;
 	new_node2->var_name = ft_strdup("SHLVL");
 	new_node2->content = ft_strdup("1");
