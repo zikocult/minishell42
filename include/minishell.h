@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 17:44:29 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:08:17 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char				*check_path(t_par *current, t_env *data);
 char				*get_full_path(char *path, char *command);
 
 // INIT_FUNCTIONS
+void				init_envi_list(t_env *data);
 void				init_parse_state(t_parse *state, char *command_buff);
 void				init_list(t_env *data, char **env);
 void				init_parse(char *command_buff, t_parse *state);

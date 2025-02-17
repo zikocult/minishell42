@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/01/20 16:45:33 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:13:43 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ int	main(int argc, char **argv, char **env)
 	data.head = NULL;
 	data.tail = NULL;
 	if (argc == 1 && argv[0])
-		init_list(&data, env);
+	{
+		if (env == NULL || env[0] == NULL)
+			init_envi_list(&data);
+		else
+			init_list(&data, env);
+	}
 	while (1)
 	{
 		command_buff = readline("💃 Minishell y olé 💃> ");

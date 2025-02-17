@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/02_readline.h_and_history.h.md",
-                "mode": "preview",
+                "file": "doc/03_directories_work.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "02_readline.h_and_history.h"
+              "title": "03_directories_work"
             }
           }
         ]
@@ -40,7 +40,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -165,21 +166,21 @@
   "active": "f6d324236aaf34a3",
   "lastOpenFiles": [
     "minishell",
-    "obj/vars_functions.o",
-    "obj/token_functions.o",
-    "obj/security_functions.o",
     "obj/main.o",
-    "obj/init_functions.o",
-    "obj/handle_quotes.o",
-    "obj/env_functions.o",
-    "obj/command_functions.o",
-    "obj/body_functions.o",
-    "obj",
+    "obj/main-37a14fee.o.tmp",
+    "obj/std_utils.o",
+    "obj/std_utils-257faf31.o.tmp",
+    "obj/parse/validate_utils.o",
+    "obj/parse/validate_utils-054ae19d.o.tmp",
+    "obj/parse/validate_redirections.o",
+    "obj/parse/validate_redirections-2157d58d.o.tmp",
+    "obj/parse/validate_buff2.o",
+    "obj/parse/validate_buff2-53dc6e99.o.tmp",
+    "doc/02_readline.h_and_history.h.md",
     "doc/00_TODO.md",
     "doc/03_directories_work.md",
     "doc/01_Indice.md",
     "doc/05_tty.md",
-    "doc/02_readline.h_and_history.h.md",
     "doc/assets/Pasted image 20241127194511.png",
     "doc/assets/Pasted image 20241127193227.png",
     "doc/assets/Pasted image 20241127190842.png",
