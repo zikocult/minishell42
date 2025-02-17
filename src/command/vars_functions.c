@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 16:18:39 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:31:06 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,27 @@ char	*expand_variable(char *input, t_env *data)
 	return (value->content);
 }
 
-int	single_quotes(char *str)
+int	single_quotes(char **str)
 {
 	int		i;
 	int		len;
 	char	*new_com;
 
-	len = ft_strlen(str) - 1;
-	if (str[0] == '\'' && str[len] == '\'')
+	len = ft_strlen(*str) - 1;
+	if ((*str)[0] == '\'' && (*str)[len] == '\'')
 	{
 		new_com = malloc(len + 1);
 		i = 0;
 		while (++i < len)
-			new_com[i - 1] = str[i];
+			new_com[i - 1] = (*str)[i];
 		new_com[len - 1] = '\0';
-		str = NULL;
-		str = ft_strdup(new_com);
+		free (*str);
+		*str = ft_strdup(new_com);
 		free(new_com);
-		printf("%s\n", str);
-		free(str);
 		return (1);
 	}
-	else if ((str[0] == '\'' && str[len] != '\''
-		) || (str[0] != '\'' && str[len] == '\''))
+	else if (((*str)[0] == '\'' && (*str)[len] != '\''
+		) || ((*str)[0] != '\'' && (*str)[len] == '\''))
 		return (printf("syntax error \n"), 1);
 	return (0);
 }
@@ -89,4 +87,26 @@ int	handle_dollar(char **str, t_env *data)
 		}
 	}
 	return (0);
+}
+
+int double_simple_dollar(char **str, t_env *data)
+{
+	int		i;
+	int		len;
+	char	*new_com;
+//	return_str_parse(*str, data);
+	handle_dollar(str, data);
+
+	len = ft_strlen(*str) - 1;
+	new_com = malloc(len + 3);
+	i = 1;
+	new_com[0] = '\'';
+	while (++i < (len - 2))
+		new_com[i - 1] = (*str)[i];
+	new_com[len - 1] = '\'';
+	new_com[len] = '\0';
+	free (*str);
+	*str = ft_strdup(new_com);
+	free(new_com);
+	return (1);
 }

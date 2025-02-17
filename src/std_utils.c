@@ -6,13 +6,13 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/17 16:17:06 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:04:11 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	process_par(t_parse *node, int (*func) (char *))
+int	process_par(t_parse *node, int (*func) (char **))
 {
 	int		i;
 	int		result;
@@ -23,16 +23,16 @@ int	process_par(t_parse *node, int (*func) (char *))
 	while (temp)
 	{
 		if (temp->command)
-			result = func(temp->command);
+			result = func(&temp->command);
 		if (temp->parameter)
-			result = func(temp->parameter);
+			result = func(&temp->parameter);
 		if (temp->infile || temp->outfile)
 		{
 			i = 0;
 			while (temp->infile[i++])
-				result = func(temp->infile[i]);
+				result = func(&temp->infile[i]);
 			while (temp->outfile[i++])
-				result = func(temp->outfile[i]);
+				result = func(&temp->outfile[i]);
 		}
 		temp = temp->next;
 		return (result);
