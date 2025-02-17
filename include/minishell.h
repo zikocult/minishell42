@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 17:24:29 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:44:29 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ typedef struct s_parse
 }					t_parse;
 
 // HANDLE_QUOTES
-void				handle_quotes_general(t_parse *state, t_env *data,
-						char *cmd_buff);
-void				handle_squotes(t_parse *state, char *cmd_buff);
-void				handle_dquotes(t_parse *state, t_env *data, char *cmd_buff);
-void				without_quotes(t_parse *state, t_env *data, char *cmd_buff);
-void				clean_quotes(t_parse *state, char c, char *cmd_buff);
+// void				handle_quotes_general(t_parse *state, t_env *data,
+// 						char *cmd_buff);
+// void				handle_squotes(t_parse *state, char *cmd_buff);
+// void				handle_dquotes(t_parse *state, t_env *data, char *cmd_buff);
+// void				without_quotes(t_parse *state, t_env *data, char *cmd_buff);
+// void				clean_quotes(t_parse *state, char c, char *cmd_buff);
 
 // COMMAND
 void				child_process(char *path, t_par *current);
@@ -125,6 +125,7 @@ bool				check_consecutive_redirections(char *cmd_buff);
 
 // VALIDATE_BUFF
 bool				validate_cmdbuff(char *cmd_buff);
+bool				check_parse_error(char c, int count);
 
 // VALIDATE_UTILS
 void				jump_single_quotes(char *cmd_buff, int *i);
@@ -156,6 +157,10 @@ void				parse_token(char *cmd_buff, t_parse *data);
 
 // PARSE_REMOVE_QUOTES
 void				remove_quotes_from_par(t_par *current);
+void				remove_quotes_from_par2(t_par *current, int i);
+bool				search_dollar_parse(char *str);
+char				*return_str_parse(char *str);
 char				*remove_single_quotes(char *str);
+char				*remove_double_quotes(char *str);
 
 #endif

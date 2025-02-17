@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 18:41:12 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/08 15:53:03 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:51:28 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,29 @@ char	*remove_single_quotes(char *str)
 		return (NULL);
 	free(str);
 	return (new_str);
+}
+
+bool	search_dollar_parse(char *str)
+{
+	int		i;
+
+	i = 0;
+	if (!str)
+		return (false);
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+char	*return_str_parse(char *str)
+{
+	if (!str)
+		return (NULL);
+	str = remove_single_quotes(str);
+	str = remove_double_quotes(str);
+	return (str);
 }
