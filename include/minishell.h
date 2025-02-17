@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 16:41:29 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:54:02 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ typedef struct s_parse
 }					t_parse;
 
 // HANDLE_QUOTES
-void				handle_quotes_general(t_parse *state, t_env *data,
-						char *cmd_buff);
-void				handle_squotes(t_parse *state, char *cmd_buff);
-void				handle_dquotes(t_parse *state, t_env *data, char *cmd_buff);
-void				without_quotes(t_parse *state, t_env *data, char *cmd_buff);
-void				clean_quotes(t_parse *state, char c, char *cmd_buff);
+// void				handle_quotes_general(t_parse *state, t_env *data,
+// 						char *cmd_buff);
+// void				handle_squotes(t_parse *state, char *cmd_buff);
+// void				handle_dquotes(t_parse *state, t_env *data, char *cmd_buff);
+// void				without_quotes(t_parse *state, t_env *data, char *cmd_buff);
+// void				clean_quotes(t_parse *state, char c, char *cmd_buff);
 
 // COMMAND
 void				child_process(char *path, t_par *current);

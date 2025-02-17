@@ -6,29 +6,11 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/17 16:36:39 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:53:15 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// static void	remove_double_quotes(char **str)
-// {
-// 	char	*src;
-// 	char	*dst;
-//
-// 	if (!str || !(*str))
-// 		return ;
-// 	src = *str;
-// 	dst = *str;
-// 	while (*src)
-// 	{
-// 		if (*src != '"')
-// 			*dst++ = *src;
-// 		src++;
-// 	}
-// 	*dst = '\0';
-// }
 
 static size_t	calculate_new_length(const char *str)
 {
@@ -80,15 +62,15 @@ char	*remove_double_quotes(char *str)
 
 void	remove_quotes_from_par2(t_par *current, int i)
 {
-	if (search_dollar_parse(current->command))
+	if (!search_dollar_parse(current->command))
 		current->command = return_str_parse(current->command);
-	if (search_dollar_parse(current->parameter))
+	if (!search_dollar_parse(current->parameter))
 		current->parameter = return_str_parse(current->parameter);
 	if (current->infile)
 	{
 		while (current->infile[i])
 		{
-			if (search_dollar_parse(current->infile[i]))
+			if (!search_dollar_parse(current->infile[i]))
 				current->infile[i] = return_str_parse(current->infile[i]);
 			i++;
 		}
@@ -98,7 +80,7 @@ void	remove_quotes_from_par2(t_par *current, int i)
 	{
 		while (current->outfile[i])
 		{
-			if (search_dollar_parse(current->outfile[i]))
+			if (!search_dollar_parse(current->outfile[i]))
 				current->outfile[i] = return_str_parse(current->outfile[i]);
 			i++;
 		}
