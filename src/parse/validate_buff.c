@@ -6,26 +6,11 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/11 15:44:41 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:39:12 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static bool	check_parse_error(char c, int count)
-{
-	if ((c == '<' || c == '>') && count >= 3)
-	{
-		printf("minishell: parse_error %c\n", c);
-		return (false);
-	}
-	if (c == '|' && count >= 2)
-	{
-		printf("minishell: parse_error |\n");
-		return (false);
-	}
-	return (true);
-}
 
 static bool	check_pipe_error(char *cmd_buff, int i)
 {

@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/08 15:54:52 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/17 16:41:29 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ bool				check_consecutive_redirections(char *cmd_buff);
 
 // VALIDATE_BUFF
 bool				validate_cmdbuff(char *cmd_buff);
+bool				check_parse_error(char c, int count);
 
 // VALIDATE_UTILS
 void				jump_single_quotes(char *cmd_buff, int *i);
@@ -147,6 +148,10 @@ void				parse_token(char *cmd_buff, t_parse *data);
 
 // PARSE_REMOVE_QUOTES
 void				remove_quotes_from_par(t_par *current);
+void				remove_quotes_from_par2(t_par *current, int i);
+bool				search_dollar_parse(char *str);
+char				*return_str_parse(char *str);
 char				*remove_single_quotes(char *str);
+char				*remove_double_quotes(char *str);
 
 #endif

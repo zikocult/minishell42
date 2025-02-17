@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/11 15:06:52 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:36:39 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,18 @@ char	*remove_double_quotes(char *str)
 	return (new_str);
 }
 
-static void	remove_quotes_from_par2(t_par *current, int i)
+void	remove_quotes_from_par2(t_par *current, int i)
 {
-	current->command = remove_double_quotes(current->command);
-	current->parameter = remove_double_quotes(current->parameter);
+	if (search_dollar_parse(current->command))
+		current->command = return_str_parse(current->command);
+	if (search_dollar_parse(current->parameter))
+		current->parameter = return_str_parse(current->parameter);
 	if (current->infile)
 	{
 		while (current->infile[i])
 		{
-			current->infile[i] = remove_single_quotes(current->infile[i]);
-			current->infile[i] = remove_double_quotes(current->infile[i]);
+			if (search_dollar_parse(current->infile[i]))
+				current->infile[i] = return_str_parse(current->infile[i]);
 			i++;
 		}
 	}
@@ -96,18 +98,9 @@ static void	remove_quotes_from_par2(t_par *current, int i)
 	{
 		while (current->outfile[i])
 		{
-			current->outfile[i] = remove_single_quotes(current->outfile[i]);
-			current->outfile[i] = remove_double_quotes(current->outfile[i]);
+			if (search_dollar_parse(current->outfile[i]))
+				current->outfile[i] = return_str_parse(current->outfile[i]);
 			i++;
 		}
-	}
-}
-
-void	remove_quotes_from_par(t_par *current)
-{
-	while (current)
-	{
-		remove_quotes_from_par2(current, 0);
-		current = current->next;
 	}
 }
