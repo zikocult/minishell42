@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 18:08:17 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:43:17 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,20 +96,18 @@ void				free_list(t_env *data);
 char				*if_notstr(char *str);
 
 // VARS_FUNCTIONS
-char				*expand_variable(char *input, t_env *data);
-
-int				process_par(t_parse *node, int (*func)(char **));
-char			process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
-
-
+char			*expand_variable(char *input, t_env *data);
 int				double_simple_dollar(char **str, t_env *data);
 int				single_quotes(char **str);
 int				dollar_search(char *str);
 int				handle_dollar(char **str, t_env *data);
 
+//STD_UTILS
+int				process_par(t_parse *node, int (*func)(char **));
+char			process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
+
 // ENV_FUNCTIONS
-void				*create_node2(char *env_var, t_var *new_node,
-						char *equal_sign);
+void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
 t_var				*create_node(char *env_var);
 t_var				*env_search(t_env *data, char *str);
 t_var				*insert_blank_node(t_env *data);

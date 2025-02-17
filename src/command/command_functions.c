@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 18:22:38 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/17 19:23:01 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	execute_command(t_parse *parse_data, t_env *data)
 			current = current->next;
 			continue ;
 		}
-		// if (process_data(parse_data, data, double_simple_dollar))
-		// {
-		// 	current = current->next;
-		// 	continue ;
-		// }
+		if (!process_data(parse_data, data, double_simple_dollar))
+		{
+		 	current = current->next;
+		 	continue ;
+		}
 		process_data(parse_data, data, handle_dollar);
 		if (!current->command)
 		{
