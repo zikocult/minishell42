@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/17 17:04:11 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:34:20 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,31 @@
 int	process_par(t_parse *node, int (*func) (char **))
 {
 	int		i;
-	int		result;
 	t_par	*temp;
 
-	result = 0;
 	temp = node->head;
 	while (temp)
 	{
 		if (temp->command)
-			result = func(&temp->command);
+			func(&temp->command);
 		if (temp->parameter)
-			result = func(&temp->parameter);
-		if (temp->infile || temp->outfile)
+			func(&temp->parameter);
+		if (temp->infile)
 		{
 			i = 0;
-			while (temp->infile[i++])
-				result = func(&temp->infile[i]);
-			while (temp->outfile[i++])
-				result = func(&temp->outfile[i]);
+			while (temp->infile[i])
+				func(&temp->infile[i++]);
+		}
+		if (temp->outfile)
+		{
+			i = 0;
+			while (temp->outfile[i])
+				func(&temp->outfile[i++]);
 		}
 		temp = temp->next;
-		return (result);
+		return (1);
 	}
-	return (result);
+	return (0);
 }
 
 char	process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *))
@@ -52,13 +54,17 @@ char	process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *))
 			func(&temp->command, data);
 		if (temp->parameter)
 			func(&temp->parameter, data);
-		if (temp->infile || temp->outfile)
+		if (temp->infile)
 		{
 			i = 0;
-			while (temp->infile[i++])
-				func(&temp->infile[i], data);
-			while (temp->outfile[i++])
-				func(&temp->outfile[i], data);
+			while (temp->infile[i])
+				func(&temp->infile[i++], data);
+		}
+		if (temp->outfile)
+		{
+			i = 0;
+			while (temp->outfile[i])
+				func(&temp->outfile[i++], data);
 		}
 		temp = temp->next;
 		return (1);
