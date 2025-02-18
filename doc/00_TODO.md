@@ -33,13 +33,14 @@
 - [x] **PARSEO**
 	- [x] Hay que revisar las entradas con *'* y *"*, per ejemplo una entrada com *" ' $USER " '* tendria que dar error.
 	- [x] Incluir lo anterior en el *validation_parse*
-- [ ] **ENV**
+- [ ] **ENV_builtin**
 	- [ ] Separación de la entrada de comando *a=a* por ejemplo, para realizar la asignación, va ligado al siguiente punto, pero en este caso tenemos que revisar.
 	- [ ] La revisión la quiero realizar con una función que revise el comando y que dicho comando tenga "*variable=contenido*"
+	- [ ] No me hace bien el crear una nueva entrada en la tabla, hay que revisar con cuidado.
 	- [ ] Export, set, unset, que como he comentado, va atado a lo anterior.
 - [ ] **Signals**
 	- [ ] Empezar al acabar con **ENV**
-- [ ] **CD y movimientos por directorio**
+- [ ] **CD_builtin y movimientos por directorio**
 	- [ ] Empezar al acabar con **signals**
 ## Documentación por finalizar
 

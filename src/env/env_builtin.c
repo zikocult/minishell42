@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:17:54 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/15 13:02:28 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:26:27 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	env_builtin(t_env *data)
 
 void	add_elem(t_env *data, char *name, char *content)
 {
-	data->tail->var_name = name;
-	data->tail->content = content;
+	data->tail->var_name = ft_strdup(name);
+	data->tail->content = ft_strdup(content);
 	insert_blank_node(data);
 }
