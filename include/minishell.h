@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 20:05:13 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:33:21 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int				double_simple_dollar(char **str, t_env *data);
 int				single_quotes(char **str);
 int				dollar_search(char *str);
 int				handle_dollar(char **str, t_env *data);
+int	double_quotes_dollar(char **str, t_env *data);
 
 //STD_UTILS
 int				process_par(t_parse *node, int (*func)(char **));

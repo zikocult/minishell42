@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 20:55:38 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:57:17 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,17 @@ int double_simple_dollar(char **str, t_env *data)
 		(*str)[len + 1] = '\'';
 		(*str)[len + 2] = '\0';
 		free(new_com);
+		return (1);
+	}
+	return (0);
+}
+
+int	double_quotes_dollar(char **str, t_env *data)
+{
+	if ((*str)[0] == '\"')
+	{
+		remove_double_quotes(*str);
+		handle_dollar(str, data);
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 19:23:01 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:16:36 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,42 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	current = parse_data->head;
 	while (current)
 	{
+		/* if (process_data(parse_data, data, handle_dollar)) */
+		/* { */
+		/* 	execute_command2(current, data); */
+		/* 	current = current->next; */
+		/* 	continue ; */
+		/* } */
 		if (process_par(parse_data, single_quotes))
 		{
 			execute_command2(current, data);
 			current = current->next;
 			continue ;
 		}
-		if (!process_data(parse_data, data, double_simple_dollar))
+		if (process_data(parse_data, data, double_simple_dollar))
 		{
+			//execute_command2(current, data);
 		 	current = current->next;
 		 	continue ;
 		}
+		/* if (process_data(parse_data, data, double_quotes_dollar)) */
+		/* { */
+		/* 	execute_command2(current, data); */
+		/* 	current = current->next; */
+		/* 	continue ; */
+		/* } */
 		process_data(parse_data, data, handle_dollar);
-		if (!current->command)
-		{
-			current = current->next;
-			continue ;
-		}
+		/* if (process_data(parse_data, data, handle_dollar)) */
+		/* { */
+		/* 	execute_command2(current, data); */
+		/* 	current = current->next; */
+		/* 	continue ; */
+		/* } */
+		/* if (!current->command) */
+		/* { */
+		/* 	current = current->next; */
+		/* 	continue ; */
+		/* } */
 		execute_command2(current, data);
 		current = current->next;
 	}
