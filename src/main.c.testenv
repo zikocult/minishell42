@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/18 17:56:30 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/18 23:39:34 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ int	main(int argc, char **argv, char **env)
 		else
 			init_list(&data, env);
 	}
-	unset_builtin(&data, "PATH");
-	unset_builtin(&data, "patata");
+	unset_builtin(&data, "_");
+	unset_builtin(&data, "SHLVL");
+	unset_builtin(&data, "PWD");
 	// add_elem(&data, "patata", "patata");
-	// insert_blank_node(&data);
+	// add_elem(&data, "caracol", "lata");
+	// add_elem(&data, "mandanga", "buena");
+	// add_elem(&data, "patata", "patata");
 	env_builtin(&data);
 	// while (1)
 	// {
