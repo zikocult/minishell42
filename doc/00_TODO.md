@@ -2,7 +2,7 @@
 - [ ]  [[#Github]]
 - [x] [[#Organización inicio]]
 - [ ] [[#TODO actual para Guillem]]
-	- [ ] Parseo
+	- [x] Parseo
 	- [ ] ENV
 	- [ ] Signals
 	- [ ] Movimiento de directorios
@@ -30,9 +30,9 @@
 
 ## TODO actual para Guillem
 
-- [ ] **PARSEO**
-	- [ ] Hay que revisar las entradas con *'* y *"*, per ejemplo una entrada com *" ' $USER " '* tendria que dar error.
-	- [ ] Incluir lo anterior en el *validation_parse*
+- [x] **PARSEO**
+	- [x] Hay que revisar las entradas con *'* y *"*, per ejemplo una entrada com *" ' $USER " '* tendria que dar error.
+	- [x] Incluir lo anterior en el *validation_parse*
 - [ ] **ENV**
 	- [ ] Separación de la entrada de comando *a=a* por ejemplo, para realizar la asignación, va ligado al siguiente punto, pero en este caso tenemos que revisar.
 	- [ ] La revisión la quiero realizar con una función que revise el comando y que dicho comando tenga "*variable=contenido*"

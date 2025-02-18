@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 19:40:22 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 19:59:29 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:43:09 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	unset_builtin(t_env *data, char *str)
 
 	current = env_prev_search(data, str);
 	del_node = NULL;
-	if (current->next)
+	if (current)
 	{
 		del_node = current->next;
 		current->next = current->next->next;
