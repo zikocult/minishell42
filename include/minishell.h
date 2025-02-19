@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/17 23:35:39 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/19 19:00:06 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_var
 typedef struct s_env
 {
 	t_var			*head;
+	t_var			*head_env;
 	t_var			*tail;
 }					t_env;
 
@@ -120,6 +121,7 @@ void				handle_echo(char **args);
 
 // ENV_BUILTIN
 void				env_builtin(t_env *data);
+void				var_builtin(t_env *data);
 void				add_elem(t_env *data, char *name, char *content);
 
 // VALIDATE_REDIRECTIONS

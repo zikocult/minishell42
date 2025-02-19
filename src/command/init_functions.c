@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 09:23:05 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 20:05:16 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:52:09 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	init_envi_list(t_env *data)
 	if (!new_node2)
 		return ;
 	data->head = new_node;
+	data->head_env = new_node;
 	data->tail = new_node3;
 	init_envi_list2(data);
 	new_node->next = new_node2;
@@ -66,6 +67,7 @@ void	init_list(t_env *data, char **env)
 		if (!data->head)
 		{
 			data->head = new_node;
+			data->head_env = new_node;
 			data->tail = new_node;
 		}
 		else
