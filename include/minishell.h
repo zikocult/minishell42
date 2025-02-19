@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/19 19:00:06 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/19 19:16:42 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ void				handle_echo(char **args);
 void				env_builtin(t_env *data);
 void				var_builtin(t_env *data);
 void				add_elem(t_env *data, char *name, char *content);
+
+// UNSET_BUILTIN
+void				unset_builtin(t_env *data, char *str);
 
 // VALIDATE_REDIRECTIONS
 bool				check_consecutive_redirections(char *cmd_buff);
