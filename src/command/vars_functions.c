@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/18 17:57:17 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:03:44 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ char	*expand_variable(char *input, t_env *data)
 	return (value->content);
 }
 
-int	single_quotes(char **str)
+int	single_quotes(char **str, t_env *data)
 {
 	int		i;
 	int		len;
 	char	*new_com;
 
+	(void)data;
 	len = ft_strlen(*str) - 1;
 	if ((*str)[0] == '\'' && (*str)[len] == '\'')
 	{
@@ -84,6 +85,7 @@ int	handle_dollar(char **str, t_env *data)
 			free(*str);
 			*str = ft_strjoin(temp, expansion);
 			free(temp);
+			return (1);
 		}
 	}
 	return (0);
@@ -97,7 +99,7 @@ int double_simple_dollar(char **str, t_env *data)
 
 	if ((*str)[0] == '\"' && (*str)[1] == '\'')
 	{
-		new_com = ft_strdup(return_str_parse(*str));
+		new_com = return_str_parse(*str);
 		handle_dollar(&new_com, data);
 		len = ft_strlen(new_com);
 

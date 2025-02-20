@@ -6,13 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/02/15 11:39:26 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:41:07 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void print_token(t_parse *data)
+void print_token(t_parse *data)
 {
 	t_par	*current;
 	int		i;
