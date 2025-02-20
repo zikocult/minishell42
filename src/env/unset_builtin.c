@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 19:40:22 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/19 21:15:19 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/20 18:28:02 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ void	unset_builtin(t_env *data, char *str)
 			del_node = current->next;
 			current->next = current->next->next;
 		}
-		if (del_node == data->head_env)
-			data->head_env = del_node->next;
 		if (del_node == data->head)
 			data->head = del_node->next;
+		free(del_node->type);
 		free(del_node->content);
 		free(del_node->var_name);
 		free(del_node);

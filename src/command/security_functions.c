@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2025/02/18 18:18:50 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:00:37 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	free_list(t_env	*data)
 			free(current->content);
 		if(current->var_name)
 			free(current->var_name);
+		if(current->type)
+			free(current->type);
 		if (current)
 			free(current);
 		current = next_node;

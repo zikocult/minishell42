@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/19 21:20:45 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/20 18:29:46 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ int	main(int argc, char **argv, char **env)
 		else
 			init_list(&data, env);
 	}
-	// unset_builtin(&data, "HOME");
-	add_elem(&data, "patata", "patata");
-	add_elem(&data, "caracol", "lata");
+	// unset_builtin(&data, "SYSTEMD_EXEC_PID");
+	unset_builtin(&data, "SSH_AUTH_SOCK");
+	add_elem(&data, "patata", "patata", "exp");
+	add_elem(&data, "caracol", "lata", "exp");
+
 	unset_builtin(&data, "PWD");
-	// unset_builtin(&data, "SHLVL");
 	unset_builtin(&data, "_");
+	unset_builtin(&data, "SHLVL");
 	
-	add_elem(&data, "mandanga", "buena");
-	add_elem(&data, "patata", "Melon");
+	add_elem(&data, "mandanga", "buena", "var");
+	add_elem(&data, "patata", "Melon", "var");
 	env_builtin(&data);
-	printf("\nAnd now the new data\n\n");
-	var_builtin(&data);
 	// while (1)
 	// {
 	// 	command_buff = readline("💃 Minishell y olé 💃> ");
