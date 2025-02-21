@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 19:40:22 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/20 19:47:50 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/20 20:20:28 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ t_var	*env_prev_search(t_env *data, char *str)
 	t_var	*current;
 
 	current = data->head;
-	if (ft_strcmp(current->var_name, str) == 0)
+	if (!ft_strcmp(current->var_name, str))
 		return (current);
-	while (current->next != NULL)
+	while (current->next)
 	{
-		if (ft_strcmp(current->next->var_name, str) == 0)
+		if (!ft_strcmp(current->next->var_name, str))
 			return (current);
 		current = current->next;
 	}
@@ -36,9 +36,8 @@ void	unset_builtin(t_env *data, char *str)
 	current = env_prev_search(data, str);
 	if (current)
 	{
-		if (!ft_strcmp(str, data->head->next->var_name))
-			del_node = data->head->next;
-		else if (current == data->head)
+		if (current == data->head &&
+			ft_strcmp(current->next->var_name, str))
 			del_node = current;
 		else
 		{
