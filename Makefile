@@ -6,7 +6,7 @@
 #    By: gbaruls- <gbaruls-@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/06 16:54:00 by gbaruls-          #+#    #+#              #
-#    Updated: 2025/02/21 18:58:45 by patri            ###   ########.fr        #
+#    Updated: 2025/02/22 19:22:33 by patri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJS		= $(addsuffix .o, $(OBJSTEMP))
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror 
-DFLAGS		= -g #-fsanitize=address
+DFLAGS		= -g -fsanitize=address
 AR			= ar rcs
 RANLIB		= ranlib
 RM			= rm -rf
