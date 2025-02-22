@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/22 20:32:44 by patri            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:53:11 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,70 +38,18 @@ static void	execute_command2(t_par *current, t_env *data)
 	free(path);
 }
 
-/*void	execute_command(t_parse *parse_data, t_env *data)
-{
-	t_par	*current;
-
-	current = parse_data->head;
-	while (current)
-	{
-		if (process_data(parse_data, data, single_quotes))
-		{
-			execute_command2(current, data);
-			current = current->next;
-			continue ;
-		}
-		if (process_data(parse_data, data, double_simple_dollar))
-		{
-			execute_command2(current, data);
-		 	current = current->next;
-			continue ;
-		}
-		if (process_data(parse_data, data, double_quotes_dollar))
-		{
-			execute_command2(current, data);
-			current = current->next;
-			continue ;
-		}
-		if (process_data(parse_data, data, handle_dollar))
-		{
-			execute_command2(current, data);
-			current = current->next;
-			continue ;
-		}
-		if (!current->command)
-		{
-			current = current->next;
-			continue ;
-		}
-		execute_command2(current, data);
-		current = current->next;
-	}
-}*/
-
-static int	try_processes(t_par *current, t_parse *parse_data, t_env *data)
+static int	try_processes(t_parse *parse_data, t_env *data)
 {
 	if (process_data(parse_data, data, single_quotes))
-	{
-		execute_command2(current, data);
 		return (1);
-	}
 	if (process_data(parse_data, data, double_simple_dollar))
-	{
-		execute_command2(current, data);
 		return (1);
-	}
 	if (process_data(parse_data, data, double_quotes_dollar))
-	{
-		execute_command2(current, data);
 		return (1);
-	}
 	if (process_data(parse_data, data, handle_dollar))
-	{
-		execute_command2(current, data);
 		return (1);
-	}
-	return (0);
+	else
+		return (0);
 }
 
 void	execute_command(t_parse *parse_data, t_env *data)
@@ -111,8 +59,9 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	current = parse_data->head;
 	while (current)
 	{
-		if (try_processes(current, parse_data, data))
+		if (try_processes(parse_data, data))
 		{
+			execute_command2(current, data);
 			current = current->next;
 			continue ;
 		}

@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/22 19:26:44 by patri            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:18:11 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *))
 	{
 		internal_process(temp, data, func, &control);
 		temp = temp->next;
-		if (control > 0)
-			return (1);
 	}
+	if (control > 0)
+		return (1);
 	return (0);
 }

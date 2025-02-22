@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/22 19:47:57 by patri            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:05:00 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*expand_variable(char *input, t_env *data)
 	value = env_search(data, var_name);
 	free(var_name);
 	if (!value)
-		return ("\0");
+		return (NULL);
 	return (value->content);
 }
 
@@ -82,11 +82,17 @@ int	handle_dollar(char **str, t_env *data)
 		if ((*str)[i++] == '$')
 		{
 			expansion = expand_variable(&(*str)[i], data);
+			if (!expansion)
+			{
+				free(temp);
+				return (0);
+			}
 			free(*str);
 			*str = ft_strjoin(temp, expansion);
 			free(temp);
 			return (1);
 		}
+		free(temp);
 	}
 	return (0);
 }
@@ -125,12 +131,9 @@ int	double_quotes_dollar(char **str, t_env *data)
 
 	if ((*str)[0] == '\"')
 	{
-        new_str = remove_double_quotes(*str); // Crear una copia sin comillas
-        handle_dollar(&new_str, data); // Manejar el símbolo $
- //       free(*str); // Liberar la cadena original
-        *str = new_str; // Asignar la nueva cadena
-/*		remove_double_quotes(*str);
-		handle_dollar(str, data);*/
+        new_str = remove_double_quotes(*str); 
+        handle_dollar(&new_str, data);
+        *str = new_str;
 		return (1);
 	}
 	return (0);

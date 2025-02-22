@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/15 11:39:44 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:03:40 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ char	*check_path(t_par *current, t_env *data)
 {
 	char	*path;
 
+	if (current->command[0] == '$')
+		return (NULL);// hacer lo mismo con el resto de nodos
+//crear funcion y aprovechar el parse data
 	path = find_path(current, data);
 	if (!path)
 	{
