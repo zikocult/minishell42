@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/20 18:03:14 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:32:44 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,39 +38,33 @@ static void	execute_command2(t_par *current, t_env *data)
 	free(path);
 }
 
-void	execute_command(t_parse *parse_data, t_env *data)
+/*void	execute_command(t_parse *parse_data, t_env *data)
 {
 	t_par	*current;
 
 	current = parse_data->head;
 	while (current)
 	{
-		if (process_data(parse_data, data, single_quotes) == 1)
+		if (process_data(parse_data, data, single_quotes))
 		{
-			printf("single quotes\n");
-
 			execute_command2(current, data);
 			current = current->next;
 			continue ;
 		}
-		if (process_data(parse_data, data, double_simple_dollar) == 1)
+		if (process_data(parse_data, data, double_simple_dollar))
 		{
-			printf("double_simple\n");
-
+			execute_command2(current, data);
 		 	current = current->next;
 			continue ;
 		}
-		if (process_data(parse_data, data, double_quotes_dollar) == 1)
+		if (process_data(parse_data, data, double_quotes_dollar))
 		{
-			printf("double_dollar\n");
-
 			execute_command2(current, data);
 			current = current->next;
 			continue ;
 		}
-		if (process_data(parse_data, data, handle_dollar) == 1)
+		if (process_data(parse_data, data, handle_dollar))
 		{
-			printf("dollar\n");
 			execute_command2(current, data);
 			current = current->next;
 			continue ;
@@ -80,7 +74,53 @@ void	execute_command(t_parse *parse_data, t_env *data)
 			current = current->next;
 			continue ;
 		}
-	//	print_token(parse_data);
+		execute_command2(current, data);
+		current = current->next;
+	}
+}*/
+
+static int	try_processes(t_par *current, t_parse *parse_data, t_env *data)
+{
+	if (process_data(parse_data, data, single_quotes))
+	{
+		execute_command2(current, data);
+		return (1);
+	}
+	if (process_data(parse_data, data, double_simple_dollar))
+	{
+		execute_command2(current, data);
+		return (1);
+	}
+	if (process_data(parse_data, data, double_quotes_dollar))
+	{
+		execute_command2(current, data);
+		return (1);
+	}
+	if (process_data(parse_data, data, handle_dollar))
+	{
+		execute_command2(current, data);
+		return (1);
+	}
+	return (0);
+}
+
+void	execute_command(t_parse *parse_data, t_env *data)
+{
+	t_par	*current;
+
+	current = parse_data->head;
+	while (current)
+	{
+		if (try_processes(current, parse_data, data))
+		{
+			current = current->next;
+			continue ;
+		}
+		if (!current->command)
+		{
+			current = current->next;
+			continue ;
+		}
 		execute_command2(current, data);
 		current = current->next;
 	}

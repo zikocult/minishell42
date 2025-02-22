@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/21 19:29:08 by patri            ###   ########.fr       */
+/*   Updated: 2025/02/22 19:47:57 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char	*expand_variable(char *input, t_env *data)
 	value = env_search(data, var_name);
 	free(var_name);
 	if (!value)
-		return (ft_strdup(""));
-	return (ft_strdup(value->content));
+		return ("\0");
+	return (value->content);
 }
 
 int	single_quotes(char **str, t_env *data)
@@ -87,7 +87,6 @@ int	handle_dollar(char **str, t_env *data)
 			free(temp);
 			return (1);
 		}
-		free (temp); //puesto para el doble free
 	}
 	return (0);
 }
