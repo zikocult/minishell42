@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/23 16:00:23 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:54:16 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static void	child_process(char *path, t_par *current)
 	status = 0;
 	pid = fork();
 	if (pid == 0)
-		execve(path, &current->command, NULL);
+	{
+		if (execve(path, &current->command, NULL) == -1)
+			exit(EXIT_FAILURE);
+	}
 	else if (pid > 0)
 		waitpid(pid, status, 0);
 	else
@@ -42,9 +45,9 @@ static int	try_processes(t_parse *parse_data, t_env *data)
 {
 	if (process_data(parse_data, data, single_quotes))
 		return (1);
-	if (process_data(parse_data, data, double_simple_dollar))
+	else if (process_data(parse_data, data, double_simple_dollar))
 		return (1);
-	if (process_data(parse_data, data, double_quotes_dollar))
+	else if (process_data(parse_data, data, double_quotes_dollar))
 		return (1);
 	else
 		return (0);
@@ -57,13 +60,13 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	current = parse_data->head;
 	while (current)
 	{
-		if (try_processes(parse_data, data))
+		if (try_processes(parse_data, data) > 0)
 		{
 			execute_command2(current, data);
 			current = current->next;
 			continue ;
 		}
-		if (!process_data(parse_data, data, handle_dollar))
+		if (process_data(parse_data, data, handle_dollar))
 		{
 			current = current->next;
 			continue ;

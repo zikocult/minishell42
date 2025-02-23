@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/23 16:00:46 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:18:29 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ char	*find_path(t_par *current, t_env *data)
 	return (full_path);
 }
 
-
-
 static int	path_messages(char *str)
 {
 	int	i;
@@ -83,7 +81,6 @@ char	*check_path(t_par *current, t_env *data)
 	path = find_path(current, data);
 	if (!path)
 	{
-		printf("no koala\n");
 		path_messages(current->command);
 		current = current->next;
 		return (NULL);
