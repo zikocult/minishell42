@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/22 22:03:40 by patri            ###   ########.fr       */
+/*   Updated: 2025/02/23 16:00:46 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ char	*find_path(t_par *current, t_env *data)
 	return (full_path);
 }
 
-static void	path_messages(char *str)
+
+
+static int	path_messages(char *str)
 {
 	int	i;
 	int	file;
@@ -71,18 +73,17 @@ static void	path_messages(char *str)
 		printf("%s: Is a directory\n", str);
 	else if (str[0] != '/')
 		printf("%s: command NOT found\n", str);
+	return (0);
 }
 
 char	*check_path(t_par *current, t_env *data)
 {
 	char	*path;
 
-	if (current->command[0] == '$')
-		return (NULL);// hacer lo mismo con el resto de nodos
-//crear funcion y aprovechar el parse data
 	path = find_path(current, data);
 	if (!path)
 	{
+		printf("no koala\n");
 		path_messages(current->command);
 		current = current->next;
 		return (NULL);

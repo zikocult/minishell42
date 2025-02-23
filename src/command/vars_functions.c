@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/22 21:05:00 by patri            ###   ########.fr       */
+/*   Updated: 2025/02/23 15:57:19 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	dollar_search(char *str)
 	while (str[i] != '$' && str[i])
 		i++;
 	if (str[i] == '$')
-		return (i);
+		return (i);	
 	return (0);
 }
 

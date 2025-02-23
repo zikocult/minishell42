@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/20 18:06:36 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/23 10:55:53 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int				double_quotes_dollar(char **str, t_env *data);
 
 //STD_UTILS
 int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
+int				process_char(t_par *temp, int c, int (*func)(const char *, int));
 
 // ENV_FUNCTIONS
 void	*create_node2(char *env_var, t_var *new_node, char *equal_sign);
