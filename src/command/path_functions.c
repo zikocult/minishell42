@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/15 11:39:44 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:18:29 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*find_path(t_par *current, t_env *data)
 	return (full_path);
 }
 
-static void	path_messages(char *str)
+static int	path_messages(char *str)
 {
 	int	i;
 	int	file;
@@ -71,6 +71,7 @@ static void	path_messages(char *str)
 		printf("%s: Is a directory\n", str);
 	else if (str[0] != '/')
 		printf("%s: command NOT found\n", str);
+	return (0);
 }
 
 char	*check_path(t_par *current, t_env *data)

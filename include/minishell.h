@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/19 19:16:42 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/24 17:07:41 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_parse
 // void				clean_quotes(t_parse *state, char c, char *cmd_buff);
 
 // COMMAND
-void				child_process(char *path, t_par *current);
 char				*command_needed(char *command, t_env *data);
 void				execute_command(t_parse *parse_data, t_env *data);
 
@@ -90,6 +89,7 @@ void				init_parse(char *command_buff, t_parse *state);
 
 // BODY_FUNCTIONS
 int					select_type(char *command_buff, t_env *data);
+void				print_token(t_parse *data);
 
 // SECURITY_FUNCTIONS
 void				free_memory(char **ptr);
@@ -108,6 +108,16 @@ int					handle_dollar(char **str, t_env *data);
 int					process_par(t_parse *node, int (*func)(char **));
 char				process_data(t_parse *node, t_env *data,
 						int (*func)(char **, t_env *));
+char			*expand_variable(char *input, t_env *data);
+int				double_simple_dollar(char **str, t_env *data);
+int				single_quotes(char **str, t_env *data);
+int				dollar_search(char *str);
+int				handle_dollar(char **str, t_env *data);
+int				double_quotes_dollar(char **str, t_env *data);
+
+//STD_UTILS
+int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
+int				process_char(t_par *temp, int c, int (*func)(const char *, int));
 
 // ENV_FUNCTIONS
 void				*create_node2(char *env_var, t_var *new_node,

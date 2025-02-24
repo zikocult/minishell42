@@ -6,13 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/02/17 19:23:01 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:54:16 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	child_process(char *path, t_par *current)
+static void	child_process(char *path, t_par *current)
 {
 	pid_t	pid;
 	int		*status;
@@ -35,8 +35,22 @@ static void	execute_command2(t_par *current, t_env *data)
 	char	*path;
 
 	path = check_path(current, data);
+	if (!path)
+		return ;
 	child_process(path, current);
 	free(path);
+}
+
+static int	try_processes(t_parse *parse_data, t_env *data)
+{
+	if (process_data(parse_data, data, single_quotes))
+		return (1);
+	else if (process_data(parse_data, data, double_simple_dollar))
+		return (1);
+	else if (process_data(parse_data, data, double_quotes_dollar))
+		return (1);
+	else
+		return (0);
 }
 
 void	execute_command(t_parse *parse_data, t_env *data)
@@ -46,18 +60,17 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	current = parse_data->head;
 	while (current)
 	{
-		if (process_par(parse_data, single_quotes))
+		if (try_processes(parse_data, data) > 0)
 		{
 			execute_command2(current, data);
 			current = current->next;
 			continue ;
 		}
-		if (!process_data(parse_data, data, double_simple_dollar))
+		if (process_data(parse_data, data, handle_dollar))
 		{
-		 	current = current->next;
-		 	continue ;
+			current = current->next;
+			continue ;
 		}
-		process_data(parse_data, data, handle_dollar);
 		if (!current->command)
 		{
 			current = current->next;

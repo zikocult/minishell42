@@ -6,13 +6,13 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/02/15 11:39:26 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:35:19 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void print_token(t_parse *data)
+void print_token(t_parse *data)
 {
 	t_par	*current;
 	int		i;
@@ -82,11 +82,11 @@ int	select_type(char *command_buff, t_env *data)
 	{
 		rl_clear_history();
 		free_parse(&state);
+//		exit(0);
 	 	return (1);
 	}
 	else
 	{
-
 	 	execute_command(&state, data);
 
 	}
