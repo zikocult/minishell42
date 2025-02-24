@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/24 17:07:41 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:17:51 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,25 +99,17 @@ char				*if_notstr(char *str);
 
 // VARS_FUNCTIONS
 char				*expand_variable(char *input, t_env *data);
-int					double_simple_dollar(char **str, t_env *data);
-int					single_quotes(char **str);
 int					dollar_search(char *str);
 int					handle_dollar(char **str, t_env *data);
 
-// STD_UTILS
-int					process_par(t_parse *node, int (*func)(char **));
-char				process_data(t_parse *node, t_env *data,
-						int (*func)(char **, t_env *));
-char			*expand_variable(char *input, t_env *data);
-int				double_simple_dollar(char **str, t_env *data);
+//EXPAND_QUOTES
 int				single_quotes(char **str, t_env *data);
-int				dollar_search(char *str);
-int				handle_dollar(char **str, t_env *data);
+int				double_simple_dollar(char **str, t_env *data);
 int				double_quotes_dollar(char **str, t_env *data);
 
-//STD_UTILS
+
+// STD_UTILS
 int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
-int				process_char(t_par *temp, int c, int (*func)(const char *, int));
 
 // ENV_FUNCTIONS
 void				*create_node2(char *env_var, t_var *new_node,

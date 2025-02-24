@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/23 20:24:27 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:16 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	single_quotes(char **str, t_env *data)
 	(void)data;
 	len = ft_strlen(*str);
 	if (len == 0)
-		return (printf("Syntax Error\n"), 1);
+		return (printf("minishell: '' Command not found \n"), 1);
 	if ((*str)[0] == '\'' && (*str)[len - 1] == '\'')
 	{
 		new_com = malloc(len + 1);
@@ -34,9 +34,6 @@ int	single_quotes(char **str, t_env *data)
 		free(new_com);
 		return (1);
 	}
-	else if (((*str)[0] == '\'' && (*str)[len - 1] != '\''
-		) || ((*str)[0] != '\'' && (*str)[len - 1] == '\''))
-		return (printf("Syntax Error\n"), 1);
 	return (0);
 }
 
@@ -84,12 +81,6 @@ int	double_quotes_dollar(char **str, t_env *data)
 		new_str = remove_double_quotes(*str);
 		handle_dollar(&new_str, data);
 		*str = new_str;
-		return (1);
-	}
-	else if ((((*str)[0] == '\"' && (*str)[len - 1] != '\"')
-		) || ((*str)[0] != '\"' && (*str)[len - 1] == '\"'))
-	{
-		printf("Syntax Error D2\n");
 		return (1);
 	}
 	return (0);
