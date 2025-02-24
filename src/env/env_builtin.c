@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:17:54 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/20 18:05:30 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:52:10 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	env_builtin(t_env *data)
 	current = data->head;
 	while (current->next)
 	{
-		if (!ft_strcmp(current->type, "env"))
+		if (!ft_strcmp(current->type, "env") || !ft_strcmp(current->type, "var") || !ft_strcmp(current->type, "exp"))
 			printf("%s=%s\n", current->var_name, current->content);
 		current = current->next;
 	}

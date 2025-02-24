@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/20 20:19:48 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/24 17:48:10 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int	main(int argc, char **argv, char **env)
 	}
 	// unset_builtin(&data, "SYSTEMD_EXEC_PID");
 	// unset_builtin(&data, "SSH_AUTH_SOCK");
-	unset_builtin(&data, "LANG");
+	unset_builtin(&data, "SYSTEMD_EXEC_PID");
+	unset_builtin(&data, "SESSION_MANAGER");
 	add_elem(&data, "patata", "patata", "exp");
 	add_elem(&data, "caracol", "lata", "exp");
 
-	// unset_builtin(&data, "_");
+	unset_builtin(&data, "_");
 	unset_builtin(&data, "SHLVL");
-	// unset_builtin(&data, "PWD");
+	unset_builtin(&data, "PWD");
 	
 	add_elem(&data, "mandanga", "buena", "var");
 	add_elem(&data, "patata", "Melon", "var");
