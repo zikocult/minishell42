@@ -6,11 +6,25 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:34:30 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/02/17 23:34:55 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/02/24 17:37:11 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+bool	len_buff(char *cmd_buff)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_buff[i])
+	{
+		if (cmd_buff[i] != 32 && (cmd_buff[i] <= 7 || cmd_buff[i] >= 13))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 bool	validate_quotes(char *cmd_buff)
 {

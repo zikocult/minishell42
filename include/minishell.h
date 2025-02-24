@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/24 17:17:51 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:37:56 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,6 @@ char				*remove_double_quotes(char *str);
 
 // VALIDATE_QUOTES
 bool				validate_quotes(char *cmd_buff);
+bool				len_buff(char *cmd_buff);
 
 #endif
