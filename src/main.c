@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/25 17:33:03 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:56:33 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **env)
 	unset_builtin(&data, "_");
 	
 	add_elem(&data, "mandanga", "buena", "exp");
-	add_elem(&data, "patata", NULL, "exp");
+	add_elem(&data, "patata", NULL, "var");
 	add_elem(&data, "pescado", NULL, "var");
 	env_list_builtin(&data);
 	export_list_builtin(&data);

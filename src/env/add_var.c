@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_elem.c                                         :+:      :+:    :+:   */
+/*   add_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:34:40 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/25 17:35:14 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:56:16 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,27 @@ static void	new_node1(t_env *data, char *name, char *content, char *type)
 	data->last_node = new_node;
 }
 
-static void	new_node2(t_env *data, char *name, char *content, char *type)
+static void	new_node2(t_var *new_node, char *content, char *type)
+{
+	if (content)
+	{
+		free(new_node->content);
+		new_node->content = ft_strdup(content);
+	}
+	else
+	{
+		if (new_node->content)
+			free(new_node->content);
+		new_node->content = NULL;
+	}
+	if (ft_strcmp(new_node->type, "exp") && ft_strcmp(new_node->type, "env"))
+	{
+		free(new_node->type);
+		new_node->type = ft_strdup(type);
+	}
+}
+
+static void	new_node3(t_env *data, char *name, char *content, char *type)
 {
 	t_var	*new_node;
 
@@ -58,21 +78,8 @@ void	add_elem(t_env *data, char *name, char *content, char *type)
 		if (!new_node)
 			new_node1(data, name, content, type);
 		else
-		{
-			if (content)
-			{
-				free(new_node->content);
-				new_node->content = ft_strdup(content);
-			}
-			else
-			{
-				if (new_node->content)
-					free(new_node->content);
-			}
-			free(new_node->type);
-			new_node->type = ft_strdup(type);
-		}
+			new_node2(new_node, content, type);
 	}
 	else
-		new_node2(data, name, content, type);
+		new_node3(data, name, content, type);
 }
