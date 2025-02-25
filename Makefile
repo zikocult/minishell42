@@ -46,7 +46,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(LIBS) Makefile
 			$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@
 
 $(OBJSDIRS) : 
-			$(MKDIR) $(OBJSDIRS)
+			$(MKDIR) $@
 
 libft:
 			make -C ./mylibft/

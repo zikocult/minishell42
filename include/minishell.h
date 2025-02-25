@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/20 17:19:14 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:09:39 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int					handle_dollar(char **str, t_env *data);
 int					process_par(t_parse *node, int (*func)(char **));
 char				process_data(t_parse *node, t_env *data,
 						int (*func)(char **, t_env *));
+// EXPORT_BUILTIN
+void				export_list_builtin(t_env *data);
 
 // ENV_FUNCTIONS
 void				*create_node2(char *env_var, t_var *new_node,
@@ -121,7 +123,7 @@ t_var				*insert_blank_node(t_env *data);
 void				handle_echo(char **args);
 
 // ENV_BUILTIN
-void				env_builtin(t_env *data);
+void				env_list_builtin(t_env *data);
 void				add_elem(t_env *data, char *name, char *content, char *type);
 
 // UNSET_BUILTIN
