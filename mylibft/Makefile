@@ -62,7 +62,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(LIBS) Makefile
 			$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJSDIRS) :
-	$(MKDIR) $(OBJSDIRS)
+	$(MKDIR) $@
 
 clean:
 			$(RM) $(OBJS)

@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/24 17:37:56 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:05:56 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 typedef struct s_var
 {
+	char			*type;
 	char			*var_name;
 	char			*content;
 	struct s_var	*next;
@@ -38,7 +39,7 @@ typedef struct s_var
 typedef struct s_env
 {
 	t_var			*head;
-	t_var			*head_env;
+	t_var			*last_node;
 	t_var			*tail;
 }					t_env;
 
@@ -64,13 +65,6 @@ typedef struct s_parse
 	t_par			*tail;
 }					t_parse;
 
-// HANDLE_QUOTES
-// void				handle_quotes_general(t_parse *state, t_env *data,
-// 						char *cmd_buff);
-// void				handle_squotes(t_parse *state, char *cmd_buff);
-// void				handle_dquotes(t_parse *state, t_env *data, char *cmd_buff);
-// void				without_quotes(t_parse *state, t_env *data, char *cmd_buff);
-// void				clean_quotes(t_parse *state, char c, char *cmd_buff);
 
 // COMMAND
 char				*command_needed(char *command, t_env *data);
@@ -111,6 +105,9 @@ int				double_quotes_dollar(char **str, t_env *data);
 // STD_UTILS
 int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
 
+// EXPORT_BUILTIN
+void				export_list_builtin(t_env *data);
+
 // ENV_FUNCTIONS
 void				*create_node2(char *env_var, t_var *new_node,
 						char *equal_sign);
@@ -122,9 +119,10 @@ t_var				*insert_blank_node(t_env *data);
 void				handle_echo(char **args);
 
 // ENV_BUILTIN
-void				env_builtin(t_env *data);
-void				var_builtin(t_env *data);
-void				add_elem(t_env *data, char *name, char *content);
+void				env_list_builtin(t_env *data);
+
+//ADD_VAR
+void				add_elem(t_env *data, char *name, char *content, char *type);
 
 // UNSET_BUILTIN
 void				unset_builtin(t_env *data, char *str);
