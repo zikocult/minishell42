@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/25 18:05:56 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:21:58 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,12 @@ t_var				*insert_blank_node(t_env *data);
 // ECHO_FUNCTIONS
 void				handle_echo(char **args);
 
+// PWD_BUILTIN
+void				pwd_builtin(void);
+
 // ENV_BUILTIN
 void				env_list_builtin(t_env *data);
+int					env_builtin(char *str, t_env *data);
 
 //ADD_VAR
 void				add_elem(t_env *data, char *name, char *content, char *type);
