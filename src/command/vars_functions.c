@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/27 17:59:20 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:14:48 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	dollar_search(char *str)
 	return (0);
 }
 
-int	handle_dollar(char **str, t_env *data)
+/*int	handle_dollar(char **str, t_env *data)
 {
 	int		i;
 	char	*temp;
@@ -68,5 +68,59 @@ int	handle_dollar(char **str, t_env *data)
 		}
 	}
 	return (0);
-}
+}*/
 
+/*static char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*result;
+
+	result = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (result);
+}*/
+
+int	handle_dollar(char **str, t_env *data)
+{
+	int		i;
+	char	*temp;
+	char	*start;
+	char	*end;
+	char	*name;
+	char	*expansion;
+	char	*new_str;
+
+	if (ft_strchr(*str, '$')) 
+	{
+		i = dollar_search(*str); 
+		temp = ft_strndup(*str, i); 
+		if ((*str)[i++] == '$') 
+		{
+			start = &(*str)[i]; 
+			end = start;
+			while (*end && (ft_isalnum(*end) || *end == '_'))
+				end++;
+			name = ft_strndup(start, end - start);
+			if (!name)
+			{
+				free(temp);
+				return (1); 
+			}
+			expansion = expand_variable(name, data);
+			free(name);
+			if (!expansion)
+			{
+				free(temp);
+				return (1); 
+			}
+			new_str = ft_strjoin(temp, expansion);
+			free(temp);
+//			free(expansion);
+			new_str = ft_strjoin(new_str, end);
+			free(*str);
+			*str = new_str;
+			return (0);
+		}
+	}
+	return (0);
+}	

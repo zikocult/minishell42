@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/27 18:44:23 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:44:54 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,43 +81,63 @@ static int	mult_dollar(char *str)
 	return (dollar);
 }
 
-
-static int	expand_mult(char *str, t_env *data)
+static char	*ft_strjoin_free(char *s1, char *s2)
 {
-	int		j;
-	int		k;
-	char	*temp;
-	char	*expansion;
-	char	**dollars;
+	char	*result;
 
-	i = dollar_search(str);
-	temp = "\0";
-	dollars = ft_split(str, '$');
-	j = 0;
-	while(dollars[j])
-	{
-		k = 0;
-		test = ft_calloc(ft_strlen(dollars[j]) + 1, sizeof (char *));
-		test[0] = '$'; 
-		while(ft_isalnum(dollar[j][k]))
-		{
-			test[k + 1] = *dollar[j][k];
-			k++;
-		}			
-		expansion = expand_variable(&test, data);
-		if (!expansion)
-			continue;
-		box = ft_strjoin(temp, expansion);
-		free(temp);
-		temp = ft_strjoin(box, dollar[j]+k);
-		free(box);
-		j++;
-	}
-	free(*str);
-	*str = temp;
-	free(temp);
-	return (0);
+	result = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (result);
 }
+
+static int	expand_mult(char **str, t_env *data)
+{
+	char	*result;
+	char	*temp;
+	char	*start;
+	char	*end;
+	char	*name;
+	int		i;
+
+	result = ft_strdup(""); 
+	if (!result)
+		return (1); 
+	temp = *str;
+	while (*temp)
+	{
+		if (*temp == '$') 
+		{
+			start = temp; 
+			end = start + 1;
+			while (*end && (ft_isalnum(*end) || *end == '_'))
+				end++;
+			name = ft_strndup(start, end - start);
+			if (!name)
+			{
+				free(result);
+				return (1); 
+			}
+			if (handle_dollar(&name, data) == 0)
+				result = ft_strjoin_free(result, name);
+			else if (handle_dollar(&name, data) == 1)
+				free(name);
+			temp = end;
+		}
+		else
+		{
+			i = 0;
+			while (temp[i] && temp[i] != '$')
+				i++;
+			result = ft_strjoin_free(result, ft_strndup(temp, i));
+			temp += i;
+		}
+	}
+	free(*str); 
+	*str = result; 
+	return (0); 
+}
+
 
 int	double_quotes_dollar(char **str, t_env *data)
 {
