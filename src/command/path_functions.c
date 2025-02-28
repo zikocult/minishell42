@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/23 19:18:29 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:55:24 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,25 @@ static int	path_messages(char *str)
 {
 	int	i;
 	int	file;
+	int	directory;
 
 	i = 0;
 	file = 0;
+	directory = 0;
 	while (str[i])
 	{
 		if (str[i] == '.')
-		{
-			printf("%s: Perimssion denied\n", str);
 			file = 1;
-		}
+		else if (str[i] == '/')
+			directory = 1;
 		i++;
 	}
 	if (str[0] == '/' && file != 1)
 		printf("%s: Is a directory\n", str);
 	else if (str[0] != '/')
 		printf("%s: command NOT found\n", str);
+	else if (file == 1 && directory == 1)
+		printf("%s: Perimssion denied\n", str);
 	return (0);
 }
 
