@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/02/28 19:14:48 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/02 18:31:30 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	handle_dollar(char **str, t_env *data)
 	char	*name;
 	char	*expansion;
 	char	*new_str;
+	char	*new_temp;
 
 	if (ft_strchr(*str, '$')) 
 	{
@@ -110,15 +111,25 @@ int	handle_dollar(char **str, t_env *data)
 			free(name);
 			if (!expansion)
 			{
-				free(temp);
-				return (1); 
+			//	expansion = ft_strdup("");
+		/*		free(temp);
+				return (1);*/
+				new_str = ft_strjoin(temp, end);
+                free(temp);
+                free(*str);
+                *str = new_str;
+                return (0);
 			}
-			new_str = ft_strjoin(temp, expansion);
+		/*	new_temp = ft_strjoin(temp, expansion);
+			new_str = ft_strjoin(new_temp, end);*/
+			new_temp = ft_strjoin(expansion, end);
+
+			new_str = ft_strjoin(temp, new_temp);
+			free(new_temp);
 			free(temp);
-//			free(expansion);
-			new_str = ft_strjoin(new_str, end);
 			free(*str);
 			*str = new_str;
+
 			return (0);
 		}
 	}
