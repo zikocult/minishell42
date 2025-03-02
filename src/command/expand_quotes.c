@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/28 18:44:54 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/02 18:49:04 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static int	mult_dollar(char *str)
 			dollar++;
 		i++;
 	}
-	printf("hola dollar\n");
 	return (dollar);
 }
 
@@ -151,10 +150,8 @@ int	double_quotes_dollar(char **str, t_env *data)
 		return (0);
 	if ((*str)[0] == '\"' && (*str)[len - 1] == '\"')
 	{
-
 		if (mult_dollar(*str)> 1)
 		{
-			printf("hola\n");
 			expand_mult(str, data);
 			return (1);
 		}

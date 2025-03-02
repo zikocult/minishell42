@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/03/02 18:31:30 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/02 21:18:59 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,34 +43,23 @@ int	dollar_search(char *str)
 	return (0);
 }
 
-/*int	handle_dollar(char **str, t_env *data)
+static int	not_expansion(char **str, char *temp, char *end)
 {
-	int		i;
-	char	*temp;
-	char	*expansion;
+	char	*new_str;
 
-	if (ft_strchr(*str, '$'))
+	new_str = ft_strjoin(temp, end);
+	if (!new_str)
 	{
-		i = dollar_search(*str);
-		temp = ft_strndup(*str, i);
-		if ((*str)[i++] == '$')
-		{
-			expansion = expand_variable(&(*str)[i], data);
-			if (!expansion)
-			{
-				free(temp);
-				return (1);
-			}
-			free(*str);
-			*str = ft_strjoin(temp, expansion);
-			free(temp);
-			return (0);
-		}
+		free(temp);
+		return (1);
 	}
+	free(temp);
+	free(*str);
+	*str = new_str;
 	return (0);
-}*/
+}
 
-/*static char	*ft_strjoin_free(char *s1, char *s2)
+static char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*result;
 
@@ -78,60 +67,56 @@ int	dollar_search(char *str)
 	free(s1);
 	free(s2);
 	return (result);
-}*/
+}
+
+static char	*extract_and_expand_variable(char *str,
+	int i, t_env *data, char **end_ptr)
+{
+	char	*start;
+	char	*end;
+	char	*new_temp;
+	char	*new_str;
+
+	start = &str[i];
+	end = start;
+	while (*end && (ft_isalnum(*end) || *end == '_'))
+		end++;
+	new_temp = ft_strndup(start, end - start);
+	new_str = expand_variable(new_temp, data);
+	free(new_temp);
+	*end_ptr = end;
+	return (new_str);
+}
+
+static int	build_new_string(char **str, char *temp, char *new_str, char *end)
+{
+	char	*new_temp;
+
+	if (!new_str)
+		return (not_expansion(str, temp, end));
+	new_temp = ft_strjoin(new_str, end);
+	new_str = ft_strjoin_free(temp, new_temp);
+	free(*str);
+	*str = new_str;
+	return (0);
+}
 
 int	handle_dollar(char **str, t_env *data)
 {
 	int		i;
 	char	*temp;
-	char	*start;
-	char	*end;
-	char	*name;
-	char	*expansion;
 	char	*new_str;
-	char	*new_temp;
+	char	*end;
 
-	if (ft_strchr(*str, '$')) 
+	if (ft_strchr(*str, '$'))
 	{
-		i = dollar_search(*str); 
-		temp = ft_strndup(*str, i); 
-		if ((*str)[i++] == '$') 
+		i = dollar_search(*str);
+		temp = ft_strndup(*str, i);
+		if ((*str)[i++] == '$')
 		{
-			start = &(*str)[i]; 
-			end = start;
-			while (*end && (ft_isalnum(*end) || *end == '_'))
-				end++;
-			name = ft_strndup(start, end - start);
-			if (!name)
-			{
-				free(temp);
-				return (1); 
-			}
-			expansion = expand_variable(name, data);
-			free(name);
-			if (!expansion)
-			{
-			//	expansion = ft_strdup("");
-		/*		free(temp);
-				return (1);*/
-				new_str = ft_strjoin(temp, end);
-                free(temp);
-                free(*str);
-                *str = new_str;
-                return (0);
-			}
-		/*	new_temp = ft_strjoin(temp, expansion);
-			new_str = ft_strjoin(new_temp, end);*/
-			new_temp = ft_strjoin(expansion, end);
-
-			new_str = ft_strjoin(temp, new_temp);
-			free(new_temp);
-			free(temp);
-			free(*str);
-			*str = new_str;
-
-			return (0);
+			new_str = extract_and_expand_variable(*str, i, data, &end);
+			return (build_new_string(str, temp, new_str, end));
 		}
 	}
 	return (0);
-}	
+}
