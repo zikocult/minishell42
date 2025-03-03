@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/27 18:21:58 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:14:11 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
 
 // EXPORT_BUILTIN
 void				export_list_builtin(t_env *data);
+int					export_builtin(char *str, t_env *data);
 
 // ENV_FUNCTIONS
 void				*create_node2(char *env_var, t_var *new_node,

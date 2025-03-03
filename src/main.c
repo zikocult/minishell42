@@ -6,11 +6,12 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/02/27 18:22:24 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:20:24 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv, char **env)
 {
@@ -32,20 +33,26 @@ int	main(int argc, char **argv, char **env)
 	unset_builtin(&data, "SESSION_MANAGER");
 	add_elem(&data, "patata", "patata", "exp");
 	// add_elem(&data, "caracol", "lata", "exp");
+	export_builtin("Mandanga=patata", &data);
 
 	// unset_builtin(&data, "_");
 	// unset_builtin(&data, "SHLVL");
 	// unset_builtin(&data, "PWD");
 	// unset_builtin(&data, "_");
 	
-	add_elem(&data, "mandanga", "buena", "exp");
+	add_elem(&data, "Mandanga", "buena", "exp");
 	add_elem(&data, "patata", NULL, "var");
 	add_elem(&data, "pescado", NULL, "var");
-	// env_builtin("a=b=c", &data);
-	// env_builtin("a=patata", &data);
+	env_builtin("a=b=c", &data);
+	env_builtin("Mandanga=cacota", &data);
+	export_builtin("Mandanga", &data);
+	// export_builtin("pescado", &data);
+	// env_builtin("mandanga", &data);
+	printf("\n\n\nAhora viene la lista de env\n\n\n\n\n");
+	// export_list_builtin(&data);
 	env_list_builtin(&data);
-	env_builtin("mandanga", &data);
-	pwd_builtin();
+
+	// env_list_builtin(&data);
 	// export_list_builtin(&data);
 	// while (1)
 	// {
@@ -64,6 +71,5 @@ int	main(int argc, char **argv, char **env)
 	// 	}
 	// 	free(command_buff);
 	// }
-	
 	return (free_list(&data), 0);
 }
