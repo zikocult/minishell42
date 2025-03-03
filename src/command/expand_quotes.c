@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/02 18:49:04 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/03 18:22:23 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	mult_dollar(char *str)
 	return (dollar);
 }
 
-static char	*ft_strjoin_free(char *s1, char *s2)
+static char	*ft_strjoin_free(char *s1, char *s2) //MOVER A EXP_UTILS
 {
 	char	*result;
 
@@ -90,53 +90,63 @@ static char	*ft_strjoin_free(char *s1, char *s2)
 	return (result);
 }
 
-static int	expand_mult(char **str, t_env *data)
+static char *expansion(char **temp, t_env *data, char *result)
 {
-	char	*result;
-	char	*temp;
-	char	*start;
-	char	*end;
-	char	*name;
-	int		i;
+    char *start;
+    char *end;
+	char *name;
 
-	result = ft_strdup(""); 
-	if (!result)
-		return (1); 
-	temp = *str;
-	while (*temp)
-	{
-		if (*temp == '$') 
-		{
-			start = temp; 
-			end = start + 1;
-			while (*end && (ft_isalnum(*end) || *end == '_'))
-				end++;
-			name = ft_strndup(start, end - start);
-			if (!name)
-			{
-				free(result);
-				return (1); 
-			}
-			if (handle_dollar(&name, data) == 0)
-				result = ft_strjoin_free(result, name);
-			else if (handle_dollar(&name, data) == 1)
-				free(name);
-			temp = end;
-		}
-		else
-		{
-			i = 0;
-			while (temp[i] && temp[i] != '$')
-				i++;
-			result = ft_strjoin_free(result, ft_strndup(temp, i));
-			temp += i;
-		}
-	}
-	free(*str); 
-	*str = result; 
-	return (0); 
+	start = *temp;
+	end	= start + 1;
+    while (*end && (ft_isalnum(*end) || *end == '_'))
+        end++;
+    name = ft_strndup(start, end - start);
+    if (!name)
+        return (free(result), NULL);
+    if (handle_dollar(&name, data) == 0)
+        result = ft_strjoin_free(result, name);
+    else
+        free(name);
+    *temp = end;
+    return result;
 }
 
+static char *append_text(char **temp, char *result)
+{
+    int i;
+	char *substr;
+
+	i = 0;
+    while ((*temp)[i] && (*temp)[i] != '$')
+        i++;
+    substr = ft_strndup(*temp, i);
+    result = ft_strjoin_free(result, substr);
+    *temp += i;
+    return (result);
+}
+
+static int expand_mult(char **str, t_env *data)
+{
+    char *result;
+	char *temp;
+
+	result = ft_strdup("");
+    if (!result)
+        return 1;
+    temp = *str;
+    while (*temp)
+    {
+        if (*temp == '$')
+            result = expansion(&temp, data, result);
+        else
+            result = append_text(&temp, result);  
+        if (!result)
+            return 1;
+    }
+    free(*str);
+    *str = result;
+    return 0;
+}
 
 int	double_quotes_dollar(char **str, t_env *data)
 {
@@ -151,10 +161,7 @@ int	double_quotes_dollar(char **str, t_env *data)
 	if ((*str)[0] == '\"' && (*str)[len - 1] == '\"')
 	{
 		if (mult_dollar(*str)> 1)
-		{
-			expand_mult(str, data);
-			return (1);
-		}
+			return (expand_mult(str, data), 1);
 		else
 		{	
 			while ((*str)[i] == 32)
