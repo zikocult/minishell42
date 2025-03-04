@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/03 18:22:23 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:15:22 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,90 +64,6 @@ int	double_simple_dollar(char **str, t_env *data)
 	return (0);
 }
 
-static int	mult_dollar(char *str)
-{
-	int	i;
-	int	dollar;
-
-	dollar = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			dollar++;
-		i++;
-	}
-	return (dollar);
-}
-
-static char	*ft_strjoin_free(char *s1, char *s2) //MOVER A EXP_UTILS
-{
-	char	*result;
-
-	result = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (result);
-}
-
-static char *expansion(char **temp, t_env *data, char *result)
-{
-    char *start;
-    char *end;
-	char *name;
-
-	start = *temp;
-	end	= start + 1;
-    while (*end && (ft_isalnum(*end) || *end == '_'))
-        end++;
-    name = ft_strndup(start, end - start);
-    if (!name)
-        return (free(result), NULL);
-    if (handle_dollar(&name, data) == 0)
-        result = ft_strjoin_free(result, name);
-    else
-        free(name);
-    *temp = end;
-    return result;
-}
-
-static char *append_text(char **temp, char *result)
-{
-    int i;
-	char *substr;
-
-	i = 0;
-    while ((*temp)[i] && (*temp)[i] != '$')
-        i++;
-    substr = ft_strndup(*temp, i);
-    result = ft_strjoin_free(result, substr);
-    *temp += i;
-    return (result);
-}
-
-static int expand_mult(char **str, t_env *data)
-{
-    char *result;
-	char *temp;
-
-	result = ft_strdup("");
-    if (!result)
-        return 1;
-    temp = *str;
-    while (*temp)
-    {
-        if (*temp == '$')
-            result = expansion(&temp, data, result);
-        else
-            result = append_text(&temp, result);  
-        if (!result)
-            return 1;
-    }
-    free(*str);
-    *str = result;
-    return 0;
-}
-
 int	double_quotes_dollar(char **str, t_env *data)
 {
 	char	*new_str;
@@ -160,10 +76,10 @@ int	double_quotes_dollar(char **str, t_env *data)
 		return (0);
 	if ((*str)[0] == '\"' && (*str)[len - 1] == '\"')
 	{
-		if (mult_dollar(*str)> 1)
+		if (mult_dollar(*str) > 1)
 			return (expand_mult(str, data), 1);
 		else
-		{	
+		{
 			while ((*str)[i] == 32)
 				i++;
 			new_str = remove_double_quotes(*str);
