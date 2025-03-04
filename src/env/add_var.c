@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:34:40 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/03 20:32:10 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/03/04 19:07:10 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ static void	new_node1(t_env *data, char *name, char *content, char *type)
 	data->last_node = new_node;
 }
 
+static void	free_type(t_var *new_node, char *type)
+{
+	free(new_node->type);
+	new_node->type = ft_strdup(type);
+}
+
 static void	new_node2(t_var *new_node, char *content, char *type)
 {
 	if (content)
@@ -43,11 +49,15 @@ static void	new_node2(t_var *new_node, char *content, char *type)
 			free(new_node->content);
 		new_node->content = NULL;
 	}
-	if (ft_strcmp(new_node->type, "exp") || ft_strcmp(new_node->type, "env"))
+	if (!ft_strcmp(type, "env"))
+		free_type(new_node, type);
+	else if (!ft_strcmp(type, "exp"))
 	{
-		free(new_node->type);
-		new_node->type = ft_strdup(type);
+		if (ft_strcmp(new_node->type, "env"))
+			free_type(new_node, type);
 	}
+	else
+		free_type(new_node, type);
 }
 
 static void	new_node3(t_env *data, char *name, char *content, char *type)
@@ -68,7 +78,7 @@ static void	new_node3(t_env *data, char *name, char *content, char *type)
 	data->last_node = new_node;
 }
 
-void	add_elem(t_env *data, char *name, char *content, char *type)
+int	add_elem(t_env *data, char *name, char *content, char *type)
 {
 	t_var	*new_node;
 
@@ -82,4 +92,5 @@ void	add_elem(t_env *data, char *name, char *content, char *type)
 	}
 	else
 		new_node3(data, name, content, type);
+	return (0);
 }

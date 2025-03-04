@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/03 16:14:11 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:07:07 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void				env_list_builtin(t_env *data);
 int					env_builtin(char *str, t_env *data);
 
 //ADD_VAR
-void				add_elem(t_env *data, char *name, char *content, char *type);
+int					add_elem(t_env *data, char *name, char *content, char *type);
 
 // UNSET_BUILTIN
 void				unset_builtin(t_env *data, char *str);
