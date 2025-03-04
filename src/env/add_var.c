@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:34:40 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/03 18:06:09 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:32:10 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	new_node2(t_var *new_node, char *content, char *type)
 			free(new_node->content);
 		new_node->content = NULL;
 	}
-	if (ft_strcmp(new_node->type, "exp") && ft_strcmp(new_node->type, "env"))
+	if (ft_strcmp(new_node->type, "exp") || ft_strcmp(new_node->type, "env"))
 	{
 		free(new_node->type);
 		new_node->type = ft_strdup(type);

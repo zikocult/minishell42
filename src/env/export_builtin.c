@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:39:26 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/03/03 18:09:34 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:24:49 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	change_type(char *str, t_env *data)
 	if (current && ft_strcmp(current->type, "env"))
 	{
 			free(current->type);
-			current->type = "exp";
+			current->type = ft_strdup("exp");
 	}
 	else if (!current)
 		add_elem(data, str, NULL, "exp");
