@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   security_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:43:16 by patri             #+#    #+#             */
-/*   Updated: 2025/02/20 17:00:37 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:23:07 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	malloc_error(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	free_list(t_env	*data)
+void	free_list(t_env *data)
 {
 	t_var	*current;
 	t_var	*next_node;
@@ -41,11 +41,11 @@ void	free_list(t_env	*data)
 	while (current->next)
 	{
 		next_node = current->next;
-		if(current->content)
+		if (current->content)
 			free(current->content);
-		if(current->var_name)
+		if (current->var_name)
 			free(current->var_name);
-		if(current->type)
+		if (current->type)
 			free(current->type);
 		if (current)
 			free(current);
@@ -61,4 +61,14 @@ char	*if_notstr(char *str)
 	if (!str)
 		return (NULL);
 	return (str);
+}
+
+void	free_main(char *command_buff, t_env *data)
+{
+	if (data->heredoc_delimeter)
+	{
+		free(data->heredoc_delimeter);
+		data->heredoc_delimeter = NULL;
+	}
+	free(command_buff);
 }

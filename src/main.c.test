@@ -3,61 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/04 19:01:58 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:08:34 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
+
+void	handle_sigint(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
 int	main(int argc, char **argv, char **env)
 {
-	// char	*command_buff;
+	char	*command_buff;
 	t_env	data;
 
 	data.head = NULL;
 	data.tail = NULL;
+	data.heredoc_delimeter = NULL;
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	// Pruebas del heredoc
+	printf("\n=== Iniciando pruebas de heredoc ===\n");
+	// Prueba 1: Heredoc básico
+	printf("\nPrueba 1: Heredoc básico (escribe 'fin' para terminar)\n");
+	process_heredoc("fin", &data);
+	// Prueba 2: Verificar estado activo
+	printf("\nPrueba 2: Verificar estado activo\n");
+	if (is_heredoc_active(&data))
+		printf("Error: Heredoc debería estar inactivo\n");
+	else
+		printf("Heredoc inactivo - Correcto\n");
+	// Prueba 3: EOF sin terminar heredoc
+	printf("\nPrueba 3: Simular EOF sin terminar heredoc\n");
+	start_heredoc("fin", &data);
+	handle_heredoc_eof(&data);
+	// Prueba 4: Verificar limpieza después de EOF
+	printf("\nPrueba 4: Verificar limpieza después de EOF\n");
+	if (is_heredoc_active(&data))
+		printf("Error: Heredoc debería estar inactivo después de EOF\n");
+	else
+		printf("Heredoc inactivo después de EOF - Correcto\n");
+	printf("\n=== Pruebas de heredoc completadas ===\n\n");
+
 	if (argc == 1 && argv[0])
 	{
 		if (env == NULL || env[0] == NULL)
 			init_envi_list(&data);
 		else
-		 	init_list(&data, env);
+			init_list(&data, env);
 	}
-	unset_builtin(&data, "_");
-	unset_builtin(&data, "SHLVL");
-	unset_builtin(&data, "PWD");
-	export_builtin("patata", &data);
-	export_builtin("Mandanga=patata", &data);
-	add_elem(&data, "Mandanga", "buena", "exp");
-	add_elem(&data, "patata", "maravillosa", "var");
-	add_elem(&data, "pescado", NULL, "var");
-	env_builtin("Mandanga=cacota", &data);
-	export_builtin("Mandanga=mandangu", &data);
-	export_builtin("pescado", &data);
-	printf("\nAhora viene la lista de env\n\n");
-	env_list_builtin(&data);
-	printf("\nAhora viene la lista de exp\n\n");
-	export_list_builtin(&data);
-	// while (1)
-	// {
-	// 	command_buff = readline("💃 Minishell y olé 💃> ");
-	// 	if (*command_buff == '\0')
-	// 	{
-	// 		free(command_buff);
-	// 		continue ;
-	// 	}
-	// 	if (ft_strlen(command_buff) > 0)
-	// 		add_history(command_buff);
-	// 	if (select_type(command_buff, &data))
-	// 	{
-	// 		free(command_buff);
-	// 		break ;
-	// 	}
-	// 	free(command_buff);
-	// }
+	while (1)
+	{
+		command_buff = readline("💃 Minishell y olé 💃> ");
+		if (!command_buff)
+		{
+			if (is_heredoc_active(&data))
+			{
+				handle_heredoc_eof(&data);
+				continue ;
+			}
+			free(command_buff);
+			break ;
+		}
+		if (*command_buff == '\0')
+		{
+			free(command_buff);
+			continue ;
+		}
+		if (ft_strlen(command_buff) > 0)
+			add_history(command_buff);
+		if (select_type(command_buff, &data))
+		{
+			free(command_buff);
+			break ;
+		}
+		free(command_buff);
+	}
 	return (free_list(&data), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/04 19:07:07 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:50:31 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 # include "../mylibft/include/libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <linux/limits.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
@@ -41,6 +42,7 @@ typedef struct s_env
 	t_var			*head;
 	t_var			*last_node;
 	t_var			*tail;
+	char			*heredoc_delimeter;
 }					t_env;
 
 typedef struct s_par
@@ -64,7 +66,6 @@ typedef struct s_parse
 	t_par			*head;
 	t_par			*tail;
 }					t_parse;
-
 
 // COMMAND
 char				*command_needed(char *command, t_env *data);
@@ -90,20 +91,21 @@ void				free_memory(char **ptr);
 void				malloc_error(char *str);
 void				free_list(t_env *data);
 char				*if_notstr(char *str);
+void				free_main(char *command_buff, t_env *data);
 
 // VARS_FUNCTIONS
 char				*expand_variable(char *input, t_env *data);
 int					dollar_search(char *str);
 int					handle_dollar(char **str, t_env *data);
 
-//EXPAND_QUOTES
-int				single_quotes(char **str, t_env *data);
-int				double_simple_dollar(char **str, t_env *data);
-int				double_quotes_dollar(char **str, t_env *data);
-
+// EXPAND_QUOTES
+int					single_quotes(char **str, t_env *data);
+int					double_simple_dollar(char **str, t_env *data);
+int					double_quotes_dollar(char **str, t_env *data);
 
 // STD_UTILS
-int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
+int					process_data(t_parse *node, t_env *data,
+						int (*func)(char **, t_env *));
 
 // EXPORT_BUILTIN
 void				export_list_builtin(t_env *data);
@@ -126,8 +128,9 @@ void				pwd_builtin(void);
 void				env_list_builtin(t_env *data);
 int					env_builtin(char *str, t_env *data);
 
-//ADD_VAR
-int					add_elem(t_env *data, char *name, char *content, char *type);
+// ADD_VAR
+int					add_elem(t_env *data, char *name, char *content,
+						char *type);
 
 // UNSET_BUILTIN
 void				unset_builtin(t_env *data, char *str);
@@ -178,5 +181,10 @@ char				*remove_double_quotes(char *str);
 // VALIDATE_QUOTES
 bool				validate_quotes(char *cmd_buff);
 bool				len_buff(char *cmd_buff);
+
+// HEREDOC
+void				process_heredoc(const char *delimiter, t_env *data, int fd);
+void				handle_heredoc_eof(t_env *data);
+int					is_heredoc_active(t_env *data);
 
 #endif
