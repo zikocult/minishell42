@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/04 16:15:22 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:44:33 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	single_quotes(char **str, t_env *data)
 {
-	int		i;
+//	int		i;
 	int		len;
 	char	*new_com;
 
@@ -24,14 +24,16 @@ int	single_quotes(char **str, t_env *data)
 		return (printf("minishell: '' Command not found \n"), 1);
 	if ((*str)[0] == '\'' && (*str)[len - 1] == '\'')
 	{
-		new_com = malloc(len + 1);
+		/*new_com = malloc(len + 1);
 		i = 0;
 		while (++i < len)
 			new_com[i - 1] = (*str)[i];
 		new_com[len - 2] = '\0';
 		free (*str);
 		*str = ft_strdup(new_com);
-		free(new_com);
+		free(new_com);*/
+		new_com = remove_single_quotes(*str);
+		*str = new_com;
 		return (1);
 	}
 	return (0);

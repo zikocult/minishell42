@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/03/04 18:34:44 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:01:55 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 	
@@ -38,16 +38,16 @@ int	handle_dollar(char **str, t_env *data)
 	char	*new_str;
 	char	*end;
 
-	if (ft_strchr(*str, '$'))
+	if (ft_strchr(*str, '$') && !ft_strchr(*str, '\'') && !ft_strchr(*str, '\"'))
 	{
 		i = dollar_search(*str);
 		temp = ft_strndup(*str, i);
-		if (mult_dollar(*str) > 1)
-			return (expand_mult(str, data), 1);
+/*		if (mult_dollar(*str) > 1)
+			return (expand_mult(str, data), 1);*/
 		if ((*str)[i++] == '$')
 		{
 			new_str = extract_expand(*str, i, data, &end);
-			return (build_new_string(str, temp, new_str, end));
+			return (build_new_string(str, temp, new_str, end), 1);
 		}
 		free(temp);
 	}
@@ -58,21 +58,24 @@ int	expand_mult(char **str, t_env *data)
 {
 	char	*result;
 	char	*temp;
-
-	result = ft_strdup("");
-	if (!result)
-		return (1);
-	temp = *str;
-	while (*temp)
-	{	
-		if (*temp == '$')
-			result = expansion(&temp, data, result);
-		else
-			result = append_text(&temp, result);
+	if (mult_dollar(*str) > 1)
+	{
+		result = ft_strdup("");
 		if (!result)
-			return (1);
+			return (0);
+		temp = *str;
+		while (*temp)
+		{	
+			if (*temp == '$')
+				result = expansion(&temp, data, result);
+			else
+				result = append_text(&temp, result);
+			if (!result)
+				return (0);
+		}
+		free(*str);
+		*str = result;
+		return (1);
 	}
-	free(*str);
-	*str = result;
 	return (0);
 }

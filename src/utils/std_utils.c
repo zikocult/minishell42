@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/04 16:38:02 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:35:39 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ static int	internal_data(t_par *temp, t_env *data,
 {
 	int	i;
 
-	if (temp->command)
-		if (func(&temp->command, data))
-			(*control)++;
-	if (temp->parameter)
-		if (func(&temp->parameter, data))
-			(*control)++;
+	if (temp->command && func(&temp->command, data))
+		(*control)++;
+	if (temp->parameter && func(&temp->parameter, data))
+		(*control)++;
 	if (temp->infile)
 	{
 		i = 0;
