@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:23:51 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/04 19:00:18 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:38:04 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	build_new_string(char **str, char *temp, char *new_str, char *end)
 	new_temp = ft_strjoin(new_str, end);
 	new_str = ft_strjoin_free(temp, new_temp);
 	free(*str);
-	*str = new_str;
+	*str = ft_strdup(new_str);
+	free(new_str);
 	return (0);
 }
 

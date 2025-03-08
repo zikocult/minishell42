@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/07 17:44:33 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/08 19:30:46 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,17 @@ int	double_quotes_dollar(char **str, t_env *data)
 		return (0);
 	if ((*str)[0] == '\"' && (*str)[len - 1] == '\"')
 	{
-		if (mult_dollar(*str) > 1)
-			return (expand_mult(str, data), 1);
-		else
-		{
+		/* if (mult_dollar(*str) > 1) */
+		/* 	return (expand_mult(str, data), 1); */
+		/* else */
+		/* { */
 			while ((*str)[i] == 32)
 				i++;
 			new_str = remove_double_quotes(*str);
 			handle_dollar(&new_str, data);
 			*str = new_str;
 			return (1);
-		}
+	//	}
 	}
 	return (0);
 }

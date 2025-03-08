@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/03/07 19:01:55 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/08 20:37:00 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 	
@@ -54,28 +54,84 @@ int	handle_dollar(char **str, t_env *data)
 	return (0);
 }
 
+char	*check_quotes(char *result)
+{
+	int		quotes_number;
+	int		i;
+	int		j;
+	char	*new_result;
+
+	i = 0;
+	j = 0;
+	quotes_number = mult_dollar(result, '\"');
+	new_result = malloc(sizeof(char) * ((ft_strlen(result) - quotes_number) + 1));
+	if (!new_result)
+	{
+		perror("malloc");
+		exit(4);
+	}
+	printf("RESULT == %s\n", result);
+	while (result[i] != '\0')
+	{
+		while (result[i] == '\"')
+			i++;
+		if (result[i] == '\0')
+			break ;
+		new_result[j] = result[i];
+		i++;
+		j++;
+	}
+	new_result[j] = '\0';
+	free(result);
+	return (new_result);
+}
+
 int	expand_mult(char **str, t_env *data)
 {
 	char	*result;
 	char	*temp;
-	if (mult_dollar(*str) > 1)
+
+	printf("entro en expandmult\n");
+	result = ft_strdup("");
+		/* if (!result) */
+		/* 	return (0); */
+	temp = *str;
+	if (mult_dollar(temp, '$') > 1)
 	{
-		result = ft_strdup("");
-		if (!result)
-			return (0);
-		temp = *str;
-		while (*temp)
+		while (*temp != '\0')
 		{	
 			if (*temp == '$')
+			{
 				result = expansion(&temp, data, result);
+				printf("Este es result en expand muult: %s\n", result);
+			}
 			else
 				result = append_text(&temp, result);
 			if (!result)
-				return (0);
+				return (1);
 		}
+		printf("Este es result before check_quotes: %s\n", result);
+		result = check_quotes(result);
 		free(*str);
 		*str = result;
+
+		printf("Este es result en expand mult: %s\n", result);
 		return (1);
 	}
+	free(result);
 	return (0);
 }
+
+/* int expand_mult(char **str, t_env *data) */
+/* { */
+/* 	int i; */
+
+/* 	i = 0; */
+/* 	while((*str)[i]) */
+/* 	{ */
+/* 		if (str[i] == 32 || (str[i] >= 9 && str[i] <= 13)) */
+/* 			i++; */
+/* 		if (str[i] == '\'') */
+/* 			while (str[i]) */
+/* 	} */
+/* } */
