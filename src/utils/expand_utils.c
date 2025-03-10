@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:01:29 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/08 20:42:50 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:56:38 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,30 @@ char	*expansion(char **temp, t_env *data, char *result)
 	return (new_result);
 }
 
-char	*append_text(char **temp, char *result)
+char	*append_text(char **temp, char *result, int flag)
 {
 	int		i;
 	char	*substr;
 
 	i = 0;
-	while ((*temp)[i] != '\0' && (*temp)[i] != '$')
-		i++;
-	substr = ft_strndup(*temp, i);
-	result = ft_strjoin_free(result, substr);
-	*temp += i;
+	if (flag == 1 && (*temp)[ft_strlen(*temp) - 1] == '\'')
+	{
+		printf ("paso el primer flag de append\n");
+		free (result);
+		result = ft_strdup(*temp);
+//		result = ft_strjoin_free(result, substr);
+	}
+	else
+	{
+		while ((*temp)[i] != '\0' && (*temp)[i] != '$')
+		{
+			if ((*temp)[i] == '\'' && (*temp)[i + 1] == '$' && flag != 1)
+				i++;
+			i++;
+		}
+		substr = ft_strndup(*temp, i);
+		result = ft_strjoin_free(result, substr);
+		*temp += i;
+	}
 	return (result);
 }

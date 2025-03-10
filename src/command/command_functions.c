@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/03/08 18:04:00 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:01:39 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,16 @@ static void	execute_command2(t_par *current, t_env *data)
 
 static int	try_processes(t_parse *parse_data, t_env *data)
 {
+	if (process_data(parse_data, data, expand_mult))
+		return (1);
+	if (process_data(parse_data, data, handle_dollar))
+		return (1);
 	if (process_data(parse_data, data, double_quotes_dollar))
-	{
-		printf("Entro en process doble\n");
-		return (1);	
-	}
+		return (1);
 	if (process_data(parse_data, data, double_simple_dollar))
-	{
-		printf("Entro en process doble simple\n");
-		return (1);	
-	}
+		return (1);
 	if (process_data(parse_data, data, single_quotes))
-	{
-		printf("Entro en process simple\n");
-		return (1);	
-	}
+		return (1);
 	else
 		return (0);
 }
@@ -69,26 +64,12 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	current = parse_data->head;
 	while (current)
 	{
-		if (process_data(parse_data, data, expand_mult))
-		{
-			printf("Ahorita boom\n");
-			execute_command2(current, data);
-			current = current->next;
-			continue ;
-		}
-		if (process_data(parse_data, data, handle_dollar))
-		{
-			printf("Entro en handle\n");
-			execute_command2(current, data);
-			current = current->next;
-			continue ;
-		}
 		if (try_processes(parse_data, data))
 		{
 			execute_command2(current, data);
 			current = current->next;
 			continue ;
-		}		
+		}
 		if (!current->command)
 		{
 			current = current->next;

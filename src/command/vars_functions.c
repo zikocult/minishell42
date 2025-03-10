@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/03/08 20:37:00 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:01:52 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 	
@@ -42,8 +42,6 @@ int	handle_dollar(char **str, t_env *data)
 	{
 		i = dollar_search(*str);
 		temp = ft_strndup(*str, i);
-/*		if (mult_dollar(*str) > 1)
-			return (expand_mult(str, data), 1);*/
 		if ((*str)[i++] == '$')
 		{
 			new_str = extract_expand(*str, i, data, &end);
@@ -90,12 +88,17 @@ int	expand_mult(char **str, t_env *data)
 {
 	char	*result;
 	char	*temp;
+	int		flag;
 
+	flag = 0;
 	printf("entro en expandmult\n");
 	result = ft_strdup("");
-		/* if (!result) */
-		/* 	return (0); */
 	temp = *str;
+	printf("asi llega str:%s\n", temp);
+	/* if ((*str)[0] == '\"') */
+	/* 	flag = 0; */
+	if ((*str)[0] == '\'')
+		flag = 1;
 	if (mult_dollar(temp, '$') > 1)
 	{
 		while (*temp != '\0')
@@ -105,8 +108,13 @@ int	expand_mult(char **str, t_env *data)
 				result = expansion(&temp, data, result);
 				printf("Este es result en expand muult: %s\n", result);
 			}
+			else if (flag == 1 &&  (temp)[ft_strlen(temp) - 1] == '\'')
+			{
+				result = append_text(&temp, result, flag);
+				return (1);
+			}
 			else
-				result = append_text(&temp, result);
+				result = append_text(&temp, result, flag);
 			if (!result)
 				return (1);
 		}
@@ -114,24 +122,9 @@ int	expand_mult(char **str, t_env *data)
 		result = check_quotes(result);
 		free(*str);
 		*str = result;
-
 		printf("Este es result en expand mult: %s\n", result);
 		return (1);
 	}
 	free(result);
 	return (0);
 }
-
-/* int expand_mult(char **str, t_env *data) */
-/* { */
-/* 	int i; */
-
-/* 	i = 0; */
-/* 	while((*str)[i]) */
-/* 	{ */
-/* 		if (str[i] == 32 || (str[i] >= 9 && str[i] <= 13)) */
-/* 			i++; */
-/* 		if (str[i] == '\'') */
-/* 			while (str[i]) */
-/* 	} */
-/* } */
