@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/10 16:03:09 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:42:27 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ int	single_quotes(char **str, t_env *data)
 	{
 		new_com = remove_single_quotes(*str);
 		*str = new_com;
+		if ((*str)[0] == '\"')
+		{
+			new_com = remove_double_quotes(*str);
+			*str = new_com;
+			handle_dollar(str, data);
+		}
 		return (1);
 	}
 	return (0);

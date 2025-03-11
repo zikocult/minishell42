@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/03/10 18:01:52 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:32:12 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 	
@@ -90,11 +90,13 @@ int	expand_mult(char **str, t_env *data)
 	char	*temp;
 	int		flag;
 
-	flag = 0;
 	printf("entro en expandmult\n");
 	result = ft_strdup("");
+//	result = NULL;
 	temp = *str;
+	flag = 0;
 	printf("asi llega str:%s\n", temp);
+
 	/* if ((*str)[0] == '\"') */
 	/* 	flag = 0; */
 	if ((*str)[0] == '\'')
@@ -108,9 +110,10 @@ int	expand_mult(char **str, t_env *data)
 				result = expansion(&temp, data, result);
 				printf("Este es result en expand muult: %s\n", result);
 			}
-			else if (flag == 1 &&  (temp)[ft_strlen(temp) - 1] == '\'')
+			else if (flag == 1 && (temp)[ft_strlen(temp) - 1] == '\'')
 			{
-				result = append_text(&temp, result, flag);
+				result = remove_single_quotes(temp);
+				*str = result;
 				return (1);
 			}
 			else
