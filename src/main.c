@@ -6,12 +6,11 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/10 19:12:54 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:07:05 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdbool.h>
 
 void	handle_sigint(int sig)
 {
@@ -26,6 +25,7 @@ static void	first_init(t_env *data, char **env)
 {
 	data->head = NULL;
 	data->tail = NULL;
+	data->heredoc_delimeter = NULL;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	if (env == NULL || env[0] == NULL)
@@ -35,8 +35,8 @@ static void	first_init(t_env *data, char **env)
 }
 
 // Return values
-// 		0 = continue
-// 		1 = break
+// 		false or 0= continue
+// 		truen or 1 = break
 static bool	validation_main(char *command_buff, t_env *data)
 {
 	if (!command_buff)
@@ -71,7 +71,11 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		return_main = false;
-		command_buff = readline("Minishell 💻, beer 🍻 and OLÉ! 💃 ");
+		printf("\nPrueba 1: Heredoc básico (escribe 'fin' para terminar)\n");
+		process_heredoc("fin", &data, "echo");
+		printf("Prueba 2: Heredoc básico (escribe 'inicio' para terminar)\n");
+		process_heredoc("inicio", &data, "cat");
+		command_buff = readline("Minishell 💻 y OLÉ!💃 ");
 		return_main = validation_main(command_buff, &data);
 		if (return_main) 
 			break;

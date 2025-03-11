@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/10 16:59:05 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:02:14 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_env
 	t_var			*head;
 	t_var			*last_node;
 	t_var			*tail;
+	char			*heredoc_delimeter;
 }					t_env;
 
 typedef struct s_par
@@ -180,4 +181,8 @@ char				*remove_double_quotes(char *str);
 bool				validate_quotes(char *cmd_buff);
 bool				len_buff(char *cmd_buff);
 
+// HEREDOC
+void				process_heredoc(char *delimiter, t_env *data, char *command);
+
 #endif
+
