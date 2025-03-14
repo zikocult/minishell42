@@ -6,41 +6,51 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/07 17:35:39 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/14 18:49:32 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	internal_data(t_par *temp, t_env *data,
+static void	internal_infile(t_par *temp, t_env *data,
 	int (*func)(char **, t_env *), int *control)
 {
 	int	i;
 
+	i = 0;
+	while (temp->infile[i])
+	{
+		if (func(&temp->infile[i], data))
+			(*control)++;
+		i++;
+	}
+}
+
+static void	internal_outfile(t_par *temp, t_env *data,
+	int (*func)(char **, t_env *), int *control)
+{
+	int	i;
+
+	i = 0;
+	while (temp->outfile[i])
+	{
+		if (func(&temp->outfile[i], data))
+			(*control)++;
+		i++;
+	}
+}
+
+static int	internal_data(t_par *temp, t_env *data,
+	int (*func)(char **, t_env *), int *control)
+{
 	if (temp->command && func(&temp->command, data))
 		(*control)++;
 	if (temp->parameter && func(&temp->parameter, data))
 		(*control)++;
 	if (temp->infile)
-	{
-		i = 0;
-		while (temp->infile[i])
-		{
-			if (func(&temp->infile[i], data))
-				(*control)++;
-			i++;
-		}
-	}
+		internal_infile(temp, data, func, control);
 	if (temp->outfile)
-	{
-		i = 0;
-		while (temp->outfile[i])
-		{
-			if (func(&temp->outfile[i], data))
-				(*control)++;
-			i++;
-		}
-	}
+		internal_outfile(temp, data, func, control);
 	return (0);
 }
 

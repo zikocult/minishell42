@@ -6,10 +6,10 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/03/14 16:25:14 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:23:09 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-	
+
 #include "../../include/minishell.h"
 
 char	*expand_variable(char *input, t_env *data)
@@ -38,17 +38,15 @@ int	handle_dollar(char **str, t_env *data)
 	char	*new_str;
 	char	*end;
 
-	if (ft_strchr(*str, '$') && !ft_strchr(*str, '\'') && !ft_strchr(*str, '\"'))
+	if (ft_strchr(*str, '$') && !ft_strchr(*str, '\'')
+		&& !ft_strchr(*str, '\"'))
 	{
 		i = dollar_search(*str);
 		temp = ft_strndup(*str, i);
 		if ((*str)[i++] == '$')
 		{
 			if (!(*str)[i])
-			{
-				free(temp);
-				return (0);
-			}
+				return (free(temp), 0);
 			else
 			{
 				new_str = extract_expand(*str, i, data, &end);
@@ -62,80 +60,68 @@ int	handle_dollar(char **str, t_env *data)
 
 char	*check_quotes(char *result)
 {
-	int		quotes_number;
 	int		i;
 	int		j;
 	char	*new_result;
 
-	i = 0;
 	j = 0;
-	quotes_number = mult_dollar(result, '\"');
-	new_result = malloc(sizeof(char) * ((ft_strlen(result) - quotes_number) + 1));
+	i = mult_dollar(result, '\"');
+	new_result = malloc(((ft_strlen(result) - i) + 1));
 	if (!new_result)
 	{
 		perror("malloc");
 		exit(4);
 	}
-	printf("RESULT == %s\n", result);
+	i = 0;
 	while (result[i] != '\0')
 	{
 		while (result[i] == '\"')
 			i++;
 		if (result[i] == '\0')
 			break ;
-		new_result[j] = result[i];
-		i++;
-		j++;
+		new_result[j++] = result[i++];
 	}
 	new_result[j] = '\0';
 	free(result);
 	return (new_result);
 }
 
-int	expand_mult(char **str, t_env *data)
+static int	expand_mult_intern(char **str, int flag, t_env *data)
 {
 	char	*result;
 	char	*temp;
+
+	result = ft_strdup("");
+	temp = *str;
+	while (*temp != '\0')
+	{
+		if (*temp == '$')
+			result = expansion(&temp, data, result);
+		else if (flag == 1 && (temp)[ft_strlen(temp) - 1] == '\'')
+		{
+			result = remove_single_quotes(temp);
+			*str = result;
+			return (1);
+		}
+		else
+			result = append_text(&temp, result, flag);
+		if (!result)
+			return (1);
+	}
+	result = check_quotes(result);
+	free(*str);
+	*str = result;
+	return (1);
+}
+
+int	expand_mult(char **str, t_env *data)
+{
 	int		flag;
 
-	printf("entro en expandmult\n");
-	result = ft_strdup("");
-//	result = NULL;
-	temp = *str;
 	flag = 0;
-	printf("asi llega str:%s\n", temp);
-
-	/* if ((*str)[0] == '\"') */
-	/* 	flag = 0; */
 	if ((*str)[0] == '\'')
 		flag = 1;
-	if (mult_dollar(temp, '$') > 1)
-	{
-		while (*temp != '\0')
-		{	
-			if (*temp == '$')
-			{
-				result = expansion(&temp, data, result);
-				printf("Este es result en expand muult: %s\n", result);
-			}
-			else if (flag == 1 && (temp)[ft_strlen(temp) - 1] == '\'')
-			{
-				result = remove_single_quotes(temp);
-				*str = result;
-				return (1);
-			}
-			else
-				result = append_text(&temp, result, flag);
-			if (!result)
-				return (1);
-		}
-		printf("Este es result before check_quotes: %s\n", result);
-		result = check_quotes(result);
-		free(*str);
-		*str = result;
-		printf("Este es result en expand mult: %s\n", result);
-		return (1);
-	}
-	free(result);
+	if (mult_dollar(*str, '$') > 1)
+		expand_mult_intern(str, flag, data);
 	return (0);
 }

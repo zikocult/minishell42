@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/14 16:35:08 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:24:14 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,33 @@ int	single_quotes(char **str, t_env *data)
 			*str = new_com;
 			handle_dollar(str, data);
 		}
+		return (1);
+	}
+	return (0);
+}
+
+int	simple_double_dollar(char **str, t_env *data)
+{
+	int		i;
+	int		len;
+	char	*new_com;
+
+	(void)data;
+	if ((*str)[0] == '\'' && (*str)[1] == '\"')
+	{
+		new_com = return_str_parse(*str);
+		len = ft_strlen(new_com);
+		*str = (char *)malloc(sizeof(char) * (len + 2 + 1));
+		(*str)[0] = '\"';
+		i = 0;
+		while (i < len)
+		{
+			(*str)[i + 1] = new_com[i];
+			i++;
+		}
+		(*str)[len + 1] = '\"';
+		(*str)[len + 2] = '\0';
+		free(new_com);
 		return (1);
 	}
 	return (0);

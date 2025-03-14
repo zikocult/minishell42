@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/03/11 16:28:13 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:57:37 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ static int	try_processes(t_parse *parse_data, t_env *data)
 		return (1);
 	if (process_data(parse_data, data, handle_dollar))
 		return (1);
-	if (process_data(parse_data, data, double_quotes_dollar))
-		return (1);
 	if (process_data(parse_data, data, double_simple_dollar))
+		return (1);
+	if (process_data(parse_data, data, simple_double_dollar))
+		return (1);
+	if (process_data(parse_data, data, double_quotes_dollar))
 		return (1);
 	if (process_data(parse_data, data, single_quotes))
 		return (1);
