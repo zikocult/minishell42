@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 20:05:43 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/11 18:42:27 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:35:08 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	double_quotes_dollar(char **str, t_env *data)
 		new_str = remove_double_quotes(*str);
 		handle_dollar(&new_str, data);
 		*str = new_str;
+		if (ft_strlen(*str) == 0)
+			return (printf("minishell: '' Command not found \n"), 1);
 		return (1);
 	}
 	return (0);

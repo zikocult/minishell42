@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 11:31:22 by patri             #+#    #+#             */
-/*   Updated: 2025/03/11 18:32:12 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:25:14 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 	
@@ -44,8 +44,16 @@ int	handle_dollar(char **str, t_env *data)
 		temp = ft_strndup(*str, i);
 		if ((*str)[i++] == '$')
 		{
-			new_str = extract_expand(*str, i, data, &end);
-			return (build_new_string(str, temp, new_str, end), 1);
+			if (!(*str)[i])
+			{
+				free(temp);
+				return (0);
+			}
+			else
+			{
+				new_str = extract_expand(*str, i, data, &end);
+				return (build_new_string(str, temp, new_str, end), 1);
+			}
 		}
 		free(temp);
 	}
