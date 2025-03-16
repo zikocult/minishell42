@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/03/14 17:57:37 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/16 08:51:35 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	child_process(char *path, t_par *current)
 		perror("Error en fork");
 }
 
-static void	execute_command2(t_par *current, t_env *data)
+void	execute_command(t_par *current, t_env *data)
 {
 	char	*path;
 
@@ -59,7 +59,7 @@ static int	try_processes(t_parse *parse_data, t_env *data)
 		return (0);
 }
 
-void	execute_command(t_parse *parse_data, t_env *data)
+void	start_expansion(t_parse *parse_data, t_env *data)
 {
 	t_par	*current;
 
@@ -68,7 +68,7 @@ void	execute_command(t_parse *parse_data, t_env *data)
 	{
 		if (try_processes(parse_data, data))
 		{
-			execute_command2(current, data);
+			execute_command(current, data);
 			current = current->next;
 			continue ;
 		}
@@ -77,7 +77,7 @@ void	execute_command(t_parse *parse_data, t_env *data)
 			current = current->next;
 			continue ;
 		}
-		execute_command2(current, data);
+		execute_command(current, data);
 		current = current->next;
 	}
 }

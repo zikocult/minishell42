@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/16 08:49:10 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/16 08:55:29 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ typedef struct s_parse
 
 
 // COMMAND
-char				*command_needed(char *command, t_env *data);
-void				execute_command(t_parse *parse_data, t_env *data);
+void				start_expansion(t_parse *parse_data, t_env *data);
+void				execute_command(t_par *current, t_env *data);
 
 // PATH
 char				*find_path(t_par *current, t_env *data);
