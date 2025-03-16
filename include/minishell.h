@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/16 09:57:21 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:53:27 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,22 +198,21 @@ bool				len_buff(char *cmd_buff);
 
 //PIPE_PATH.C
 char	*enviroment(char **env);
-char	*find_path(char *copy, char *command);
-void	free_memory(char **ptr);
+//char	*find_path(char *copy, char *command);
 void	free_pipes(int **pipes, int num_pipes);
 int		**create_big_pip(int num_pipes);
 
 //PIPE_COMMAND.C
 void	create_pipes(int **pipes, int num_pipes);
 void	close_pipes(int **pipes, int num_pipes);
-void	execute_commands(t_command_data *cmd_data, int **pipes, int num_pipes);
-void	exec_child(int i, t_command_data *cmd_data, int **pipes, int num_pipes);
+//void	execute_commands(t_command_data *cmd_data, int **pipes, int num_pipes);
+void	exec_child(int i, t_parse *state, int **pipes, int num_pipes, t_env *data);
 void	wait_for_children(int argc);
 
 //PIPE_BODY.C
-void	setup_first_command(int i, t_command_data *cmd_data, int **pipes);
-void	setup_last_command(int i, t_command_data *cmd_data, int **pipes);
+void	setup_first_command(int i, t_parse *state, int **pipes);
+void	setup_last_command(int i, t_parse *state, int **pipes);
 void	setup_intermediate_command(int i, int **pipes);
-void	setup_redirection(int i, t_command_data *cmd_data, int **pipes);
+void	setup_redirection(int i, t_parse *state, int **pipes);
 
 #endif
