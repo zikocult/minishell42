@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/04 19:07:07 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/16 08:49:10 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,27 @@ char				*if_notstr(char *str);
 
 // VARS_FUNCTIONS
 char				*expand_variable(char *input, t_env *data);
-int					dollar_search(char *str);
 int					handle_dollar(char **str, t_env *data);
+int					expand_mult(char **str, t_env *data);
+
+//VARS_UTILS
+int					not_expansion(char **str, char *temp, char *end);
+char				*extract_expand(char *str, int i, t_env *data, char **end_ptr);
+int					build_new_string(char **str, char *temp, char *new_str, char *end);
+int					dollar_search(char *str);
 
 //EXPAND_QUOTES
-int				single_quotes(char **str, t_env *data);
-int				double_simple_dollar(char **str, t_env *data);
-int				double_quotes_dollar(char **str, t_env *data);
+int					single_quotes(char **str, t_env *data);
+int					double_simple_dollar(char **str, t_env *data);
+int					simple_double_dollar(char **str, t_env *data);
+int					double_quotes_dollar(char **str, t_env *data);
 
+//EXPAND_UTILS
+int					mult_dollar(char *str, char c);
+char				*ft_strjoin_free(char *s1, char *s2);
+char				*expansion(char **temp, t_env *data, char *result);
+char				*append_text(char **temp, char *result, int flag);
+int					expand_mult(char **str, t_env *data);
 
 // STD_UTILS
 int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
