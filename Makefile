@@ -45,11 +45,13 @@ $(NAME):	$(LIBFT) $(OBJSDIRS) $(OBJS)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(LIBS) Makefile
 			$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@
 
-$(OBJSDIRS) :
-			$(MKDIR) $(OBJSDIRS)
+$(OBJSDIRS) : 
+			$(MKDIR) $@
 
 libft:
 			make -C ./mylibft/
+			
+$(LIBFT):	libft
 
 clean:
 			$(RM) $(OBJS)
@@ -66,5 +68,5 @@ normi:
 			@norminette $(SRCS)
 
 info:
-			$(info $(SRCS_FILES))
+			$(info $(OBJSDIRS))
 

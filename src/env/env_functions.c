@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:00:05 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/04 17:44:54 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/16 08:33:44 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	*create_node2(char *env_var, t_var *new_node, char *equal_sign)
 		new_node->var_name[i] = env_var[i];
 		i++;
 	}
+	new_node->type = ft_strdup("env");
 	new_node->var_name[name_length] = '\0';
 	new_node->content = ft_strdup(equal_sign + 1);
 	if (!new_node->content)
@@ -76,6 +77,7 @@ t_var	*insert_blank_node(t_env *data)
 	new_node = (t_var *)malloc(sizeof(t_var));
 	if (!new_node)
 		return (NULL);
+	new_node->type = "\0";
 	new_node->content = "\0";
 	new_node->var_name = "\0";
 	new_node->next = NULL;

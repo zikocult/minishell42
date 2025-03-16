@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_builtin.c                                      :+:      :+:    :+:   */
+/*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
+/*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 17:17:54 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/03 20:31:24 by Guillem Barulls  ###   ########.fr       */
+/*   Created: 2025/02/21 12:39:26 by Guillem Barulls   #+#    #+#             */
+/*   Updated: 2025/03/03 20:24:49 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	env_list_builtin(t_env *data)
-{
-	t_var	*current;
-
-	current = data->head;
-	while (current->next)
-	{
-		if (!ft_strcmp(current->type, "env"))
-			printf("%s=%s\n", current->var_name, current->content);
-		current = current->next;
-	}
-}
 
 static char *create_var(char *str)
 {
@@ -68,7 +55,22 @@ static char	*create_value(char *str)
 	return (value);
 }
 
-int	env_builtin(char *str, t_env *data)
+static void	change_type(char *str, t_env *data)
+{
+	t_var	*current;
+
+	current = NULL;
+	current = env_search(data, str);
+	if (current && ft_strcmp(current->type, "env"))
+	{
+			free(current->type);
+			current->type = ft_strdup("exp");
+	}
+	else if (!current)
+		add_elem(data, str, NULL, "exp");
+}
+
+int	export_builtin(char *str, t_env *data)
 {
 	char	*var;
 	char	*value;
@@ -82,15 +84,11 @@ int	env_builtin(char *str, t_env *data)
 		while (str[count] != '=' && str[count])
 			count++;
 		value = create_value((str + count + 1));
-		add_elem(data, var, value, "env");
+		add_elem(data, var, value, "exp");
 		free (var);
 		free(value);
-		env_list_builtin(data);
 	}
 	else
-	{
-		printf("env: ‘%s’: No such file or directory\n", str);
-		return (1);
-	}
+		change_type(str, data);
 	return (0);
 }
