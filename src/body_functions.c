@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/03/16 08:54:52 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/16 10:02:04 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,7 @@ int	select_type(char *command_buff, t_env *data)
 	 	return (1);
 	}
 	else
-	{
 	 	start_expansion(&state, data);
-
-	}
 	print_token(&state);
 	free_parse(&state);
 	return (0);
