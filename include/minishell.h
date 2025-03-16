@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/16 12:53:27 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:42:23 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_parse
 
 // COMMAND
 void				start_expansion(t_parse *parse_data, t_env *data);
-void				execute_command(t_par *current, t_env *data);
+//void				execute_command(t_par *current, t_env *data);
 
 // PATH
 char				*find_path(t_par *current, t_env *data);
@@ -205,7 +205,7 @@ int		**create_big_pip(int num_pipes);
 //PIPE_COMMAND.C
 void	create_pipes(int **pipes, int num_pipes);
 void	close_pipes(int **pipes, int num_pipes);
-//void	execute_commands(t_command_data *cmd_data, int **pipes, int num_pipes);
+void	execute_command(t_parse *state, t_env *data, int **pipes, int num_pipes);
 void	exec_child(int i, t_parse *state, int **pipes, int num_pipes, t_env *data);
 void	wait_for_children(int argc);
 
@@ -214,5 +214,10 @@ void	setup_first_command(int i, t_parse *state, int **pipes);
 void	setup_last_command(int i, t_parse *state, int **pipes);
 void	setup_intermediate_command(int i, int **pipes);
 void	setup_redirection(int i, t_parse *state, int **pipes);
+
+//EXTRA_PIPE
+int		count_pipes(t_parse *state);
+char	**get_argv_from_parse(t_par *current);
+void	execute_pipex(t_parse *state, t_env *data);
 
 #endif
