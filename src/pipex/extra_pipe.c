@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:08:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/16 14:05:00 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:00:22 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,25 @@ void execute_pipex(t_parse *state, t_env *data)
 {
 	int				num_pipes;
 	int				**pipes;
-
 	// Contar número de comandos en la lista enlazada
 	t_par *current = state->head;
 	int num_commands = 0;
+
 	while (current)
 	{
 		num_commands++;
 		current = current->next;
 	}
-
 	// Si no hay comandos, terminamos
 	if (num_commands < 1)
 		return;
-
 	// Configuración de pipes
 	num_pipes = num_commands - 1;
-	pipes = create_big_pip(num_pipes);
-
-	// Configuración de cmd_data
-	/* cmd_data.argc = num_commands + 3;  // Simulamos argc para que pipex funcione */
-	/* cmd_data.argv = get_argv_from_parse(state->head); */
-	/* cmd_data.env = env_to_array(data); */
-	/* cmd_data.find = enviroment(cmd_data.env); */
+	pipes = create_big_pip(num_pipes); //chekeado y ok
 
 	// Ejecutar pipeline
-	create_pipes(pipes, num_pipes);
-	execute_command(state, data, pipes, num_pipes);	
+	create_pipes(pipes, num_pipes); //chekeado y ok
+	execute_command(state, data, pipes);	
 	close_pipes(pipes, num_pipes);
 	wait_for_children(num_commands);
 

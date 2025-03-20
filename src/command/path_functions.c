@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/04 18:29:40 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:33:47 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,34 @@ char	*get_full_path(char *path, char *command)
 	return (full_path);
 }
 
+/* char	*find_path(t_par *current, t_env *data) */
+/* { */
+/* 	char	**paths; */
+/* 	char	*full_path; */
+/* 	int		i; */
+/* 	t_var	*search; */
+
+/* 	search = env_search(data, "PATH"); */
+/* 	if (!search) */
+/* 		return (NULL); */
+/* 	paths = ft_split(search->content, ':'); */
+/* 	if_notstr(*paths); */
+/* 	i = 0; */
+/* 	full_path = NULL; */
+/* 	while (paths[i]) */
+/* 	{ */
+/* 		full_path = get_full_path(paths[i], current->command); */
+/* 		if (access(full_path, X_OK) == 0) */
+/* 			break ; */
+/* 		free(full_path); */
+/* 		full_path = NULL; */
+/* 		i++; */
+/* 	} */
+/* 	free_memory(paths); */
+/* 	if_notstr(full_path); */
+/* 	return (full_path); */
+/* } */
+
 char	*find_path(t_par *current, t_env *data)
 {
 	char	**paths;
@@ -30,24 +58,30 @@ char	*find_path(t_par *current, t_env *data)
 	int		i;
 	t_var	*search;
 
-	search = env_search(data, "PATH");
+	// Buscar la variable PATH en la estructura t_env
+	search = data->head;
+	while (search && ft_strncmp(search->var_name, "PATH", 4) != 0)
+		search = search->next;
 	if (!search)
 		return (NULL);
+
+	// Separar los directorios de PATH
 	paths = ft_split(search->content, ':');
-	if_notstr(*paths);
+	if (!paths || !*paths) // Evitar segfault si paths es NULL
+		return (NULL);
+	
 	i = 0;
 	full_path = NULL;
 	while (paths[i])
 	{
 		full_path = get_full_path(paths[i], current->command);
 		if (access(full_path, X_OK) == 0)
-			break ;
+			break;
 		free(full_path);
 		full_path = NULL;
 		i++;
 	}
 	free_memory(paths);
-	if_notstr(full_path);
 	return (full_path);
 }
 
@@ -85,8 +119,21 @@ char	*check_path(t_par *current, t_env *data)
 	if (!path)
 	{
 		path_messages(current->command);
-		current = current->next;
 		return (NULL);
 	}
 	return (path);
 }
+
+/* char	*check_path(t_par *current, t_env *data) */
+/* { */
+/* 	char	*path; */
+
+/* 	path = find_path(current, data); */
+/* 	if (!path) */
+/* 	{ */
+/* 		path_messages(current->command); */
+/* 		current = current->next; */
+/* 		return (NULL); */
+/* 	} */
+/* 	return (path); */
+/* } */

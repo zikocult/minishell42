@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/03/16 14:01:40 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:23:55 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	select_type(char *command_buff, t_env *data)
 	{
 
 	 	start_expansion(&state, data);
-		execute_pipex(&state, data);
+//		execute_pipex(&state, data);
 	}
 	print_token(&state);
 	free_parse(&state);

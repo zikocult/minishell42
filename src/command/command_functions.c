@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/03/16 14:04:07 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:23:26 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 	{
 		if (try_processes(parse_data, data))
 		{
+			execute_pipex(parse_data, data);
 //			execute_command(current, data);
 			current = current->next;
 			continue ;
@@ -77,6 +78,7 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 			current = current->next;
 			continue ;
 		}
+		execute_pipex(parse_data, data);
 //		execute_command(current, data);
 		current = current->next;
 	}
