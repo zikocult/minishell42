@@ -1,0 +1,8 @@
+doc
+include
+Makefile
+minishell
+mylibft
+obj
+outfile.txt
+src

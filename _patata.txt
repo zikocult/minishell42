@@ -1,0 +1,9 @@
+Makefile
+_patata.txt
+doc
+include
+minishell
+mylibft
+obj
+outfile.txt
+src
