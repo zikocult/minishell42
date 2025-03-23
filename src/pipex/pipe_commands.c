@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:09:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:31:30 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/23 13:34:45 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,18 @@ void execute_command(t_parse *state, t_env *data, int **pipes)
 	i = 0;
 	while (current)
 	{
-		printf("explorando current en execute command\n");
 		pid = fork();
 		if (pid == -1)
 		{
 			perror("fork");
 			exit(EXIT_FAILURE);
 		}
-		if (pid == 0) // Proceso hijo
-		{
-			printf("justo antes de exec_child\n");
-			printf("el valor de i antes de exec_child es: %d\n", i);
+		if (pid == 0) 
 			exec_child(i, state, pipes, data);
-			printf("salimos de exec_child\n");
-		}
 		current = current->next;
 		i++;
 	}
-
-	// Cerrar pipes en el proceso padre
 	close_pipes(pipes, i - 1);
-
-	// Esperar hijos modif jueves 20
-	printf("el valor de i en exec command es: %d", i);
 	while (i > 0)
 	{
 		wait(&status);
@@ -88,188 +77,108 @@ void execute_command(t_parse *state, t_env *data, int **pipes)
 	}
 }
 
-void exec_child(int i, t_parse *state, int **pipes, t_env *data)
+static char **get_envp(t_env *data)
 {
-	t_par *current = state->head;
-	int j = 0;
+    int count = 0;
+    t_var *current = data->head;
 
-	printf("dentro de exec_child\n");
-	// Buscar el comando correspondiente
-	while (j < i && current)
-	{
-		current = current->next;
-		j++;
-	}
+    // Contar cuántas variables de entorno hay
+    while (current)
+    {
+        count++;
+        current = current->next;
+    }
 
-	// Cerrar todos los pipes excepto los necesarios
-	j = 0;
-	while (j < i)
-	{
-		close(pipes[j][0]);
-		close(pipes[j][1]);
-		j++;
-	}
+    // Asignar memoria para el array de strings
+    char **envp = (char **)malloc((count + 1) * sizeof(char *));
+    if (!envp)
+        return NULL;
 
-	// Configurar redirecciones
-	if (i > 0)
-		dup2(pipes[i - 1][0], STDIN_FILENO);
-	if (i < i - 1)
-		dup2(pipes[i][1], STDOUT_FILENO);
+    // Rellenar el array con "NOMBRE=VALOR"
+    current = data->head;
+    int i = 0;
+    while (current)
+    {
+        int len = ft_strlen(current->var_name) + ft_strlen(current->content) + 2;
+        envp[i] = (char *)malloc(len * sizeof(char));
+        if (!envp[i])
+        {
+            while (i > 0)
+                free(envp[--i]);
+            free(envp);
+            return NULL;
+        }
+        ft_strlcpy(envp[i], current->var_name, len);
+        ft_strlcat(envp[i], "=", len);
+        ft_strlcat(envp[i], current->content, len);
+        current = current->next;
+        i++;
+    }
+    envp[i] = NULL; // Terminar con NULL
 
-	// Ejecutar el comando
-	char *path = check_path(current, data);
-	if (!path)
-		exit(EXIT_FAILURE);
-
-	execve(path, &current->parameter, NULL);
-
-	// Si execve falla
-	perror("execve");
-	exit(EXIT_FAILURE);
+    return envp;
 }
 
+void exec_child(int i, t_parse *state, int **pipes, t_env *data)
+{
+    t_par *current = state->head;
+    int j = 0;
+    int num_pipes = 0;
 
-/* void exec_child(int i, t_parse *state, int **pipes, int num_pipes, t_env *data) */
-/* { */
-/*     t_par   *current_command; */
-/*     char    **args; */
-/*     char    *path; */
-/*  //   char    **envp; */
-/*     int     j; */
+    // Contar cuántos pipes hay
+    t_par *temp = state->head;
+    while (temp && temp->next)
+    {
+        num_pipes++;
+        temp = temp->next;
+    }
+    // Avanzar hasta el comando correspondiente
+    while (j < i && current)
+    {
+        current = current->next;
+        j++;
+    }
+    if (!current || !current->command)
+        exit(EXIT_FAILURE); // Seguridad en caso de error
+    // Redirección de entrada y salida
+    if (i > 0) 
+        dup2(pipes[i - 1][0], STDIN_FILENO);
+    if (i < num_pipes)
+        dup2(pipes[i][1], STDOUT_FILENO);
 
-/*     // Obtener el comando correspondiente en la lista de comandos */
-/*     current_command = state->head; */
-/*     j = 0; */
-/* 	printf("dentro de exec_child\n"); */
-/*     while (j < i && current_command) */
-/*     { */
-/*         current_command = current_command->next; */
-/*         j++; */
-/*     } */
+    // Cerrar todos los pipes en el hijo
+/*    for (j = 0; j < num_pipes; j++)
+    {
+        close(pipes[j][0]);
+        close(pipes[j][1]);
+    }*/
+	close_pipes(pipes, num_pipes);
 
-/*     if (!current_command || !current_command->command) */
-/*     { */
-/*         perror("Invalid command"); */
-/*         exit(EXIT_FAILURE); */
-/*     } */
+    // Convertir parameter a char ** si es necesario
+    char *argv[3]; 
+    argv[0] = current->command;
+    argv[1] = current->parameter;
+    argv[2] = NULL;
 
-/*     // Configurar redirección de pipes */
-/*     setup_redirection(i, state, pipes); */
+    // Obtener el path del comando
+    char *path = check_path(current, data);
+    if (!path)
+    {
+        fprintf(stderr, "Command not found: %s\n", current->command);
+        exit(EXIT_FAILURE);
+    }
 
-/*     // Cerrar los pipes innecesarios */
-/*     close_pipes(pipes, num_pipes); */
+    // Obtener variables de entorno
+    char **envp = get_envp(data);
 
-/*     // Dividir comando en argumentos */
-/*     args = ft_split(current_command->command, ' '); */
+    // Ejecutar el comando
+    execve(path, argv, envp);
 
-/*     // Obtener la ruta del comando */
-/*     path = find_path(current_command, data); */
+    // Si execve falla
+    perror("execve");
+    exit(EXIT_FAILURE);
+}
 
-/*     if (!path) */
-/*     { */
-/*         fprintf(stderr, "Command not found: %s\n", current_command->command); */
-/*         exit(EXIT_FAILURE); */
-/*     } */
-
-/*     // Convertir el entorno a un array */
-/*  //   envp = env_to_array(data); */
-
-/*     // Ejecutar el comando */
-/*     if (execve(path, args, NULL) == -1) */
-/*     { */
-/*         perror("execve"); */
-/*         exit(EXIT_FAILURE); */
-/*     } */
-
-/*     free(path); */
-/*     free(args); */
-/* //    free(envp); */
-/*     exit(EXIT_FAILURE); */
-/* } */
-
-/* void execute_command(t_parse *state, t_env *data, int **pipes, int num_pipes) */
-/* { */
-/* 	t_par	*current; */
-/* 	int		pid; */
-/* 	int		i; */
-
-/* 	current = state->head; */
-/* 	i = 0; */
-
-/* 	while (current) */
-/* 	{ */
-/* 		pid = fork(); */
-/* 		if (pid == -1) */
-/* 		{ */
-/* 			perror("fork"); */
-/* 			exit(EXIT_FAILURE); */
-/* 		} */
-/* 		if (pid == 0) // Proceso hijo */
-/* 		{ */
-/* 			exec_child(i, state, pipes, num_pipes, data); */
-/* 		} */
-
-/* 		current = current->next; */
-/* 		i++; */
-/* 	} */
-/* } */
-
-/* void exec_child(int i, t_parse *state, int **pipes, int num_pipes, t_env *data) */
-/* { */
-/*     char    **result; */
-/*     char    *path; */
-/*     t_par   *current_command; */
-/*     int     j; */
-
-/*     // Obtener el comando correspondiente en la lista de comandos */
-/*     current_command = state->head; */
-/*     j = 0; */
-
-/*     // Recorrer hasta el i-ésimo comando (el índice i empieza desde 0) */
-/*     while (j < i) */
-/*     { */
-/*         current_command = current_command->next; */
-/*         j++; */
-/*     } */
-
-/*     // Verificar si el comando existe */
-/*     if (!current_command || !current_command->command) */
-/*     { */
-/*         perror("Invalid command"); */
-/*         exit(EXIT_FAILURE); */
-/*     } */
-
-/*     // Configurar la redirección si es necesario (por ejemplo, redirigir archivos) */
-/*     setup_redirection(i, state, pipes); */
-
-/*     // Cerrar los pipes que no son necesarios para este proceso hijo */
-/*     close_pipes(pipes, num_pipes); */
-
-/*     // Dividir el comando en sus argumentos */
-/*     result = ft_split(current_command->command, ' '); */
-
-/*     // Buscar el path del comando utilizando la función find_path, pasando 'data' que es de tipo 't_env' */
-/*     path = find_path(current_command, data);  // Cambié 'state->env' por 'data' */
-
-/*     // Verificar si find_path devolvió un path válido */
-/*     if (!path) */
-/*     { */
-/*         perror("Command not found"); */
-/*         exit(EXIT_FAILURE); */
-/*     } */
-
-/*     // Ejecutar el comando con execve */
-/*     if (execve(path, result, NULL) == -1)  // También cambié 'state->env' por 'data->env' */
-/*     { */
-/*         perror("execve"); */
-/*         exit(EXIT_FAILURE); */
-/*     } */
-
-/*     // Si execve falla, liberar memoria y terminar el proceso */
-/*     free(path); */
-/*     free(result); */
-/*     exit(EXIT_FAILURE); */
-/* } */
 void	wait_for_children(int argc)
 {
 	int	i;

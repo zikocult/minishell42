@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 09:49:24 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/20 16:02:42 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/23 13:38:13 by patri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	**create_big_pip(int num_pipes)
 	int	**pipes;
 	int	i;
 
-	printf("necesitamos %d pipes\n", num_pipes);
 	pipes = malloc(num_pipes * sizeof(int *));
 	if (pipes == NULL)
 	{
@@ -96,7 +95,6 @@ int	**create_big_pip(int num_pipes)
 	while (i < num_pipes)
 	{
 		pipes[i] = malloc(2 * sizeof(int));
-		printf("pipe[%d]\n", i);
 		if (pipes[i] == NULL)
 		{
 			perror("Error al asignar memoria");
