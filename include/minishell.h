@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/20 16:32:23 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:35:16 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int		**create_big_pip(int num_pipes);
 //PIPE_COMMAND.C
 void	create_pipes(int **pipes, int num_pipes);
 void	close_pipes(int **pipes, int num_pipes);
-void	execute_command(t_parse *state, t_env *data, int **pipes);
+void	execute_command(t_parse *state, t_env *data);
 void	exec_child(int i, t_parse *state, int **pipes, t_env *data);
 //void	exec_child(int i, t_parse *state, int **pipes, int num_pipes, t_env *data);
 void	wait_for_children(int argc);

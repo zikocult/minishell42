@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:09:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/23 13:34:45 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/24 17:59:30 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,147 +47,99 @@ void	close_pipes(int **pipes, int num_pipes)
 	}
 }
 
-void execute_command(t_parse *state, t_env *data, int **pipes)
+void execute_command(t_parse *state, t_env *data)
 {
-	t_par   *current;
-	int     i;
-	pid_t   pid;
-	int     status;
+    t_par   *current;
+    int     i, pid, status;
+    int     command_count;
+    char    *path;
+    
+    command_count = count_pipes(state) + 1;
+    int pipes[command_count - 1][2]; 
+    current = state->head;
 
-	current = state->head;
-	i = 0;
-	while (current)
-	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0) 
-			exec_child(i, state, pipes, data);
-		current = current->next;
-		i++;
-	}
-	close_pipes(pipes, i - 1);
-	while (i > 0)
-	{
-		wait(&status);
-		i--;
-	}
-}
-
-static char **get_envp(t_env *data)
-{
-    int count = 0;
-    t_var *current = data->head;
-
-    // Contar cuántas variables de entorno hay
-    while (current)
-    {
-        count++;
-        current = current->next;
+    // Crear los pipes
+    i = 0;
+    while (i < command_count - 1) {
+        if (pipe(pipes[i]) == -1) {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+        i++;
     }
 
-    // Asignar memoria para el array de strings
-    char **envp = (char **)malloc((count + 1) * sizeof(char *));
-    if (!envp)
-        return NULL;
-
-    // Rellenar el array con "NOMBRE=VALOR"
-    current = data->head;
-    int i = 0;
-    while (current)
-    {
-        int len = ft_strlen(current->var_name) + ft_strlen(current->content) + 2;
-        envp[i] = (char *)malloc(len * sizeof(char));
-        if (!envp[i])
-        {
-            while (i > 0)
-                free(envp[--i]);
-            free(envp);
-            return NULL;
+    i = 0;
+    while (current) {
+        pid = fork();
+        if (pid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
         }
-        ft_strlcpy(envp[i], current->var_name, len);
-        ft_strlcat(envp[i], "=", len);
-        ft_strlcat(envp[i], current->content, len);
+
+        if (pid == 0) { // Proceso hijo
+            // Redirigir entrada si es necesario
+            if (i == 0 && current->infile) {
+                int fd_in = open(current->infile[0], O_RDONLY);
+                if (fd_in == -1) {
+                    perror("open infile");
+                    exit(EXIT_FAILURE);
+                }
+                dup2(fd_in, STDIN_FILENO);
+                close(fd_in);
+            } else if (i > 0) {
+                dup2(pipes[i - 1][READ_END], STDIN_FILENO);
+            }
+
+            // Redirigir salida si es necesario
+            if (i == command_count - 1 && current->outfile) {
+                int fd_out = open(current->outfile[0], O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
+                if (fd_out == -1) {
+                    perror("open outfile");
+                    exit(EXIT_FAILURE);
+                }
+                dup2(fd_out, STDOUT_FILENO);
+                close(fd_out);
+            } else if (i < command_count - 1) {
+                dup2(pipes[i][WRITE_END], STDOUT_FILENO);
+            }
+
+            // Cerrar TODOS los pipes en los procesos hijos
+            int j = 0;
+            while (j < command_count - 1) {
+                close(pipes[j][READ_END]);
+                close(pipes[j][WRITE_END]);
+                j++;
+            }
+
+            // Buscar el path del comando
+            path = check_path(current, data);
+
+            // Construir el array de argumentos correctamente
+            char *args[] = {current->command, current->parameter, NULL};
+            execve(path, args, NULL);
+
+            /* perror("execve"); */
+            exit(EXIT_FAILURE);
+        }
+
+        // *** IMPORTANTE ***
+        // Cerrar pipes en el proceso padre para evitar escrituras redundantes
+        if (i > 0) {
+            close(pipes[i - 1][READ_END]);
+        }
+        if (i < command_count - 1) {
+            close(pipes[i][WRITE_END]);
+        }
+
         current = current->next;
         i++;
     }
-    envp[i] = NULL; // Terminar con NULL
 
-    return envp;
+    // Esperar a que terminen todos los procesos hijos
+    i = 0;
+    while (i < command_count) {
+        wait(&status);
+        i++;
+    }
 }
 
-void exec_child(int i, t_parse *state, int **pipes, t_env *data)
-{
-    t_par *current = state->head;
-    int j = 0;
-    int num_pipes = 0;
-
-    // Contar cuántos pipes hay
-    t_par *temp = state->head;
-    while (temp && temp->next)
-    {
-        num_pipes++;
-        temp = temp->next;
-    }
-    // Avanzar hasta el comando correspondiente
-    while (j < i && current)
-    {
-        current = current->next;
-        j++;
-    }
-    if (!current || !current->command)
-        exit(EXIT_FAILURE); // Seguridad en caso de error
-    // Redirección de entrada y salida
-    if (i > 0) 
-        dup2(pipes[i - 1][0], STDIN_FILENO);
-    if (i < num_pipes)
-        dup2(pipes[i][1], STDOUT_FILENO);
-
-    // Cerrar todos los pipes en el hijo
-/*    for (j = 0; j < num_pipes; j++)
-    {
-        close(pipes[j][0]);
-        close(pipes[j][1]);
-    }*/
-	close_pipes(pipes, num_pipes);
-
-    // Convertir parameter a char ** si es necesario
-    char *argv[3]; 
-    argv[0] = current->command;
-    argv[1] = current->parameter;
-    argv[2] = NULL;
-
-    // Obtener el path del comando
-    char *path = check_path(current, data);
-    if (!path)
-    {
-        fprintf(stderr, "Command not found: %s\n", current->command);
-        exit(EXIT_FAILURE);
-    }
-
-    // Obtener variables de entorno
-    char **envp = get_envp(data);
-
-    // Ejecutar el comando
-    execve(path, argv, envp);
-
-    // Si execve falla
-    perror("execve");
-    exit(EXIT_FAILURE);
-}
-
-void	wait_for_children(int argc)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	while (i < argc - 3)
-	{
-		wait(&status);
-		i++;
-	}
-}
