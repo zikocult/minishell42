@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:09:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/24 17:59:30 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:54:57 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,36 @@ void execute_command(t_parse *state, t_env *data)
             path = check_path(current, data);
 
             // Construir el array de argumentos correctamente
-            char *args[] = {current->command, current->parameter, NULL};
-            execve(path, args, NULL);
+			// empieza funcion para esplitear y joinear comando y parametro
+			
+			if (current->command)
+			{
+				char **param = NULL;
+				int k = 0;
+				int count = 0;
+				if (current->parameter)
+				{
+					param = ft_split(current->parameter, ' ');
+					while (param && param[count])
+						count++;
+				}
+				char **res;
+				res = malloc(sizeof(char *) * (count + 2));
+				res[0] = ft_strdup(current->command);
+				if (current->parameter)
+				{
+					while (param[k])
+					{
+						res[k + 1] = ft_strdup(param[k]);
+						free(param[k]);
+						k++;
+					}
+					free(param);
+				}
+				res[k + 1] = '\0';
+				char **env = enviroment(data);
+				execve(path, res, env);			
+			}
 
             /* perror("execve"); */
             exit(EXIT_FAILURE);

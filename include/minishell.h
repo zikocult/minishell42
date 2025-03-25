@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/24 16:35:16 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:43:53 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ bool				validate_quotes(char *cmd_buff);
 bool				len_buff(char *cmd_buff);
 
 //PIPE_PATH.C
-char	*enviroment(char **env);
+char	**enviroment(t_env *data);
 //char	*find_path(char *copy, char *command);
 void	free_pipes(int **pipes, int num_pipes);
 int		**create_big_pip(int num_pipes);

@@ -6,35 +6,58 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 09:49:24 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/23 13:38:13 by patri            ###   ########.fr       */
+/*   Updated: 2025/03/25 18:50:24 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*enviroment(char **env)
-{
-	int		i;
-	int		found;
-	char	*copy;
+#include <stdlib.h>
+#include <string.h>
 
-	copy = NULL;
-	found = 0;
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			copy = ft_strdup(env[i]);
-			found = 1;
-			break ;
-		}
-		i++;
-	}
-	if (!found)
-		printf("no encontrado :<");
-	return (copy);
+char **enviroment(t_env *data)
+{
+    t_var *var;
+    int count = 0;
+    char **env;
+    int i = 0;
+
+    // Contar cuántas variables de entorno hay
+    var = data->head;
+    while (var)
+    {
+        count++;
+        var = var->next;
+    }
+
+    // Reservar memoria para el array de strings (+1 para NULL al final)
+    env = (char **)malloc((count + 1) * sizeof(char *));
+    if (!env)
+        return (NULL);
+
+    // Llenar el array con las variables de entorno
+    var = data->head;
+    while (var)
+    {
+        // Reservar espacio para "VAR=VAL\0"
+        int len = strlen(var->var_name) + strlen(var->content) + 2;
+        env[i] = (char *)malloc(len);
+        if (!env[i])
+            return (NULL);
+
+        // Construir el string manualmente
+        strcpy(env[i], var->var_name);  // Copiar "VAR"
+        strcat(env[i], "=");            // Agregar "="
+        strcat(env[i], var->content);   // Agregar "VALUE"
+
+        i++;
+        var = var->next;
+    }
+    env[i] = NULL; // Último elemento NULL para `execve`
+
+    return env;
 }
+
 
 /* char	*find_path(char *copy, char *command) */
 /* { */
