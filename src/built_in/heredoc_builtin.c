@@ -6,16 +6,11 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/11 17:23:07 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:07:15 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	is_heredoc_active(t_env *data)
-{
-	return (data->heredoc_delimeter != NULL);
-}
 
 static void	handle_heredoc_eof(t_env *data)
 {
@@ -53,6 +48,7 @@ void	process_heredoc(char *delimiter, t_env *data, char *command)
 
 	heredoc_content = ft_strdup("");
 	data->heredoc_delimeter = ft_strdup(delimiter);
+	g_in_heredoc = 1;
 	while (1)
 	{
 		line = readline("> ");
@@ -61,7 +57,7 @@ void	process_heredoc(char *delimiter, t_env *data, char *command)
 			handle_heredoc_eof(data);
 			break ;
 		}
-		if (!ft_strcmp(line, delimiter))
+		if (!ft_strcmp(line, delimiter) || g_in_heredoc == 2)
 		{
 			free(line);
 			break ;
