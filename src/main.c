@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/27 14:19:09 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/03/27 14:20:57 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,10 @@ int	main(int argc, char **argv, char **env)
 		command_buff = readline("Minishell 💻 y OLÉ!💃 ");
 		if (validation_main(command_buff, &data))
 			break ;
-		// Esta parte es una prueba hasta el siguiente comentario
 		printf("\nPrueba 1: Heredoc básico (escribe 'fin' para terminar)\n");
 		process_heredoc("fin", &data, "echo");
 		printf("Prueba 2: Heredoc básico (escribe 'inicio' para terminar)\n");
 		process_heredoc("inicio", &data, "cat");
-		// Hasta aquí
 	}
 	return (free_list(&data), 0);
 }
