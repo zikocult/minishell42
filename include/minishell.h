@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/16 08:55:29 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:50:50 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@
 # include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+// extern volatile sig_atomic_t	g_in_heredoc;
 
 typedef struct s_var
 {
@@ -41,6 +44,7 @@ typedef struct s_env
 	t_var			*head;
 	t_var			*last_node;
 	t_var			*tail;
+	char			*heredoc_delimeter;
 }					t_env;
 
 typedef struct s_par
@@ -191,5 +195,14 @@ char				*remove_double_quotes(char *str);
 // VALIDATE_QUOTES
 bool				validate_quotes(char *cmd_buff);
 bool				len_buff(char *cmd_buff);
+
+// HEREDOC
+int					process_heredoc(char *delimiter, t_env *data, char *command);
+
+// SIGNALS
+
+void				interactive_signals(void);
+void				restore_signals(void);
+void				here_signals(void);
 
 #endif
