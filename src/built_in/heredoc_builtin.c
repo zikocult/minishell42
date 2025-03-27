@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 16:47:49 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:53:07 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	handle_heredoc_eof(t_env *data)
 	}
 }
 
-static char	*ft_strjoin_free(char *s1, const char *s2)
+static char	*free_strjoin(char *s1, const char *s2)
 {
 	char	*result;
 
@@ -61,8 +61,8 @@ static char	*read_to_finish(char *delimiter, t_env *data)
 				handle_heredoc_eof(data);
 			break ;
 		}
-		content = ft_strjoin_free(content, line);
-		content = ft_strjoin_free(content, "\n");
+		content = free_strjoin(content, line);
+		content = free_strjoin(content, "\n");
 	}
 	if (line)
 		free(line);
