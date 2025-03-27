@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 16:53:07 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:02:38 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	process_heredoc(char *delimiter, t_env *data, char *command)
 		{
 			free(data->heredoc_delimeter);
 			data->heredoc_delimeter = NULL;
+			status = 130;
 		}
 	}
 	restore_signals();
