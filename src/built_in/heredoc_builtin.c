@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 14:28:06 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/03/27 16:47:49 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,12 @@ int	process_heredoc(char *delimiter, t_env *data, char *command)
 	else
 	{
 		waitpid(pid, &status, 0);
-		// printf("Status = %i\n", status);
-		// if (WIFEXITED(status) && WEXITSTATUS(status) == 1) ...
-		// lo siguiente es equivalente, pero como no sé si se pueden usar estas macros..
-		// WIFEXITED verifica que el proceso hijo terminó correctamente
-		// WEXITSTATUS revisa el valor del código exit()
-		// if (((status)&0xFF) == 0 && ((status >> 8) & 0xFF) == 1)
 		if (status)
 		{
 			free(data->heredoc_delimeter);
 			data->heredoc_delimeter = NULL;
 		}
 	}
-	// interactive_signals();
 	restore_signals();
 	return (status);
 }
