@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 14:16:18 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/03/27 14:28:06 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	process_heredoc(char *delimiter, t_env *data, char *command)
 			data->heredoc_delimeter = NULL;
 		}
 	}
-	interactive_signals();
+	// interactive_signals();
+	restore_signals();
 	return (status);
 }

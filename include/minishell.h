@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 14:16:59 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/03/27 14:23:50 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ int					process_heredoc(char *delimiter, t_env *data, char *command);
 // SIGNALS
 
 void				interactive_signals(void);
+void				restore_signals(void);
 void				here_signals(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/27 14:20:57 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/03/27 14:23:20 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	first_init(t_env *data, char **env)
 {
+	interactive_signals();
 	data->head = NULL;
 	data->tail = NULL;
 	data->heredoc_delimeter = NULL;
@@ -59,7 +60,7 @@ int	main(int argc, char **argv, char **env)
 		first_init(&data, env);
 	while (1)
 	{
-		interactive_signals();
+		// interactive_signals();
 		command_buff = readline("Minishell 💻 y OLÉ!💃 ");
 		if (validation_main(command_buff, &data))
 			break ;
