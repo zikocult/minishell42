@@ -6,19 +6,16 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 12:17:52 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:16:18 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-extern int	g_in_heredoc;
-
 static void	handle_heredoc_eof(t_env *data)
 {
-	if (!g_in_heredoc)
-		printf("warning: here-document delimited by end-of-file (wanted `%s\')\n",
-			data->heredoc_delimeter);
+	printf("warning: here-document delimited by end-of-file (wanted `%s\')\n",
+		data->heredoc_delimeter);
 	if (data->heredoc_delimeter)
 	{
 		free(data->heredoc_delimeter);
@@ -53,7 +50,7 @@ static char	*read_to_finish(char *delimiter, t_env *data)
 	line = ft_strdup("");
 	data->heredoc_delimeter = ft_strdup(delimiter);
 	here_signals();
-	while (content && !g_in_heredoc)
+	while (content) 
 	{
 		if (line)
 			free(line);
@@ -72,16 +69,16 @@ static char	*read_to_finish(char *delimiter, t_env *data)
 	return (content);
 }
 
-void	process_heredoc(char *delimiter, t_env *data, char *command)
+int	process_heredoc(char *delimiter, t_env *data, char *command)
 {
 	char	*heredoc_content;
 	pid_t	pid;
 	int		status;
 
+	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
-		g_in_heredoc = 0;
 		heredoc_content = read_to_finish(delimiter, data);
 		end_heredoc(heredoc_content, command, data);
 		exit(0);
@@ -89,15 +86,18 @@ void	process_heredoc(char *delimiter, t_env *data, char *command)
 	else
 	{
 		waitpid(pid, &status, 0);
+		// printf("Status = %i\n", status);
 		// if (WIFEXITED(status) && WEXITSTATUS(status) == 1) ...
 		// lo siguiente es equivalente, pero como no sé si se pueden usar estas macros..
 		// WIFEXITED verifica que el proceso hijo terminó correctamente
 		// WEXITSTATUS revisa el valor del código exit()
-		if (((status)&0xFF) == 0 && ((status >> 8) & 0xFF) == 1)
+		// if (((status)&0xFF) == 0 && ((status >> 8) & 0xFF) == 1)
+		if (status)
 		{
 			free(data->heredoc_delimeter);
 			data->heredoc_delimeter = NULL;
 		}
 	}
 	interactive_signals();
+	return (status);
 }

@@ -6,13 +6,11 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/27 12:27:32 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:19:09 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// volatile sig_atomic_t	g_in_heredoc;
 
 static void	first_init(t_env *data, char **env)
 {

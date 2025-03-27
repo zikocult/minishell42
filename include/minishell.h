@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 12:21:33 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:16:59 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,17 +184,12 @@ bool				validate_quotes(char *cmd_buff);
 bool				len_buff(char *cmd_buff);
 
 // HEREDOC
-void				process_heredoc(char *delimiter, t_env *data, char *command);
+int					process_heredoc(char *delimiter, t_env *data, char *command);
 
 // SIGNALS
 
-void	interactive_signals(void);
-void	here_signals(void);
-// void				handle_sigint(int sig);
-// void				init_signals(void);
-// void				handle_sigint_heredoc(int sig);
-// void				init_heredoc_signals(void);
-// void				restore_signals(void);
+void				interactive_signals(void);
+void				here_signals(void);
 
 #endif
 
