@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/25 19:06:47 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:21:33 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-extern volatile sig_atomic_t g_in_heredoc;
+// extern volatile sig_atomic_t	g_in_heredoc;
 
 typedef struct s_var
 {
@@ -185,6 +185,16 @@ bool				len_buff(char *cmd_buff);
 
 // HEREDOC
 void				process_heredoc(char *delimiter, t_env *data, char *command);
+
+// SIGNALS
+
+void	interactive_signals(void);
+void	here_signals(void);
+// void				handle_sigint(int sig);
+// void				init_signals(void);
+// void				handle_sigint_heredoc(int sig);
+// void				init_heredoc_signals(void);
+// void				restore_signals(void);
 
 #endif
 

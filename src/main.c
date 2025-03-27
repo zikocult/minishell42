@@ -3,39 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
+/*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:04:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/25 19:13:59 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:27:32 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-volatile sig_atomic_t g_in_heredoc;
 
-// heredoc_signal = 0 "Heredoc no activo"
-// heredoc_signal = 1 "Heredoc activo"
-// heredoc_signal = 2 "Matamos Heredoc"
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	if (g_in_heredoc == 0)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	else if(g_in_heredoc == 1)
-		g_in_heredoc = 2;
-}
+// volatile sig_atomic_t	g_in_heredoc;
 
 static void	first_init(t_env *data, char **env)
 {
 	data->head = NULL;
 	data->tail = NULL;
 	data->heredoc_delimeter = NULL;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
 	if (env == NULL || env[0] == NULL)
 		init_envi_list(data);
 	else
@@ -76,18 +59,18 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc == 1 && argv[0])
 		first_init(&data, env);
-	// Esta parte es una prueba hasta el siguiente comentario
-	printf("\nPrueba 1: Heredoc básico (escribe 'fin' para terminar)\n");
-	process_heredoc("fin", &data, "echo");
-	printf("Prueba 2: Heredoc básico (escribe 'inicio' para terminar)\n");
-	process_heredoc("inicio", &data, "cat");
-	// Hasta aquí
 	while (1)
 	{
-		g_in_heredoc = 0;
+		interactive_signals();
 		command_buff = readline("Minishell 💻 y OLÉ!💃 ");
-		if (validation_main(command_buff, &data)) 
-			break;
+		if (validation_main(command_buff, &data))
+			break ;
+		// Esta parte es una prueba hasta el siguiente comentario
+		printf("\nPrueba 1: Heredoc básico (escribe 'fin' para terminar)\n");
+		process_heredoc("fin", &data, "echo");
+		printf("Prueba 2: Heredoc básico (escribe 'inicio' para terminar)\n");
+		process_heredoc("inicio", &data, "cat");
+		// Hasta aquí
 	}
 	return (free_list(&data), 0);
 }
