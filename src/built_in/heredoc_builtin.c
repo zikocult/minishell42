@@ -6,11 +6,12 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 16:47:49 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:00:57 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <stdio.h>
 
 static void	handle_heredoc_eof(t_env *data)
 {
@@ -86,10 +87,12 @@ int	process_heredoc(char *delimiter, t_env *data, char *command)
 	else
 	{
 		waitpid(pid, &status, 0);
+		printf("status: %i \n", status);
 		if (status)
 		{
 			free(data->heredoc_delimeter);
 			data->heredoc_delimeter = NULL;
+			status = 130;
 		}
 	}
 	restore_signals();
