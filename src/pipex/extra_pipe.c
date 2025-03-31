@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:08:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/24 16:36:25 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:46:05 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ void execute_pipex(t_parse *state, t_env *data)
 
 	num_pipes = count_pipes(state);
 	num_commands = num_pipes + 1;
-	if (num_commands < 1)
+	if (num_commands < 2)
+	{
+		printf("solo un command, hay que poner execute-command\n");
 		return;
+	}
 	/* pipes = create_big_pip(num_pipes); */
 	/* create_pipes(pipes, num_pipes); */
 	execute_command(state, data);	

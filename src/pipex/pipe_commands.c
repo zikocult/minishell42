@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:09:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/25 19:54:57 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:56:13 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,16 @@ void execute_command(t_parse *state, t_env *data)
 {
     t_par   *current;
     int     i, pid, status;
-    int     command_count;
+    int     num_pipes;
     char    *path;
+	int		**pipes;
     
-    command_count = count_pipes(state) + 1;
-    int pipes[command_count - 1][2]; 
+    num_pipes = count_pipes(state);
     current = state->head;
 
     // Crear los pipes
-    i = 0;
-    while (i < command_count - 1) {
-        if (pipe(pipes[i]) == -1) {
-            perror("pipe");
-            exit(EXIT_FAILURE);
-        }
-        i++;
-    }
+	pipes = create_big_pip(num_pipes);
+	create_pipes(pipes, num_pipes);
 
     i = 0;
     while (current) {
@@ -88,10 +82,11 @@ void execute_command(t_parse *state, t_env *data)
                 close(fd_in);
             } else if (i > 0) {
                 dup2(pipes[i - 1][READ_END], STDIN_FILENO);
+				close(pipes[i - 1][READ_END]);
             }
 
             // Redirigir salida si es necesario
-            if (i == command_count - 1 && current->outfile) {
+            if (i == num_pipes && current->outfile) {
                 int fd_out = open(current->outfile[0], O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
                 if (fd_out == -1) {
                     perror("open outfile");
@@ -99,17 +94,13 @@ void execute_command(t_parse *state, t_env *data)
                 }
                 dup2(fd_out, STDOUT_FILENO);
                 close(fd_out);
-            } else if (i < command_count - 1) {
+            } else if (i < num_pipes) {
                 dup2(pipes[i][WRITE_END], STDOUT_FILENO);
+				close(pipes[i][WRITE_END]);
             }
 
             // Cerrar TODOS los pipes en los procesos hijos
-            int j = 0;
-            while (j < command_count - 1) {
-                close(pipes[j][READ_END]);
-                close(pipes[j][WRITE_END]);
-                j++;
-            }
+			close_pipes(pipes, num_pipes);
 
             // Buscar el path del comando
             path = check_path(current, data);
@@ -155,7 +146,7 @@ void execute_command(t_parse *state, t_env *data)
         if (i > 0) {
             close(pipes[i - 1][READ_END]);
         }
-        if (i < command_count - 1) {
+        if (i < num_pipes) {
             close(pipes[i][WRITE_END]);
         }
 
@@ -165,9 +156,11 @@ void execute_command(t_parse *state, t_env *data)
 
     // Esperar a que terminen todos los procesos hijos
     i = 0;
-    while (i < command_count) {
+    while (i < num_pipes) {
         wait(&status);
         i++;
     }
+	free_pipes(pipes, num_pipes);
+
 }
 
