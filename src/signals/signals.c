@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:42:31 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/03/27 14:35:45 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/01 19:32:00 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void	handle_sigint(int sig)
 static void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
-	rl_catch_signals = 0;
+	printf("\n");
 	exit(130);
 }
 
@@ -33,13 +32,6 @@ void	interactive_signals(void)
 {
 	signal(SIGINT,handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-}
-
-void	restore_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	rl_catch_signals = 1;
 }
 
 void	here_signals(void)

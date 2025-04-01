@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 17:02:38 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:36:15 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static char	*read_to_finish(char *delimiter, t_env *data)
 	content = ft_strdup("");
 	line = ft_strdup("");
 	data->heredoc_delimeter = ft_strdup(delimiter);
-	here_signals();
 	while (content) 
 	{
 		if (line)
@@ -69,30 +68,38 @@ static char	*read_to_finish(char *delimiter, t_env *data)
 	return (content);
 }
 
-int	process_heredoc(char *delimiter, t_env *data, char *command)
+static int run_heredoc_child(char *delimiter, t_env *data, char *command)
 {
-	char	*heredoc_content;
-	pid_t	pid;
-	int		status;
+	char *heredoc_content;
+
+	here_signals();
+	heredoc_content = read_to_finish(delimiter, data);
+	end_heredoc(heredoc_content, command, data);
+	exit(0);
+}
+
+int process_heredoc(char *delimiter, t_env *data, char *command)
+{
+	pid_t   pid;
+	int     status;
 
 	status = 0;
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
-	{
-		heredoc_content = read_to_finish(delimiter, data);
-		end_heredoc(heredoc_content, command, data);
-		exit(0);
-	}
+		run_heredoc_child(delimiter, data, command);
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (status)
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		{
 			free(data->heredoc_delimeter);
 			data->heredoc_delimeter = NULL;
 			status = 130;
-		}
+        }
+		else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+            status = WEXITSTATUS(status);
 	}
-	restore_signals();
+	interactive_signals();
 	return (status);
 }
