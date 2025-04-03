@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/04/01 17:58:56 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:09:45 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,6 @@ int	select_type(char *command_buff, t_env *data)
 	 	start_expansion(&state, data);
 
 	}
-	print_token(&state);
-	printf("\nPrueba 1: Heredoc básico (escribe 'fin' para terminar)\n");
-	process_heredoc("fin", data, "echo");
-	printf("Prueba 2: Heredoc básico (escribe 'inicio' para terminar)\n");
-	process_heredoc("inicio", data, "cat");
 	free_parse(&state);
 	return (0);
 }
