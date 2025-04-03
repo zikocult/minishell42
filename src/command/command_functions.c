@@ -6,40 +6,11 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/03/17 17:23:26 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:06:47 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-/* static void	child_process(char *path, t_par *current) */
-/* { */
-/* 	pid_t	pid; */
-/* 	int		*status; */
-
-/* 	status = 0; */
-/* 	pid = fork(); */
-/* 	if (pid == 0) */
-/* 	{ */
-/* 		if (execve(path, &current->command, NULL) == -1) */
-/* 			exit(EXIT_FAILURE); */
-/* 	} */
-/* 	else if (pid > 0) */
-/* 		waitpid(pid, status, 0); */
-/* 	else */
-/* 		perror("Error en fork"); */
-/* } */
-
-/* void	execute_command(t_par *current, t_env *data) */
-/* { */
-/* 	char	*path; */
-
-/* 	path = check_path(current, data); */
-/* 	if (!path) */
-/* 		return ; */
-/* 	child_process(path, current); */
-/* 	free(path); */
-/* } */
 
 static int	try_processes(t_parse *parse_data, t_env *data)
 {
@@ -68,7 +39,7 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 	{
 		if (try_processes(parse_data, data))
 		{
-			execute_pipex(parse_data, data);
+			//pendiente desbloquar execute command;
 //			execute_command(current, data);
 			current = current->next;
 			continue ;
@@ -78,8 +49,10 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 			current = current->next;
 			continue ;
 		}
-		execute_pipex(parse_data, data);
+
+//		execute_pipex(parse_data, data);
 //		execute_command(current, data);
 		current = current->next;
 	}
+	execute_pipex(parse_data, data);
 }

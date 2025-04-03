@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/25 18:43:53 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:47:13 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,20 +205,18 @@ int		**create_big_pip(int num_pipes);
 //PIPE_COMMAND.C
 void	create_pipes(int **pipes, int num_pipes);
 void	close_pipes(int **pipes, int num_pipes);
-void	execute_command(t_parse *state, t_env *data);
-void	exec_child(int i, t_parse *state, int **pipes, t_env *data);
-//void	exec_child(int i, t_parse *state, int **pipes, int num_pipes, t_env *data);
-void	wait_for_children(int argc);
-
-//PIPE_BODY.C
-void	setup_first_command(int i, t_parse *state, int **pipes);
-void	setup_last_command(int i, t_parse *state, int **pipes);
-void	setup_intermediate_command(int i, int **pipes);
-void	setup_redirection(int i, t_parse *state, int **pipes);
 
 //EXTRA_PIPE
 int		count_pipes(t_parse *state);
-char	**get_argv_from_parse(t_par *current);
 void	execute_pipex(t_parse *state, t_env *data);
+
+//PIPE
+void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *env);
+void    redirect_io(t_par *current, int i, int **pipes, int num_pipes);
+void	close_parent_pipes(int i,  int num_pipes, int **pipes);
+void	perror_exit(char *msg);
+char	**buid_comand_args(t_par *current);
+void	handle_pipes(t_parse *state, t_env *data);
+
 
 #endif
