@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/04/03 12:09:45 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/03 12:11:06 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	select_type(char *command_buff, t_env *data)
 	 	start_expansion(&state, data);
 
 	}
+	print_token(&state);
 	free_parse(&state);
 	return (0);
 }
