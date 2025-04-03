@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/03 18:36:02 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:19:42 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    build_command_args(t_par *current, char ***res)
     (*res)[k + 1] = NULL;
 }
 
-void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *env)
+void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *data)
 {
     char    *path;
     char    **res;
@@ -46,9 +46,9 @@ void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, 
     
     redirect_io(current, i, pipes, num_pipes);
     close_pipes(pipes, num_pipes);
-    path = check_path(current, env);
+    path = check_path(current, data);
     build_command_args(current, &res);
-    env_vars = enviroment(env);
+    env_vars = enviroment(data);
     execve(path, res, env_vars);
     exit(EXIT_FAILURE);
 }

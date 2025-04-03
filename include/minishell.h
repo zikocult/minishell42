@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/03 18:47:13 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:18:50 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_parse
 
 // COMMAND
 void				start_expansion(t_parse *parse_data, t_env *data);
-//void				execute_command(t_par *current, t_env *data);
+void				execute_command(t_par *current, t_env *data);
 
 // PATH
 char				*find_path(t_par *current, t_env *data);
@@ -215,8 +215,8 @@ void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, 
 void    redirect_io(t_par *current, int i, int **pipes, int num_pipes);
 void	close_parent_pipes(int i,  int num_pipes, int **pipes);
 void	perror_exit(char *msg);
-char	**buid_comand_args(t_par *current);
+void	build_command_args(t_par *current, char ***res);
 void	handle_pipes(t_parse *state, t_env *data);
 
-
+	
 #endif

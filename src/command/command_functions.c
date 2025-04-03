@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/04/03 18:06:47 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:26:39 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 		if (try_processes(parse_data, data))
 		{
 			//pendiente desbloquar execute command;
-//			execute_command(current, data);
+			execute_command(current, data);
 			current = current->next;
 			continue ;
 		}
@@ -51,8 +51,21 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 		}
 
 //		execute_pipex(parse_data, data);
-//		execute_command(current, data);
+		execute_command(current, data);
 		current = current->next;
 	}
 	execute_pipex(parse_data, data);
+}
+	
+void execute_command(t_par *current, t_env *env)
+{
+    char    *path;
+    char    **res;
+    char    **env_vars;
+    
+    path = check_path(current, env);
+    build_command_args(current, &res);
+    env_vars = enviroment(env);
+    execve(path, res, env_vars);
+//    exit(EXIT_FAILURE);
 }
