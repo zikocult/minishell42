@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:47:18 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/03 16:47:26 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:19:56 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	export_list_builtin(t_env *data)
 		if (!ft_strcmp(current->type, "env")
 			|| !ft_strcmp(current->type, "exp"))
 			printf("declare -x %s%s%s%s\n", current->var_name,
-		  			change_null(current->content, "=\""),
-		  			change_null(current->content, current->content),
-		  			change_null(current->content, "\""));
+				change_null(current->content, "=\""),
+				change_null(current->content, current->content),
+				change_null(current->content, "\""));
 		current = current->next;
 	}
 }

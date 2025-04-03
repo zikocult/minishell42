@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:17:54 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/03 20:31:24 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/03 19:16:05 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	env_list_builtin(t_env *data)
 	}
 }
 
-static char *create_var(char *str)
+static char	*create_var(char *str)
 {
 	char	*var;
 	int		i;
@@ -53,7 +53,7 @@ static char *create_var(char *str)
 
 static char	*create_value(char *str)
 {
-	int 	i;
+	int		i;
 	char	*value;
 
 	i = 0;

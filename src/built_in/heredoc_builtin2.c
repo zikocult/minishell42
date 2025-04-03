@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_functions.c                                   :+:      :+:    :+:   */
+/*   heredoc_builtin2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
+/*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 16:23:37 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/03 18:50:42 by Guillem Barulls  ###   ########.fr       */
+/*   Created: 2025/04/03 18:53:54 by Guillem Barulls   #+#    #+#             */
+/*   Updated: 2025/04/03 18:54:55 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_echo(char **args)
+void	handle_heredoc_eof(t_env *data)
 {
-	int	i;
-
-	i = 1;
-	if (args[i] && ft_strcmp(args[i], "-n") == 0)
-		i++;
-	printf("📝  ");
-	while (args[i])
+	printf("warning: here-document delimited by end-of-file (wanted `%s\')\n",
+		data->heredoc_delimeter);
+	if (data->heredoc_delimeter)
 	{
-		printf("%s", args[i]);
-		i++;
+		free(data->heredoc_delimeter);
+		data->heredoc_delimeter = NULL;
 	}
-	if (!(args[1] && ft_strcmp(args[1], "-n") == 0))
-		printf("\n");
 }

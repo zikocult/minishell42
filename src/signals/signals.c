@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:42:31 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/04/01 19:32:00 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:06:37 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	handle_sigint_heredoc(int sig)
 
 void	interactive_signals(void)
 {
-	signal(SIGINT,handle_sigint);
+	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 

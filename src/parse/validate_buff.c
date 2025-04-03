@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:29:00 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/24 17:37:16 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:03:46 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,23 @@ static bool	validate_cmdbuff3(char *cmd_buff, char *last_char, int *count,
 	return (true);
 }
 
+// Ho he posat en el while directament, però si no funciona OK, el tindré que
+// tornar i separar, l'he tret per seguir la norma
+// Aniria just després del while
+// if (cmd_buff[i] == '\0')
+// 	break ;
 bool	validate_cmdbuff(char *cmd_buff)
 {
 	int		i;
 	int		count;
 	char	last_char;
 
-	if (!validate_quotes(cmd_buff) || !validate_cmdbuff2(cmd_buff) || !len_buff(cmd_buff))
+	if (!validate_quotes(cmd_buff) || !validate_cmdbuff2(cmd_buff)
+		|| !len_buff(cmd_buff))
 		return (false);
 	init_vars(&i, &count, &last_char);
-	while (i < (int)ft_strlen(cmd_buff))
+	while (i < (int)ft_strlen(cmd_buff) && cmd_buff[i] != '\0')
 	{
-		if (cmd_buff[i] == '\0')
-			break ;
 		jump_single_quotes(cmd_buff, &i);
 		jump_double_quotes(cmd_buff, &i);
 		if (i >= (int)ft_strlen(cmd_buff))

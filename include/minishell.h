@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/03/27 16:50:50 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:49:56 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_parse
 	t_par			*tail;
 }					t_parse;
 
-
 // COMMAND
 void				start_expansion(t_parse *parse_data, t_env *data);
 void				execute_command(t_par *current, t_env *data);
@@ -102,8 +101,10 @@ int					expand_mult(char **str, t_env *data);
 
 //VARS_UTILS
 int					not_expansion(char **str, char *temp, char *end);
-char				*extract_expand(char *str, int i, t_env *data, char **end_ptr);
-int					build_new_string(char **str, char *temp, char *new_str, char *end);
+char				*extract_expand(char *str, int i, t_env *data,
+						char **end_ptr);
+int					build_new_string(char **str, char *temp,
+						char *new_str, char *end);
 int					dollar_search(char *str);
 
 //EXPAND_QUOTES
@@ -120,7 +121,8 @@ char				*append_text(char **temp, char *result, int flag);
 int					expand_mult(char **str, t_env *data);
 
 // STD_UTILS
-int				process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *));
+int					process_data(t_parse *node,
+						t_env *data, int (*func)(char **, t_env *));
 
 // EXPORT_BUILTIN
 void				export_list_builtin(t_env *data);
@@ -144,7 +146,8 @@ void				env_list_builtin(t_env *data);
 int					env_builtin(char *str, t_env *data);
 
 //ADD_VAR
-int					add_elem(t_env *data, char *name, char *content, char *type);
+int					add_elem(t_env *data, char *name,
+						char *content, char *type);
 
 // UNSET_BUILTIN
 void				unset_builtin(t_env *data, char *str);
@@ -197,12 +200,13 @@ bool				validate_quotes(char *cmd_buff);
 bool				len_buff(char *cmd_buff);
 
 // HEREDOC
-int					process_heredoc(char *delimiter, t_env *data, char *command);
+int					process_heredoc(char *delimiter, t_env *data,
+						char *command);
+void				handle_heredoc_eof(t_env *data);
 
 // SIGNALS
 
 void				interactive_signals(void);
-void				restore_signals(void);
 void				here_signals(void);
 
 #endif

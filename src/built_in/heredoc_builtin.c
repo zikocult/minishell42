@@ -6,22 +6,11 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:10:13 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/01 19:36:15 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:56:49 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	handle_heredoc_eof(t_env *data)
-{
-	printf("warning: here-document delimited by end-of-file (wanted `%s\')\n",
-		data->heredoc_delimeter);
-	if (data->heredoc_delimeter)
-	{
-		free(data->heredoc_delimeter);
-		data->heredoc_delimeter = NULL;
-	}
-}
 
 static char	*free_strjoin(char *s1, const char *s2)
 {
@@ -49,7 +38,7 @@ static char	*read_to_finish(char *delimiter, t_env *data)
 	content = ft_strdup("");
 	line = ft_strdup("");
 	data->heredoc_delimeter = ft_strdup(delimiter);
-	while (content) 
+	while (content)
 	{
 		if (line)
 			free(line);
@@ -68,9 +57,9 @@ static char	*read_to_finish(char *delimiter, t_env *data)
 	return (content);
 }
 
-static int run_heredoc_child(char *delimiter, t_env *data, char *command)
+static int	run_heredoc_child(char *delimiter, t_env *data, char *command)
 {
-	char *heredoc_content;
+	char	*heredoc_content;
 
 	here_signals();
 	heredoc_content = read_to_finish(delimiter, data);
@@ -78,10 +67,10 @@ static int run_heredoc_child(char *delimiter, t_env *data, char *command)
 	exit(0);
 }
 
-int process_heredoc(char *delimiter, t_env *data, char *command)
+int	process_heredoc(char *delimiter, t_env *data, char *command)
 {
-	pid_t   pid;
-	int     status;
+	pid_t	pid;
+	int		status;
 
 	status = 0;
 	signal(SIGINT, SIG_IGN);
@@ -96,9 +85,9 @@ int process_heredoc(char *delimiter, t_env *data, char *command)
 			free(data->heredoc_delimeter);
 			data->heredoc_delimeter = NULL;
 			status = 130;
-        }
+		}
 		else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-            status = WEXITSTATUS(status);
+			status = WEXITSTATUS(status);
 	}
 	interactive_signals();
 	return (status);

@@ -6,13 +6,13 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:39:26 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/03/03 20:24:49 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/03 19:08:55 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char *create_var(char *str)
+static char	*create_var(char *str)
 {
 	char	*var;
 	int		i;
@@ -40,7 +40,7 @@ static char *create_var(char *str)
 
 static char	*create_value(char *str)
 {
-	int 	i;
+	int		i;
 	char	*value;
 
 	i = 0;
@@ -63,8 +63,8 @@ static void	change_type(char *str, t_env *data)
 	current = env_search(data, str);
 	if (current && ft_strcmp(current->type, "env"))
 	{
-			free(current->type);
-			current->type = ft_strdup("exp");
+		free(current->type);
+		current->type = ft_strdup("exp");
 	}
 	else if (!current)
 		add_elem(data, str, NULL, "exp");
