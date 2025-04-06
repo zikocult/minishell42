@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/17 17:33:47 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/06 10:47:18 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,6 @@ char	*get_full_path(char *path, char *command)
 	free(temp_path);
 	return (full_path);
 }
-
-/* char	*find_path(t_par *current, t_env *data) */
-/* { */
-/* 	char	**paths; */
-/* 	char	*full_path; */
-/* 	int		i; */
-/* 	t_var	*search; */
-
-/* 	search = env_search(data, "PATH"); */
-/* 	if (!search) */
-/* 		return (NULL); */
-/* 	paths = ft_split(search->content, ':'); */
-/* 	if_notstr(*paths); */
-/* 	i = 0; */
-/* 	full_path = NULL; */
-/* 	while (paths[i]) */
-/* 	{ */
-/* 		full_path = get_full_path(paths[i], current->command); */
-/* 		if (access(full_path, X_OK) == 0) */
-/* 			break ; */
-/* 		free(full_path); */
-/* 		full_path = NULL; */
-/* 		i++; */
-/* 	} */
-/* 	free_memory(paths); */
-/* 	if_notstr(full_path); */
-/* 	return (full_path); */
-/* } */
 
 char	*find_path(t_par *current, t_env *data)
 {
@@ -123,17 +95,3 @@ char	*check_path(t_par *current, t_env *data)
 	}
 	return (path);
 }
-
-/* char	*check_path(t_par *current, t_env *data) */
-/* { */
-/* 	char	*path; */
-
-/* 	path = find_path(current, data); */
-/* 	if (!path) */
-/* 	{ */
-/* 		path_messages(current->command); */
-/* 		current = current->next; */
-/* 		return (NULL); */
-/* 	} */
-/* 	return (path); */
-/* } */
