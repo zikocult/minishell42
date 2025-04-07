@@ -6,36 +6,42 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/06 10:59:11 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:55:06 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void    build_command_args(t_par *current, char ***res)
+static int count_param(t_par *current, char ***param)
 {
-    char    **param;
-    int     k;
-    int     count;
+	int count;
 
-    param = NULL;
-    count = 0;
+	count = 0;
     if (current->parameter)
     {
-        param = ft_split(current->parameter, ' ');
-        while (param && param[count])
-            count++;
+        *param = ft_split(current->parameter, ' ');
+        while (*param && (*param)[count])
+			count++;
     }
-    *res = malloc(sizeof(char *) * (count + 2));
-    (*res)[0] = ft_strdup(current->command);
-    k = -1;
-    while (param && param[++k])
-    {
-        (*res)[k + 1] = ft_strdup(param[k]);
-        free(param[k]);
-    }
-    free(param);
-    (*res)[k + 1] = NULL;
+	return (count);
+}
+
+void    build_command_args(t_par *current, char **res, char **param)
+{
+    int     k;
+
+	k = 0;
+    res[0] = ft_strdup(current->command);
+	if (current->parameter)
+	{
+		while (param && param[k])
+		{
+			res[k + 1] = ft_strdup(param[k]);
+			free(param[k]);
+			k++;
+		}
+	}
+	res[k + 1] = '\0';
 }
 
 void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *data)
@@ -43,14 +49,20 @@ void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, 
     char    *path;
     char    **res;
     char    **env_vars;
-    
+	int		count;
+	char	**param;
+
+	count = count_param(current, &param);
+	res = ft_calloc(sizeof(char *), count + 2);
     redirect_io(current, i, pipes, num_pipes);
     close_pipes(pipes, num_pipes);
     path = check_path(current, data);
-    build_command_args(current, &res);
+    build_command_args(current, res, param);
     env_vars = enviroment(data);
     execve(path, res, env_vars);
-    exit(EXIT_FAILURE);
+	free_pipes(pipes, num_pipes);
+	free(*res);
+	exit(EXIT_FAILURE);
 }
 
 void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
