@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/07 16:24:10 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:25:47 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void				free_memory(char **ptr);
 void				malloc_error(char *str);
 void				free_list(t_env *data);
 char				*if_notstr(char *str);
+void				error_msg(char *str, int flag);
 
 // VARS_FUNCTIONS
 char				*expand_variable(char *input, t_env *data);

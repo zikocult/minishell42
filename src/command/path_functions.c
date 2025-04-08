@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/07 18:06:00 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:06:39 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ static int	path_messages(char *str)
 		else if (str[i] == '/')
 			directory = 1;
 		i++;
-	}
+	}	
 	if (str[0] == '/' && file != 1)
-		printf("%s: Is a directory\n", str); //CAMBIAR PRINTFS POR FUNCION CON WRITE PARA QUE
+		error_msg(str, 0);
 	else if (str[0] != '/')
-		printf("%s: command NOT found\n", str); // SALIDA MENSAJE SEA STDERROR I NO STDOUPUT
+		error_msg(str, 1);
 	else if (file == 1 && directory == 1)
-		printf("%s: Perimssion denied\n", str);
+		error_msg(str, 2);
 	return (0);
 }
 
