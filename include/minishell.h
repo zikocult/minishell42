@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/08 10:55:41 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/08 17:00:25 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ char				*append_text(char **temp, char *result, int flag);
 int					expand_mult(char **str, t_env *data);
 
 // STD_UTILS
+int					count_args(char *param);
 int					process_data(t_parse *node,
 						t_env *data, int (*func)(char **, t_env *));
 
