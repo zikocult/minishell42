@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/03 19:49:56 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/08 10:55:41 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,10 @@ bool				len_buff(char *cmd_buff);
 int					process_heredoc(char *delimiter, t_env *data,
 						char *command);
 void				handle_heredoc_eof(t_env *data);
+
+// CD
+
+int					run_cd(t_env *data, char *param);
 
 // SIGNALS
 
