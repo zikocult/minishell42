@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 10:38:31 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/04/08 12:01:30 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/08 14:15:26 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	run_cd(t_env *data, char *param)
 	int	arg_count;
 
 	arg_count = 0;
-	if (param)	
+	if (param)
 		arg_count = count_args(param);
 	if (arg_count > 1)
 		return (printf("Minishell: cd: too many arguments\n"), 1);
