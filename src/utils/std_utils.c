@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/14 18:49:32 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:03:46 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ static void	internal_outfile(t_par *temp, t_env *data,
 	}
 }
 
+////CODIGO PREPARADO POR SI PARAMETER PASA A DOBLEPUNTERO//////////////
+
+/* static void	internal_parameter(t_par *temp, t_env *data, */
+/* 	int (*func)(char **, t_env *), int *control) */
+/* { */
+/* 	int	i; */
+
+/* 	i = 0; */
+/* 	while (temp->parameter[i]) */
+/* 	{ */
+/* 		if (func(&temp->parameter[i], data)) */
+/* 			(*control)++; */
+/* 		i++; */
+/* 	} */
+/* } */
+
 static int	internal_data(t_par *temp, t_env *data,
 	int (*func)(char **, t_env *), int *control)
 {
@@ -47,6 +63,8 @@ static int	internal_data(t_par *temp, t_env *data,
 		(*control)++;
 	if (temp->parameter && func(&temp->parameter, data))
 		(*control)++;
+	/* if (temp->parameter) */
+	/* 	internal_parameter(temp, data, func, control); */
 	if (temp->infile)
 		internal_infile(temp, data, func, control);
 	if (temp->outfile)

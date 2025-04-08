@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/07 17:55:06 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:48:35 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ static int count_param(t_par *current, char ***param)
         while (*param && (*param)[count])
 			count++;
     }
+	return (count);
+}
+
+static int count_outfile(t_par *current)
+{
+	int	count;
+
+	count = 0;
+	while (current->outfile[count])
+		count++;
+	printf("hay %i outfiles\n", count);
 	return (count);
 }
 
@@ -65,13 +76,40 @@ void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, 
 	exit(EXIT_FAILURE);
 }
 
+static char	*new_file_name(char *str)
+{
+	char	*temp;
+	char	*new_str;
+	int		i;
+
+	temp = ft_strdup(str);
+	if (!temp)
+		return (NULL);
+	new_str = (char *)ft_calloc(ft_strlen(temp), sizeof(char));
+	if (!new_str)
+	{
+		free(temp);
+		return (NULL);
+	}
+	i = 1;
+	while (temp[i])
+	{
+		new_str[i - 1] = temp[i];
+		i++;
+	}
+	free(temp);
+	return (new_str);
+}
+
 void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
 {
-    int fd;
+    int		fd;
+	char	*str;
 
     if (i == 0 && current->infile)
     {
-        fd = open(current->infile[0], O_RDONLY);
+		str = new_file_name(current->infile[0]);
+        fd = open(str, O_RDONLY);
         if (fd == -1)
             perror_exit("open infile");
         dup2(fd, STDIN_FILENO);
@@ -81,14 +119,39 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
         dup2(pipes[i - 1][READ_END], STDIN_FILENO);
     if (i == num_pipes && current->outfile)
     {
-        fd = open(current->outfile[0], O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
-        if (fd == -1)
-            perror_exit("open outfile");
-        dup2(fd, STDOUT_FILENO);
-        close(fd);
-    }
+		int outf = count_outfile(current);
+		int position = 0;
+		while(current->outfile[position])
+		{
+			if (position == 0 && outf != 1) // primera posicion pero hay mas
+			{
+				str = new_file_name(current->outfile[position]);
+				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
+			}
+			if (position > 0 && position != outf) // posiciones intermedias
+			{
+				str = new_file_name(current->outfile[position]);
+				fd = open(str, O_WRONLY | O_CREAT  FILE_MODE);
+			}
+			if (position > 0 && position == outf) // posicion final pero hay anteriores
+			{
+				str = new_file_name(current->outfile[position]);
+				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
+			}
+			if (position == 0 && outf == 1) // solo hay 1
+			{
+				str = new_file_name(current->outfile[0]);
+				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
+			}
+			if (fd == -1)
+				perror_exit("open outfile");
+			dup2(fd, STDOUT_FILENO);
+			close(fd);	
+			position++;
+		}
+	}
     else if (i < num_pipes)
-        dup2(pipes[i][WRITE_END], STDOUT_FILENO);
+		dup2(pipes[i][WRITE_END], STDOUT_FILENO);
 }
 
 void    handle_pipes(t_parse *state, t_env *data)
