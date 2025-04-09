@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:24:41 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/04/08 16:31:07 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:33:50 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	consecutive_copy_param(int mode, char *temp, char **parameter,
 {
 	ft_strcpy(temp, *parameter);
 	if (mode == 0)
-		ft_strcat(temp, " ");
+		ft_strcat(temp, " &");
 	else if (mode == 1)
 		ft_strcat(temp, " &_");
 	else if (mode == 2)
@@ -111,7 +111,7 @@ void	append_parameter(char **parameter, char *token, int mode)
 		else if (mode == 3)
 			*parameter = ft_strjoin("&<", token);
 		else
-			*parameter = ft_strdup(token);
+			*parameter = ft_strjoin("&", token);
 	}
 	free(token);
 }

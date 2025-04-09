@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:26:46 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/02/06 16:15:45 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:41:11 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	free_parse(t_parse *data)
 		if (current->command)
 			free(current->command);
 		if (current->parameter)
-			free(current->parameter);
+			free_pointer(current->parameter);
 		if (current->infile)
 			free_pointer(current->infile);
 		if (current->outfile)

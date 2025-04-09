@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:05 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/17 20:46:00 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:37:40 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,28 @@ void	remove_quotes_from_par2(t_par *current, int i)
 {
 	if (!search_dollar_parse(current->command))
 		current->command = return_str_parse(current->command);
-	if (!search_dollar_parse(current->parameter))
-		current->parameter = return_str_parse(current->parameter);
+	// if (!search_dollar_parse(current->parameter))
+	// 	current->parameter = return_str_parse(current->parameter);
+	if (current->parameter)
+	{
+		while (current->parameter[i])
+		{
+			if (!search_dollar_parse(current->parameter[i]))
+				current->parameter[i] = return_str_parse(current->parameter[i]);
+			i++;
+		}
+	}
+	i = 0;
+	if (current->infile)
+	{
+		while (current->infile[i])
+		{
+			if (!search_dollar_parse(current->infile[i]))
+				current->infile[i] = return_str_parse(current->infile[i]);
+			i++;
+		}
+	}
+	i = 0;
 	if (current->infile)
 	{
 		while (current->infile[i])

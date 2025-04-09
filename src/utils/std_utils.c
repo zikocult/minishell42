@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/08 16:19:36 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:37:59 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static int	internal_data(t_par *temp, t_env *data,
 {
 	if (temp->command && func(&temp->command, data))
 		(*control)++;
-	if (temp->parameter && func(&temp->parameter, data))
-		(*control)++;
+	// if (temp->parameter && func(&temp->parameter, data))
+	// 	(*control)++;
 	if (temp->infile)
 		internal_infile(temp, data, func, control);
 	if (temp->outfile)

@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:28:01 by patri             #+#    #+#             */
-/*   Updated: 2025/04/03 12:11:06 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/08 23:40:19 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,22 @@ void print_token(t_parse *data)
 	int		i;
 
 	current = data->head;
-	printf("\n**************");
+	printf("\n**************\n");
     while (current)
     {
-        printf("\nCommand: %s\nParameter: %s\n",
-        current->command, current->parameter);
+        // printf("\nCommand: %s\nParameter: %s\n",
+        // current->command, current->parameter);
+		if (current->parameter)
+		{
+			i = 0;
+			while (current->parameter[i])
+			{
+				printf("parameter[%d]: %s\n", i, current->parameter[i]);
+				i++;
+			}
+		}
+		else 
+			printf("parameter: No parameters\n");
 		if (current->infile)
 		{
 			i = 0;
@@ -85,11 +96,11 @@ int	select_type(char *command_buff, t_env *data)
 //		exit(0);
 	 	return (1);
 	}
-	else
-	{
-	 	start_expansion(&state, data);
-
-	}
+	// else
+	// {
+	//  	start_expansion(&state, data);
+	//
+	// }
 	print_token(&state);
 	free_parse(&state);
 	return (0);

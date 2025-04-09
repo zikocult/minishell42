@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:32:18 by Guillem Bar       #+#    #+#             */
-/*   Updated: 2025/02/06 16:19:16 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:35:23 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	copy_data(t_par *new_node, t_parse *data)
 	if (data->command)
 		new_node->command = ft_strdup(data->command);
 	if (data->parameter)
-		new_node->parameter = ft_strdup(data->parameter);
+		new_node->parameter = ft_split(data->parameter, '&');
 	if (data->infile)
 		new_node->infile = ft_split(data->infile, '&');
 	if (data->outfile)

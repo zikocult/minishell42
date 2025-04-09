@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/08 17:00:25 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:35:37 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_env
 typedef struct s_par
 {
 	char			*command;
-	char			*parameter;
+	char			**parameter;
 	char			**infile;
 	char			**outfile;
 	struct s_par	*next;
