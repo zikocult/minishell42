@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/08 23:35:37 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/09 17:46:51 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-// extern volatile sig_atomic_t	g_in_heredoc;
 
 typedef struct s_var
 {
@@ -121,13 +119,17 @@ char				*append_text(char **temp, char *result, int flag);
 int					expand_mult(char **str, t_env *data);
 
 // STD_UTILS
-int					count_args(char *param);
 int					process_data(t_parse *node,
 						t_env *data, int (*func)(char **, t_env *));
+
+// MORE_UTILS
+int					count_args_double_pointer(char **ptr);
+int					count_args_spaces(char *param);
 
 // EXPORT_BUILTIN
 void				export_list_builtin(t_env *data);
 int					export_builtin(char *str, t_env *data);
+int					run_export(t_env *data, char **str);
 
 // ENV_FUNCTIONS
 void				*create_node2(char *env_var, t_var *new_node,
@@ -145,6 +147,7 @@ void				pwd_builtin(void);
 // ENV_BUILTIN
 void				env_list_builtin(t_env *data);
 int					env_builtin(char *str, t_env *data);
+int					run_env(t_env *data, char **str);
 
 //ADD_VAR
 int					add_elem(t_env *data, char *name,
@@ -206,11 +209,10 @@ int					process_heredoc(char *delimiter, t_env *data,
 void				handle_heredoc_eof(t_env *data);
 
 // CD
-
-int					run_cd(t_env *data, char *param);
+int					cd_builtin(t_env *data, char *param);
+int					run_cd(t_env *data, char **str);
 
 // SIGNALS
-
 void				interactive_signals(void);
 void				here_signals(void);
 

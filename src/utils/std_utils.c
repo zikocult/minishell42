@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:01:17 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/08 23:37:59 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/09 16:12:53 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,4 @@ int	process_data(t_parse *node, t_env *data, int (*func)(char **, t_env *))
 	if (control > 0)
 		return (1);
 	return (0);
-}
-
-int	count_args(char *param)
-{
-	char	**temp_param;
-	int		count;
-
-	count = 0;
-	temp_param = ft_split(param, ' ');
-	while (temp_param[count])
-	{
-		free(temp_param[count]);
-		count++;
-	}
-	free(temp_param);
-	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:39:26 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/04/03 19:08:55 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/09 16:38:42 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,25 @@ int	export_builtin(char *str, t_env *data)
 	else
 		change_type(str, data);
 	return (0);
+}
+
+int	run_export(t_env *data, char **str)
+{
+	int	i;
+	int	count;
+	int	ret;
+
+	i = 0;
+	if (!str)
+	{
+		export_list_builtin(data);
+		return (0);
+	}
+	count = count_args_double_pointer(str);
+	while (i < count)
+	{
+		ret = export_builtin(str[i], data);
+		i++;
+	}
+	return (ret);
 }

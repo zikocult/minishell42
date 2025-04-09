@@ -6,11 +6,12 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:17:54 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/03 19:16:05 by Guillem Barulls  ###   ########.fr       */
+/*   Updated: 2025/04/09 16:35:59 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <stdio.h>
 
 void	env_list_builtin(t_env *data)
 {
@@ -93,4 +94,19 @@ int	env_builtin(char *str, t_env *data)
 		return (1);
 	}
 	return (0);
+}
+
+int	run_env(t_env *data, char **str)
+{
+	if (!str)
+	{
+		env_list_builtin(data);
+		return (0);
+	}
+	if (count_args_double_pointer(str) > 1)
+	{
+		printf("env: '%s': No such file or directory\n", str[0]);
+		return (1);
+	}
+	return (env_builtin(str[0], data));
 }

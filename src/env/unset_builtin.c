@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 19:40:22 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/02/25 16:19:39 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:33:23 by gbaruls-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,21 @@ void	unset_builtin(t_env *data, char *str)
 		free(del_node->var_name);
 		free(del_node);
 	}
+}
+
+int	run_unset(t_env *data, char **str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	if (!str)
+		return (0);
+	count = count_args_double_pointer(str);
+	while (i < count)
+	{
+		unset_builtin(data, str[i]);
+		i++;
+	}
+	return (0);
 }
