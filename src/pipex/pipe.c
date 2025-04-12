@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/08 19:48:35 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 08:31:28 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void    build_command_args(t_par *current, char **res, char **param)
 			k++;
 		}
 	}
-	res[k + 1] = '\0';
+	res[k + 1] = NULL;
 }
 
 void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *data)
@@ -98,7 +98,7 @@ static char	*new_file_name(char *str)
 		i++;
 	}
 	free(temp);
-	return (new_str);
+	return (ft_strtrim(new_str, " \n"));
 }
 
 void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
@@ -121,34 +121,31 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
     {
 		int outf = count_outfile(current);
 		int position = 0;
-		while(current->outfile[position])
+		int last_fd = -1;  // Guardaremos el fd del último archivo
+
+		while (current->outfile[position])
 		{
-			if (position == 0 && outf != 1) // primera posicion pero hay mas
-			{
-				str = new_file_name(current->outfile[position]);
+			str = new_file_name(current->outfile[position]);
+			if (position == outf)
+				fd = open(str, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE);
+			else
 				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
-			}
-			if (position > 0 && position != outf) // posiciones intermedias
-			{
-				str = new_file_name(current->outfile[position]);
-				fd = open(str, O_WRONLY | O_CREAT  FILE_MODE);
-			}
-			if (position > 0 && position == outf) // posicion final pero hay anteriores
-			{
-				str = new_file_name(current->outfile[position]);
-				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
-			}
-			if (position == 0 && outf == 1) // solo hay 1
-			{
-				str = new_file_name(current->outfile[0]);
-				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
-			}
 			if (fd == -1)
 				perror_exit("open outfile");
-			dup2(fd, STDOUT_FILENO);
-			close(fd);	
+
+			if (last_fd != -1)  // Cerrar archivos anteriores (no se escriben)
+				close(last_fd);
+			last_fd = fd;  // Actualizamos el último fd
 			position++;
 		}
+
+		// Redirigimos stdout SOLO al último archivo
+		if (last_fd != -1)
+		{
+			dup2(last_fd, STDOUT_FILENO);
+			close(last_fd);
+		}
+		
 	}
     else if (i < num_pipes)
 		dup2(pipes[i][WRITE_END], STDOUT_FILENO);
