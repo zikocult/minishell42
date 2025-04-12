@@ -6,42 +6,42 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:08:35 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/12 11:06:55 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:01:47 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int count_pipes(t_parse *state)
+int	count_pipes(t_parse *state)
 {
-    int count;
-    t_par *current;
+	int		count;
+	t_par	*current;
 
 	count = 0;
 	current = state->head;
-    while (current != NULL)
-    {
-        count++;
-        current = current->next;
-    }
-    return (count - 1);
+	while (current != NULL)
+	{
+		count++;
+		current = current->next;
+	}
+	return (count - 1);
 }
 
-int count_param(t_par *current, char ***param)
+int	count_param(t_par *current, char ***param)
 {
-	int count;
+	int	count;
 
 	count = 0;
-    if (current->parameter)
-    {
-        *param = ft_split(current->parameter, ' ');
-        while (*param && (*param)[count])
+	if (current->parameter)
+	{
+		*param = ft_split(current->parameter, ' ');
+		while (*param && (*param)[count])
 			count++;
-    }
+	}
 	return (count);
 }
 
-int count_outfile(t_par *current)
+int	count_outfile(t_par *current)
 {
 	int	count;
 
@@ -51,17 +51,17 @@ int count_outfile(t_par *current)
 	return (count);
 }
 
-int count_vars(t_env *data)
+int	count_vars(t_env *data)
 {
-    t_var *var;
-    int count;
+	t_var	*var;
+	int		count;
 
-    count = 0;
-    var = data->head;
-    while (var)
-    {
-        count++;
-        var = var->next;
-    }
-    return (count);
+	count = 0;
+	var = data->head;
+	while (var)
+	{
+		count++;
+		var = var->next;
+	}
+	return (count);
 }

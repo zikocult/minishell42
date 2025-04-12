@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:13:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/12 11:24:14 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:53:52 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	free_list(t_env	*data)
 			free(current->content);
 		if (current->var_name)
 			free(current->var_name);
-		if(current->type)
+		if (current->type)
 			free(current->type);
 		if (current)
 			free(current);
@@ -65,15 +65,17 @@ void	free_list(t_env	*data)
 	data->tail = NULL;
 }
 
-void free_env_array(char **env, int size)
+void	free_array(char **array, int size)
 {
-    int j;
+	int	i;
 
-    j = 0;
-    while (j < size)
-    {
-        free(env[j]);
-        j++;
-    }
-    free(env);
+	if (!array)
+		return;
+	i = 0;
+	while (i < size && array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

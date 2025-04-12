@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 09:49:24 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/12 11:51:25 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:52:54 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**enviroment(t_env *data)
 		env[i] = create_env_var(var->var_name, var->content);
 		if (!env[i])
 		{
-			free_env_array(env, i);
+			free_array(env, i);
 			return (NULL);
 		}
 		i++;

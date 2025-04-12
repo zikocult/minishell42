@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 13:09:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/12 10:48:37 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:56:46 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	close_pipes(int **pipes, int num_pipes)
 	}
 }
 
-void    close_parent_pipes(int i, int num_pipes, int **pipes)
+void	close_parent_pipes(int i, int num_pipes, int **pipes)
 {
-    if (i > 0)
-        close(pipes[i - 1][READ_END]);
-    if (i < num_pipes)
-        close(pipes[i][WRITE_END]);
+	if (i > 0)
+		close(pipes[i - 1][READ_END]);
+	if (i < num_pipes)
+		close(pipes[i][WRITE_END]);
 }

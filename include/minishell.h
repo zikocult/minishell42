@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/12 10:28:56 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:14:51 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ typedef struct s_parse
 	t_par			*tail;
 }					t_parse;
 
+/* typedef struct	s_child_params */
+/* { */
+/*     t_par		*current; */
+/*     int			i; */
+/*     int			**pipes; */
+/*     int			num_pipes; */
+/*     t_env		*data; */
+/* }				t_child_params; */
+
 
 // COMMAND
 void				start_expansion(t_parse *parse_data, t_env *data);
@@ -90,9 +99,7 @@ int					select_type(char *command_buff, t_env *data);
 void				print_token(t_parse *data);
 
 // SECURITY_FUNCTIONS
-void				free_memory(char **ptr);
 void				malloc_error(char *str);
-void				free_list(t_env *data);
 char				*if_notstr(char *str);
 void				error_msg(char *str, int flag);
 
@@ -199,24 +206,35 @@ bool				len_buff(char *cmd_buff);
 
 //PIPE_PATH.C
 char	**enviroment(t_env *data);
-//char	*find_path(char *copy, char *command);
-void	free_pipes(int **pipes, int num_pipes);
 int		**create_big_pip(int num_pipes);
 
 //PIPE_COMMAND.C
 void	create_pipes(int **pipes, int num_pipes);
 void	close_pipes(int **pipes, int num_pipes);
+void	close_parent_pipes(int i,  int num_pipes, int **pipes);
 
 //EXTRA_PIPE
 int		count_pipes(t_parse *state);
+int		count_param(t_par *current, char ***param);
+int		count_outfile(t_par *current);
+int		count_vars(t_env *data);
 
 //PIPE
-void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *env);
-void    redirect_io(t_par *current, int i, int **pipes, int num_pipes);
-void	close_parent_pipes(int i,  int num_pipes, int **pipes);
-void	perror_exit(char *msg);
-void	build_command_args(t_par *current, char **res, char **param);
-void	execute_pipex(t_parse *state, t_env *data);
+//void			handle_child_process(t_child_params *params);
+void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *data)
+void			redirect_io(t_par *current, int i, int **pipes, int num_pipes);
+void			build_command_args(t_par *current, char **res, char **param);
+void			execute_pipex(t_parse *state, t_env *data);
+//void			init_child_params(t_child_params *params, t_par *current, int i, int **pipes, int num_pipes, t_env *data);
 
-	
+
+
+//FREE_FUNCTIONS
+void	free_pipes(int **pipes, int num_pipes);
+void	free_memory(char **ptr);
+void	free_list(t_env *data);
+void	free_array(char **array, int size);
+
+
+
 #endif
