@@ -6,36 +6,11 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/12 10:29:23 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:48:07 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static int count_param(t_par *current, char ***param)
-{
-	int count;
-
-	count = 0;
-    if (current->parameter)
-    {
-        *param = ft_split(current->parameter, ' ');
-        while (*param && (*param)[count])
-			count++;
-    }
-	return (count);
-}
-
-static int count_outfile(t_par *current)
-{
-	int	count;
-
-	count = 0;
-	while (current->outfile[count])
-		count++;
-	printf("hay %i outfiles\n", count);
-	return (count);
-}
 
 void    build_command_args(t_par *current, char **res, char **param)
 {
@@ -127,16 +102,16 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
 				printf("Aquí va el heredoc\n");
 				fd = open("/dev/null", O_RDONLY);  // Abre un descriptor no bloqueante
 				if (fd == -1)
-					perror_exit("open /dev/null");			
+					malloc_error("open /dev/null");			
 			}
 			else  // Redirección normal (< archivo)
 			{
 				str = new_file_name(current->infile[position]);
 				if (!str)
-					perror_exit("malloc failed");
+					malloc_error("malloc failed");
 				fd = open(str, O_RDONLY);
 				if (fd == -1)
-					perror_exit("open infile");
+					malloc_error("open infile");
 			}	
 			if (last_fd != -1)  // Cerramos archivos anteriores (no se usan)
 				close(last_fd);
@@ -163,13 +138,13 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
 		{
 			str = new_file_name(current->outfile[position]);
 			if (!str)
-				perror_exit("malloc failed");
+				malloc_error("malloc failed");
 			if (position == outf)
 				fd = open(str, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE);
 			else
 				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
 			if (fd == -1)
-				perror_exit("open outfile");
+				malloc_error("open outfile");
 
 			if (last_fd != -1)  // Cerrar archivos anteriores (no se escriben)
 				close(last_fd);
@@ -206,7 +181,7 @@ void    execute_pipex(t_parse *state, t_env *data)
     {
         pid = fork();
         if (pid == -1)
-            perror_exit("fork");
+            malloc_error("fork");
         if (pid == 0)
             handle_child_process(current, i, pipes, num_pipes, data);
         close_parent_pipes(i, num_pipes, pipes);
@@ -216,18 +191,3 @@ void    execute_pipex(t_parse *state, t_env *data)
     }
     free_pipes(pipes, num_pipes);
 }
-
-void    close_parent_pipes(int i, int num_pipes, int **pipes)
-{
-    if (i > 0)
-        close(pipes[i - 1][READ_END]);
-    if (i < num_pipes)
-        close(pipes[i][WRITE_END]);
-}
-
-void    perror_exit(char *msg)
-{
-    perror(msg);
-    exit(EXIT_FAILURE);
-}
-
