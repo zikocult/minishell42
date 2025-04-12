@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/12 08:31:28 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:29:23 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,29 +76,38 @@ void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, 
 	exit(EXIT_FAILURE);
 }
 
-static char	*new_file_name(char *str)
+static char *new_file_name(char *str)
 {
-	char	*temp;
-	char	*new_str;
-	int		i;
+    char *temp;
+    char *new_str;
+    char *trimmed_str;
+    int i;
 
-	temp = ft_strdup(str);
-	if (!temp)
-		return (NULL);
-	new_str = (char *)ft_calloc(ft_strlen(temp), sizeof(char));
-	if (!new_str)
-	{
-		free(temp);
-		return (NULL);
-	}
-	i = 1;
-	while (temp[i])
-	{
-		new_str[i - 1] = temp[i];
-		i++;
-	}
-	free(temp);
-	return (ft_strtrim(new_str, " \n"));
+    if (!str)
+        return (NULL);
+
+    temp = ft_strdup(str);
+    if (!temp)
+        return (NULL);
+
+    new_str = (char *)ft_calloc(ft_strlen(temp) + 1, sizeof(char)); // +1 para '\0'
+    if (!new_str)
+    {
+        free(temp);
+        return (NULL);
+    }
+
+    i = 1;
+    while (temp[i])
+    {
+        new_str[i - 1] = temp[i];
+        i++;
+    }
+    free(temp);
+
+    trimmed_str = ft_strtrim(new_str, " \n");
+    free(new_str); // Liberamos new_str después de usarlo
+    return (trimmed_str); // Retornamos el resultado de ft_strtrim (puede ser NULL)
 }
 
 void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
@@ -108,12 +117,39 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
 
     if (i == 0 && current->infile)
     {
-		str = new_file_name(current->infile[0]);
-        fd = open(str, O_RDONLY);
-        if (fd == -1)
-            perror_exit("open infile");
-        dup2(fd, STDIN_FILENO);
-        close(fd);
+		int position = 0;
+		int last_fd = -1;  // Guardamos el fd del último archivo
+
+		while (current->infile[position])
+		{
+			if (ft_strncmp(current->infile[position], "<", 1) == 0)  // Si es HereDoc (ej: << EOF)
+			{
+				printf("Aquí va el heredoc\n");
+				fd = open("/dev/null", O_RDONLY);  // Abre un descriptor no bloqueante
+				if (fd == -1)
+					perror_exit("open /dev/null");			
+			}
+			else  // Redirección normal (< archivo)
+			{
+				str = new_file_name(current->infile[position]);
+				if (!str)
+					perror_exit("malloc failed");
+				fd = open(str, O_RDONLY);
+				if (fd == -1)
+					perror_exit("open infile");
+			}	
+			if (last_fd != -1)  // Cerramos archivos anteriores (no se usan)
+				close(last_fd);
+			last_fd = fd;  // Actualizamos el último fd
+			position++;
+		}
+
+		// Redirigimos stdin SOLO al último archivo (o HereDoc)
+		if (last_fd != -1)
+		{
+			dup2(last_fd, STDIN_FILENO);
+			close(last_fd);
+		}
     }
     else if (i > 0)
         dup2(pipes[i - 1][READ_END], STDIN_FILENO);
@@ -126,6 +162,8 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
 		while (current->outfile[position])
 		{
 			str = new_file_name(current->outfile[position]);
+			if (!str)
+				perror_exit("malloc failed");
 			if (position == outf)
 				fd = open(str, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE);
 			else
@@ -151,7 +189,7 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes)
 		dup2(pipes[i][WRITE_END], STDOUT_FILENO);
 }
 
-void    handle_pipes(t_parse *state, t_env *data)
+void    execute_pipex(t_parse *state, t_env *data)
 {
     t_par   *current;
     int     i;

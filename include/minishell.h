@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/08 16:25:47 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:28:56 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,6 @@ void	close_pipes(int **pipes, int num_pipes);
 
 //EXTRA_PIPE
 int		count_pipes(t_parse *state);
-void	execute_pipex(t_parse *state, t_env *data);
 
 //PIPE
 void    handle_child_process(t_par *current, int i, int **pipes, int num_pipes, t_env *env);
@@ -217,7 +216,7 @@ void    redirect_io(t_par *current, int i, int **pipes, int num_pipes);
 void	close_parent_pipes(int i,  int num_pipes, int **pipes);
 void	perror_exit(char *msg);
 void	build_command_args(t_par *current, char **res, char **param);
-void	handle_pipes(t_parse *state, t_env *data);
+void	execute_pipex(t_parse *state, t_env *data);
 
 	
 #endif

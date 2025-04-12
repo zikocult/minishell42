@@ -1,0 +1,12 @@
+doc
+file1
+file2
+file3
+file with spaces.txt
+include
+Makefile
+minishell
+mylibft
+obj
+out.txt
+src
