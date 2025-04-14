@@ -6,12 +6,12 @@
 /*   By: Guillem Barulls <Guillem Barulls>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 10:38:31 by Guillem Barulls   #+#    #+#             */
-/*   Updated: 2025/04/09 17:55:53 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:19:07 by Guillem Barulls  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <cstdio>
+#include <stdio.h>
 
 static int	update_env(t_env *data, char *variable)
 {
@@ -79,6 +79,7 @@ int	run_cd(t_env *data, char **str)
 	int	count;
 	int	ret;
 
+	count = 0;
 	if (str)
 		count = count_args_double_pointer(str);
 	if (count > 1)
