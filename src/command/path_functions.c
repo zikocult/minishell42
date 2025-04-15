@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/03/04 18:29:40 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:12:11 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ char	*find_path(t_par *current, t_env *data)
 	int		i;
 	t_var	*search;
 
-	search = env_search(data, "PATH");
+	search = data->head;
+	while (search && ft_strncmp(search->var_name, "PATH", 4) != 0)
+		search = search->next;
 	if (!search)
 		return (NULL);
 	paths = ft_split(search->content, ':');
-	if_notstr(*paths);
+	if (!paths || !*paths)
+		return (NULL);
 	i = 0;
 	full_path = NULL;
 	while (paths[i])
@@ -46,9 +49,7 @@ char	*find_path(t_par *current, t_env *data)
 		full_path = NULL;
 		i++;
 	}
-	free_memory(paths);
-	if_notstr(full_path);
-	return (full_path);
+	return (free_memory(paths), full_path);
 }
 
 static int	path_messages(char *str)
@@ -69,11 +70,11 @@ static int	path_messages(char *str)
 		i++;
 	}
 	if (str[0] == '/' && file != 1)
-		printf("%s: Is a directory\n", str);
+		error_msg(str, 0);
 	else if (str[0] != '/')
-		printf("%s: command NOT found\n", str);
+		error_msg(str, 1);
 	else if (file == 1 && directory == 1)
-		printf("%s: Perimssion denied\n", str);
+		error_msg(str, 2);
 	return (0);
 }
 
@@ -85,7 +86,6 @@ char	*check_path(t_par *current, t_env *data)
 	if (!path)
 	{
 		path_messages(current->command);
-		current = current->next;
 		return (NULL);
 	}
 	return (path);

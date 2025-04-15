@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/09 17:46:51 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:17:14 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# define READ_END 0       //index pipe extremo escritura
+# define WRITE_END 1		//index pipe extremo lectura
+# define FILE_MODE 0644
 
 typedef struct s_var
 {
@@ -67,6 +71,15 @@ typedef struct s_parse
 	t_par			*tail;
 }					t_parse;
 
+typedef struct	s_child
+{
+    int			i;
+    int			**pipes;
+    int			num_pipes;
+	int			position;
+	int			last_fd;
+}				t_child;
+
 // COMMAND
 void				start_expansion(t_parse *parse_data, t_env *data);
 void				execute_command(t_par *current, t_env *data);
@@ -87,10 +100,9 @@ int					select_type(char *command_buff, t_env *data);
 void				print_token(t_parse *data);
 
 // SECURITY_FUNCTIONS
-void				free_memory(char **ptr);
 void				malloc_error(char *str);
-void				free_list(t_env *data);
 char				*if_notstr(char *str);
+void				error_msg(char *str, int flag);
 
 // VARS_FUNCTIONS
 char				*expand_variable(char *input, t_env *data);
@@ -215,5 +227,34 @@ int					run_cd(t_env *data, char **str);
 // SIGNALS
 void				interactive_signals(void);
 void				here_signals(void);
+
+//PIPE_PATH.C
+char	**enviroment(t_env *data);
+int		**create_big_pip(int num_pipes);
+
+//PIPE_COMMAND.C
+void	create_pipes(int **pipes, int num_pipes);
+void	close_pipes(int **pipes, int num_pipes);
+void	close_parent_pipes(int i,  int num_pipes, int **pipes);
+
+//EXTRA_PIPE
+int		count_pipes(t_parse *state);
+int		count_param(t_par *current, char ***param);
+int		count_outfile(t_par *current);
+int		count_vars(t_env *data);
+
+//PIPE
+void			handle_child_process(t_par *current, t_child params, t_env *data);
+char			*new_file_name(char *str);
+void			redirect_io(t_par *current, t_child params);
+void			build_command_args(t_par *current, char **res, char **param);
+void			execute_pipex(t_parse *state, t_env *data);
+//void			init_child_params(t_child_params *params, t_par *current, int i, int **pipes, int num_pipes, t_env *data);
+
+//FREE_FUNCTIONS
+void	free_pipes(int **pipes, int num_pipes);
+void	free_memory(char **ptr);
+void	free_list(t_env *data);
+void	free_array(char **array, int size);
 
 #endif

@@ -1,0 +1,14 @@
+a
+b
+c
+doc
+f
+file1
+file2
+file3
+include
+Makefile
+minishell
+mylibft
+obj
+src
