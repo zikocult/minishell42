@@ -2,6 +2,7 @@ a
 b
 c
 doc
+f
 file1
 file2
 file3

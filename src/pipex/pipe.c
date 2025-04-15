@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/14 18:39:49 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:04:00 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void    build_command_args(t_par *current, char **res, char **param)
 		while (param && param[k])
 		{
 			res[k + 1] = ft_strdup(param[k]);
-			free(param[k]);
 			k++;
 		}
+		free_memory(param);
 	}
+
 	res[k + 1] = NULL;
 }
 
@@ -49,7 +50,8 @@ void handle_child_process(t_par *current, t_child params, t_env *data)
     env_vars = enviroment(data);
     execve(path, res, env_vars);
     free_pipes(params.pipes, params.num_pipes);
-    free(res);
+    free(*res);
+
     exit(EXIT_FAILURE);
 }
 
