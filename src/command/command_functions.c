@@ -6,7 +6,7 @@
 /*   By: patri <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:07:30 by patri             #+#    #+#             */
-/*   Updated: 2025/04/07 17:33:54 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:07:47 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 	t_par	*current;
 
 	current = parse_data->head;
-	
 	while (current)
 	{
 		if (try_processes(parse_data, data))
 		{
 			if (count_pipes(parse_data) == 0)
-				execute_pipex(parse_data, data);	
+				execute_pipex(parse_data, data);
 			current = current->next;
 			continue ;
 		}
@@ -51,8 +50,8 @@ void	start_expansion(t_parse *parse_data, t_env *data)
 			continue ;
 		}
 		if (count_pipes(parse_data) == 0)
-			execute_pipex(parse_data, data);	
-		current = current->next;	
+			execute_pipex(parse_data, data);
+		current = current->next;
 	}
 	if (count_pipes(parse_data) != 0)
 		execute_pipex(parse_data, data);

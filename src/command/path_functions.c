@@ -6,7 +6,7 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:42:45 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/08 17:06:39 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:12:11 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,26 @@ char	*find_path(t_par *current, t_env *data)
 	int		i;
 	t_var	*search;
 
-	// Buscar la variable PATH en la estructura t_env
 	search = data->head;
 	while (search && ft_strncmp(search->var_name, "PATH", 4) != 0)
 		search = search->next;
 	if (!search)
 		return (NULL);
-
-	// Separar los directorios de PATH
 	paths = ft_split(search->content, ':');
-	if (!paths || !*paths) // Evitar segfault si paths es NULL
+	if (!paths || !*paths)
 		return (NULL);
-	
 	i = 0;
 	full_path = NULL;
 	while (paths[i])
 	{
 		full_path = get_full_path(paths[i], current->command);
 		if (access(full_path, X_OK) == 0)
-			break;
+			break ;
 		free(full_path);
 		full_path = NULL;
 		i++;
 	}
-	free_memory(paths);
-	return (full_path);
+	return (free_memory(paths), full_path);
 }
 
 static int	path_messages(char *str)
@@ -73,7 +68,7 @@ static int	path_messages(char *str)
 		else if (str[i] == '/')
 			directory = 1;
 		i++;
-	}	
+	}
 	if (str[0] == '/' && file != 1)
 		error_msg(str, 0);
 	else if (str[0] != '/')
