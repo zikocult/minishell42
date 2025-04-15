@@ -6,30 +6,30 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/15 16:04:00 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:33:18 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void    build_command_args(t_par *current, char **res, char **param)
-{
-    int     k;
+/* void    build_command_args(t_par *current, char **res, char **param) */
+/* { */
+/*     int     k; */
 
-	k = 0;
-    res[0] = ft_strdup(current->command);
-	if (current->parameter)
-	{
-		while (param && param[k])
-		{
-			res[k + 1] = ft_strdup(param[k]);
-			k++;
-		}
-		free_memory(param);
-	}
+/* 	k = 0; */
+/*     res[0] = ft_strdup(current->command); */
+/* 	if (current->parameter) */
+/* 	{ */
+/* 		while (param && param[k]) */
+/* 		{ */
+/* 			res[k + 1] = ft_strdup(param[k]); */
+/* 			k++; */
+/* 		} */
+/* 		free_memory(param); */
+/* 	} */
 
-	res[k + 1] = NULL;
-}
+/* 	res[k + 1] = NULL; */
+/* } */
 
 void handle_child_process(t_par *current, t_child params, t_env *data)
 {
@@ -37,16 +37,15 @@ void handle_child_process(t_par *current, t_child params, t_env *data)
     char **res;
     char **env_vars;
     int count;
-    char **param;
 
-    count = count_param(current, &param);
+    count = count_args_double_pointer(current->parameter);
     res = ft_calloc(sizeof(char *), count + 2);
     if (!res)
         exit(EXIT_FAILURE);
     redirect_io(current, params);
     close_pipes(params.pipes, params.num_pipes);
     path = check_path(current, data);
-    build_command_args(current, res, param);
+    /* build_command_args(current, res, param); */
     env_vars = enviroment(data);
     execve(path, res, env_vars);
     free_pipes(params.pipes, params.num_pipes);

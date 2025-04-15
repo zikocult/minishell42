@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/15 16:17:14 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:32:12 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,6 @@ void	close_parent_pipes(int i,  int num_pipes, int **pipes);
 
 //EXTRA_PIPE
 int		count_pipes(t_parse *state);
-int		count_param(t_par *current, char ***param);
 int		count_outfile(t_par *current);
 int		count_vars(t_env *data);
 
