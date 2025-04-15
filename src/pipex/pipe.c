@@ -6,30 +6,31 @@
 /*   By: pamanzan <pamanzan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 18:18:11 by pamanzan          #+#    #+#             */
-/*   Updated: 2025/04/15 16:33:18 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:43:43 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/* void    build_command_args(t_par *current, char **res, char **param) */
-/* { */
-/*     int     k; */
+void	build_command_args(t_par *current, char **res)
+{
+	int	i;
+	char *temp;
 
-/* 	k = 0; */
-/*     res[0] = ft_strdup(current->command); */
-/* 	if (current->parameter) */
-/* 	{ */
-/* 		while (param && param[k]) */
-/* 		{ */
-/* 			res[k + 1] = ft_strdup(param[k]); */
-/* 			k++; */
-/* 		} */
-/* 		free_memory(param); */
-/* 	} */
-
-/* 	res[k + 1] = NULL; */
-/* } */
+	i = 0;
+	res[0] = ft_strdup(current->command);
+	if (current->parameter)
+	{
+		while (current-> parameter[i])
+		{
+			temp = ft_strtrim(current->parameter[i], " \n");
+			res[i + 1] = ft_strdup(temp);
+			free(temp);
+			i++;
+		}
+	}
+	res[i + 1] = NULL; 
+}
 
 void handle_child_process(t_par *current, t_child params, t_env *data)
 {
@@ -45,12 +46,11 @@ void handle_child_process(t_par *current, t_child params, t_env *data)
     redirect_io(current, params);
     close_pipes(params.pipes, params.num_pipes);
     path = check_path(current, data);
-    /* build_command_args(current, res, param); */
+    build_command_args(current, res);
     env_vars = enviroment(data);
     execve(path, res, env_vars);
     free_pipes(params.pipes, params.num_pipes);
     free(*res);
-
     exit(EXIT_FAILURE);
 }
 
@@ -85,7 +85,7 @@ static void handle_heredoc(void)
 	int fd;
 
 	printf("Aquí va el heredoc\n");
-	fd = open("/dev/null", O_RDONLY);  // Abre un descriptor no bloqueante
+	params.fd = open("/dev/null", O_RDONLY);  // Abre un descriptor no bloqueante
 	if (fd == -1)
 		malloc_error("open /dev/null");	
 }
@@ -93,7 +93,6 @@ static void handle_heredoc(void)
 
 void    redirect_io(t_par *current, t_child params)
 {
-    int		fd;
 	char	*str;
 
     if (params.i == 0 && current->infile)
@@ -109,13 +108,13 @@ void    redirect_io(t_par *current, t_child params)
 				str = new_file_name(current->infile[params.position]);
 				if (!str)
 					malloc_error("malloc failed");
-				fd = open(str, O_RDONLY);
-				if (fd == -1)
+				params.fd = open(str, O_RDONLY);
+				if (params.fd == -1)
 					malloc_error("open infile");
 			}	
 			if (params.last_fd != -1)  // Cerramos archivos anteriores (no se usan)
 				close(params.last_fd);
-			params.last_fd = fd;  // Actualizamos el ultimo fd
+			params.last_fd = params.fd;  // Actualizamos el ultimo fd
 			params.position++;
 		}
 
@@ -131,32 +130,32 @@ void    redirect_io(t_par *current, t_child params)
     if (params.i == params.num_pipes && current->outfile)
     {
 		int outf = count_outfile(current);
-		int position = 0;
-		int last_fd = -1;  // Guardaremos el fd del ultimo archivo
+		params.position = 0;
+		params.last_fd = -1;  // Guardaremos el fd del ultimo archivo
 
-		while (current->outfile[position])
+		while (current->outfile[params.position])
 		{
-			str = new_file_name(current->outfile[position]);
+			str = new_file_name(current->outfile[params.position]);
 			if (!str)
 				malloc_error("malloc failed");
-			if (position == outf)
-				fd = open(str, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE);
+			if (params.position == outf)
+				params.fd = open(str, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE);
 			else
-				fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
-			if (fd == -1)
+				params.fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE);
+			if (params.fd == -1)
 				malloc_error("open outfile");
 
-			if (last_fd != -1)  // Cerrar archivos anteriores (no se escriben)
-				close(last_fd);
-			last_fd = fd;  // Actualizamos el ultimo fd
-			position++;
+			if (params.last_fd != -1)  // Cerrar archivos anteriores (no se escriben)
+				close(params.last_fd);
+			params.last_fd = params.fd;  // Actualizamos el ultimo fd
+			params.position++;
 		}
 
 		// Redirigimos stdout SOLO al ultimo archivo
-		if (last_fd != -1)
+		if (params.last_fd != -1)
 		{
-			dup2(last_fd, STDOUT_FILENO);
-			close(last_fd);
+			dup2(params.last_fd, STDOUT_FILENO);
+			close(params.last_fd);
 		}
 		
 	}

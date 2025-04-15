@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:08:18 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/09 16:12:51 by gbaruls-         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:54:15 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ int	count_args_double_pointer(char **ptr)
 	int	count;
 
 	count = 0;
-	while (ptr[count])
-		count++;
+	if (ptr)
+	{
+		while (ptr[count])
+			count++;
+	}
 	return (count);
 }
 

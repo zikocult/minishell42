@@ -6,7 +6,7 @@
 /*   By: gbaruls- <gbaruls-@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:29:23 by gbaruls-          #+#    #+#             */
-/*   Updated: 2025/04/15 16:32:12 by pamanzan         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:39:44 by pamanzan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct	s_child
     int			**pipes;
     int			num_pipes;
 	int			position;
+	int			fd;
 	int			last_fd;
 }				t_child;
 
@@ -246,7 +247,8 @@ int		count_vars(t_env *data);
 void			handle_child_process(t_par *current, t_child params, t_env *data);
 char			*new_file_name(char *str);
 void			redirect_io(t_par *current, t_child params);
-void			build_command_args(t_par *current, char **res, char **param);
+//char			*build_command_args(t_par *current);
+void			build_command_args(t_par *current, char **res);
 void			execute_pipex(t_parse *state, t_env *data);
 //void			init_child_params(t_child_params *params, t_par *current, int i, int **pipes, int num_pipes, t_env *data);
 
